@@ -1,3 +1,10 @@
+<script lang="ts">
+    export let status: number;
+    export let error: Error;
+
+    const dev = process.env.NODE_ENV === "development";
+</script>
+
 <style>
     h1,
     p {
@@ -20,13 +27,6 @@
         }
     }
 </style>
-
-<script lang="ts">
-    export let status: number;
-    export let error: Error;
-
-    const dev = process.env.NODE_ENV === "development";
-</script>
 
 <svelte:head>
     <title>{status}</title>
