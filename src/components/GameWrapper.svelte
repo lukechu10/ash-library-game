@@ -9,10 +9,7 @@
         booksList.push({ id: i, name: `book ${i}` });
     }
 
-    function handleDndConsider(e) {
-        booksList = e.detail.items;
-    }
-    function handleDndFinalize(e) {
+    function handleSort(e) {
         booksList = e.detail.items;
     }
 </script>
@@ -34,8 +31,8 @@
 
 <section
     use:dndzone={{ items: booksList, flipDurationMs }}
-    on:consider={handleDndConsider}
-    on:finalize={handleDndFinalize}
+    on:consider={handleSort}
+    on:finalize={handleSort}
 >
     {#each booksList as book (book.id)}
         <div class="book" animate:flip={{ duration: flipDurationMs }}>{book.name}</div>
