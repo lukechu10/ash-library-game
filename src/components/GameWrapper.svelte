@@ -3,7 +3,7 @@
     import { dndzone } from "svelte-dnd-action";
 
     let booksList: { id: number; name: string }[] = [];
-    const flipDurationMs = 300;
+    const flipDurationMs = 150;
 
     for (let i = 0; i < 10; i++) {
         booksList.push({ id: i, name: `book ${i}` });
@@ -21,11 +21,14 @@
 		border: 1px solid black;
         /* this will allow the dragged element to scroll the list */
 		overflow: scroll;
-		height: 200px;
+		height: 600px;
 	}
 
     .book {
-        padding: 5px;
+        padding: 10px;
+        margin: 2px 0;
+        border: 2px solid black;
+        border-radius: 2px;
     }
 </style>
 

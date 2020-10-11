@@ -69,7 +69,7 @@ export default {
 
 	server: {
 		input: { server: config.server.input().server.replace(/.js$/, ".ts") },
-		output: config.server.output(),
+		output: { ...config.server.output(), exports: "auto" },
 		plugins: [
 			replace({
 				'process.browser': false,
