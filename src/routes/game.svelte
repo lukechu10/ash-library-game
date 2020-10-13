@@ -10,5 +10,9 @@
     });
 </script>
 
+<svelte:head>
+    <title>Ashbury Library Game</title>
+</svelte:head>
+
 <p>Game</p>
 <svelte:component this={GameWrapper} />
