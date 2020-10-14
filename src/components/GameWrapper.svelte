@@ -15,8 +15,8 @@
         width: 100%;
         padding: 0.3em;
         border: 1px solid black;
-        /* this will allow the dragged element to scroll the list */
-        /* overflow: hidden; */
+
+        width: 100%;
         height: 192px;
     }
 </style>
@@ -26,3 +26,6 @@
         <Book cote={book.cote} />
     {/each}
 </section>
+
+<!-- prevent scrolling on touchscreen because it interfers with drag and drop -->
+<svelte:window on:touchmove|nonpassive={(event) => event.preventDefault()} />
