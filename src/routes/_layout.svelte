@@ -1,6 +1,15 @@
+<script context="module">
+</script>
+
 <script lang="ts">
     export let segment: string;
     segment; // noop
+
+    import { onMount } from "svelte";
+
+    onMount(async () => {
+        await import("../services/firebase"); // initialize firebase
+    });
 </script>
 
 <style>

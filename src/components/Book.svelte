@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { get } from "svelte/store";
     import { sortGameState } from "../store/sort";
 
     /**
      * Set to `true` to make book appear faded out. Ghost books should be used when the player is considering dropping a book onto the book shelf.
      */
     export let isGhost = false;
+    export let isDragging = false;
 
     export let cote: string;
 
@@ -45,13 +45,18 @@
     ) => {
         let currentPos = event.currentTarget.getBoundingClientRect();
         diffPos = { x: event.x - currentPos.x, y: event.y - currentPos.y };
+
         zIndex = $sortGameState.highestZIndex;
         sortGameState.incrementZIndex();
+
+        isDragging = true;
 
         window.addEventListener("pointermove", handleMove);
     };
 
     const handleUp = () => {
+        isDragging = false;
+
         window.removeEventListener("pointermove", handleMove);
     };
 </script>
@@ -73,10 +78,17 @@
 
         user-select: none;
         text-align: center;
+
+        transition-duration: 200ms;
+        transition-property: box-shadow;
     }
 
     .ghost.book {
         opacity: 50%;
+    }
+
+    .dragging.book {
+        box-shadow: black 0px 0px 7px;
     }
 
     .book:hover {
@@ -99,6 +111,7 @@
     bind:this={bookEl}
     class="book"
     class:ghost={isGhost}
+    class:dragging={isDragging}
     on:pointerdown={handleDown}
     on:dragstart={(event) => event.preventDefault()}
     style="transform: {transform}; z-index: {zIndex}"
@@ -107,6 +120,8 @@
         class="book-cover"
         src="https://via.placeholder.com/140x145"
         alt="book cover"
+        width="140px"
+        height="145px"
     />
 
     <span>{cote}</span>
