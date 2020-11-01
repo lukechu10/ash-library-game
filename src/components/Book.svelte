@@ -1,5 +1,7 @@
 <script lang="ts">
     import { sortGameState } from "../store/sort";
+    import type { Book } from "../services/bookApi";
+    import { getCoteFromBook } from "../services/bookApi";
 
     /**
      * Set to `true` to make book appear faded out. Ghost books should be used when the player is considering dropping a book onto the book shelf.
@@ -7,7 +9,14 @@
     export let isGhost = false;
     export let isDragging = false;
 
-    export let cote: string;
+    /**
+     * Data from book api.
+    */
+    export let data: Book;
+    /**
+     * Extract cote from book data.
+    */
+    $: cote = getCoteFromBook(data);
 
     /**
      * The current position of the book (fixed position).
@@ -118,7 +127,7 @@
 >
     <img
         class="book-cover"
-        src="https://via.placeholder.com/140x145"
+        src={data.imageUrl}
         alt="book cover"
         width="140px"
         height="145px"
