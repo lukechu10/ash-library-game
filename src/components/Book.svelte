@@ -1,28 +1,43 @@
 <script lang="ts">
-    import { tick } from "svelte";
     import { get } from "svelte/store";
     import { sortGameState } from "../store/sort";
 
+    /**
+     * Set to `true` to make book appear faded out. Ghost books should be used when the player is considering dropping a book onto the book shelf.
+     */
+    export let isGhost = false;
+
     export let cote: string;
 
+    /**
+     * The current position of the book (fixed position).
+     */
+    export let pos = { x: 0, y: 0 };
+    $: transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
+    /**
+     * Ref to book div.
+     */
     let bookEl: HTMLDivElement;
-    let initialPos: { x: number; y: number };
+    /**
+     * Record position on pointerdown event so mouse doesn't need to be in center of book.
+     */
     let diffPos: { x: number; y: number };
-    let pos = { x: 0, y: 0 };
-    // increment when dragging to make book appear over other books.
+    /**
+     * increment when dragging to make book appear over other books.
+     */
     let zIndex = 0;
 
-    $: transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
-
-    (async () => {
-        await tick();
-        initialPos = bookEl.getBoundingClientRect();
-    })();
+    /**
+     * Moves book to a location (without animation).
+     */
+    const moveTo = ({ x, y }) => {
+        pos.x = x - diffPos.x;
+        pos.y = y - diffPos.y;
+    };
 
     const handleMove = (event) => {
         let { x, y } = event;
-        pos.x = x - initialPos.x - diffPos.x;
-        pos.y = y - initialPos.y - diffPos.y;
+        moveTo({ x, y });
     };
 
     const handleDown = (
@@ -30,7 +45,7 @@
     ) => {
         let currentPos = event.currentTarget.getBoundingClientRect();
         diffPos = { x: event.x - currentPos.x, y: event.y - currentPos.y };
-        zIndex = (get(sortGameState) as any).highestZIndex;
+        zIndex = $sortGameState.highestZIndex;
         sortGameState.incrementZIndex();
 
         window.addEventListener("pointermove", handleMove);
@@ -43,7 +58,9 @@
 
 <style>
     .book {
-        position: absolute;
+        position: fixed;
+        top: 0;
+        left: 0;
 
         width: 150px;
         height: 180px;
@@ -52,10 +69,14 @@
 
         display: inline-block;
         background-color: rgb(163, 163, 163);
-        margin: 4px;
+        margin: 0;
 
         user-select: none;
         text-align: center;
+    }
+
+    .ghost.book {
+        opacity: 50%;
     }
 
     .book:hover {
@@ -77,15 +98,17 @@
 <div
     bind:this={bookEl}
     class="book"
+    class:ghost={isGhost}
     on:pointerdown={handleDown}
     on:dragstart={(event) => event.preventDefault()}
-    style="transform: {transform}; z-index: {zIndex};"
+    style="transform: {transform}; z-index: {zIndex}"
 >
     <img
         class="book-cover"
         src="https://via.placeholder.com/140x145"
         alt="book cover"
     />
+
     <span>{cote}</span>
 </div>
 

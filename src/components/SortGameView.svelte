@@ -1,5 +1,6 @@
 <script lang="ts">
     import Book from "./Book.svelte";
+    import BookShelf from "./BookShelf.svelte";
 
     const booksList = [
         { id: 0, cote: "ABC" },
@@ -11,21 +12,23 @@
 </script>
 
 <style>
-    section {
-        width: 100%;
-        padding: 0.3em;
-        border: 1px solid black;
-
-        width: 100%;
-        height: 192px;
+    span {
+        font-family: Berlin Sans FB;
+        font-size: 30pt;
     }
 </style>
 
-<section class="book-shelf">
+<span>Time: ...</span>
+<span>Score: ...</span>
+
+<!-- All the books are in .books-container in DOM -->
+<div class="books-container">
     {#each booksList as book (book.id)}
         <Book cote={book.cote} />
     {/each}
-</section>
+</div>
 
-<!-- prevent scrolling on touchscreen because it interfers with drag and drop -->
+<BookShelf />
+
+<!-- prevent scrolling on touchscreen because it interferes with drag and drop -->
 <svelte:window on:touchmove|nonpassive={(event) => event.preventDefault()} />

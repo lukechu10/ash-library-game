@@ -1,12 +1,12 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import type GameWrapper from "../components/GameWrapper.svelte";
+    import type SortGameView from "../components/SortGameView.svelte";
 
-    let GameWrapper: GameWrapper;
+    let SortGameView: SortGameView;
 
     onMount(async () => {
-        const module = await import("../components/GameWrapper.svelte");
-        GameWrapper = module.default;
+        const module = await import("../components/SortGameView.svelte");
+        SortGameView = module.default;
     });
 </script>
 
@@ -14,5 +14,4 @@
     <title>Ashbury Library Game</title>
 </svelte:head>
 
-<p>Game</p>
-<svelte:component this={GameWrapper} />
+<svelte:component this={SortGameView} />
