@@ -9,8 +9,8 @@
     "export": "sapper export --legacy",
     "start": "node __sapper__/build",
     "validate": "svelte-check --ignore src/node_modules/@sapper",
-    "format": "prettier --write src --plugin-search-dir=. ./**/*.html",
-    "format:check": "prettier --check src --plugin-search-dir=. ./**/*.html"
+    "format": "prettier --write src",
+    "format:check": "prettier --check src"
   },
   "dependencies": {
     "compression": "^1.7.1",

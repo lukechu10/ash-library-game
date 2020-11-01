@@ -1,12 +1,16 @@
 <script lang="ts">
     import { tick } from "svelte";
+    import { get } from "svelte/store";
+    import { sortGameState } from "../store/sort";
 
     export let cote: string;
 
     let bookEl: HTMLDivElement;
-    let initialPos: {x: number, y: number};
-    let diffPos: {x: number, y: number};
+    let initialPos: { x: number; y: number };
+    let diffPos: { x: number; y: number };
     let pos = { x: 0, y: 0 };
+    // increment when dragging to make book appear over other books.
+    let zIndex = 0;
 
     $: transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
 
@@ -16,22 +20,23 @@
     })();
 
     const handleMove = (event) => {
-        let {x, y} = event;
+        let { x, y } = event;
         pos.x = x - initialPos.x - diffPos.x;
         pos.y = y - initialPos.y - diffPos.y;
     };
 
-    const handleDown = (event: PointerEvent & { currentTarget: HTMLElement }) => {
+    const handleDown = (
+        event: PointerEvent & { currentTarget: HTMLElement }
+    ) => {
         let currentPos = event.currentTarget.getBoundingClientRect();
         diffPos = { x: event.x - currentPos.x, y: event.y - currentPos.y };
-        // diffPos = { x: event.x, y: event.y };
+        zIndex = (get(sortGameState) as any).highestZIndex;
+        sortGameState.incrementZIndex();
 
         window.addEventListener("pointermove", handleMove);
     };
 
     const handleUp = () => {
-        // diffPos = null;
-
         window.removeEventListener("pointermove", handleMove);
     };
 </script>
@@ -74,9 +79,13 @@
     class="book"
     on:pointerdown={handleDown}
     on:dragstart={(event) => event.preventDefault()}
-    style="transform: {transform}"
+    style="transform: {transform}; z-index: {zIndex};"
 >
-    <img class="book-cover" src="https://via.placeholder.com/140x145" alt="book cover" />
+    <img
+        class="book-cover"
+        src="https://via.placeholder.com/140x145"
+        alt="book cover"
+    />
     <span>{cote}</span>
 </div>
 
