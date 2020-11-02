@@ -2,16 +2,11 @@
     import { onMount } from "svelte";
     import { getBooks } from "../services/bookApi";
     import Book from "./Book.svelte";
+    import { sortGameState } from "../store/sortGameState";
 
-    /**
-     * List of all books (excluding ghost books).
-     */
-    let bookList = [];
     onMount(async () => {
-        bookList = await getBooks();
+        sortGameState.loadBooksFromAPI(await getBooks());
     });
-
-    $: console.log("Book list changed", bookList);
 </script>
 
 <style>
@@ -40,8 +35,8 @@
 
 <!-- All the books are in .books-container in DOM -->
 <div class="books-container">
-    {#each bookList as book (book.DOCUMENT_ID)}
-        <Book data={book} />
+    {#each $sortGameState.bookList as book, i (book.DOCUMENT_ID)}
+        <Book data={book} initialPos={{ x: 10 + (160 * i), y: 450 }} />
     {/each}
 </div>
 

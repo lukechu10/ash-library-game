@@ -4,11 +4,15 @@
 //         : "http://localhost:8080";
 export const API_URL_BASE = "https://ash-game-api.herokuapp.com";
 
-export interface Book extends BookData {
+export interface BookData extends RawBook {
     imageUrl: string;
+    /**
+     * Position of book on shelf. If not on shelf, value should be `undefined`. Starts as `undefined`.
+     */
+    shelfPosition?: number;
 }
 
-export interface BookData {
+export interface RawBook {
     DOCUMENT_ID: string;
     TITRE: string;
     SUPPORT: string;
@@ -19,16 +23,16 @@ export interface BookData {
     IMAGE: string;
 }
 
-export async function getBooks(): Promise<Book[]> {
+export async function getBooks(): Promise<BookData[]> {
     const apiRes = await fetch(
         `${API_URL_BASE}/books/get?amount=5&bookType=alpha`
     );
-    const books: Book[] = await apiRes.json();
+    const books: BookData[] = await apiRes.json();
 
     return books;
 }
 
-export function getCoteFromBook(book: Book) {
+export function getCoteFromBook(book: BookData) {
     // cote text
     const deweyPos = book.COTE.search(/[0-9]{3}/);
     if (deweyPos !== -1) {

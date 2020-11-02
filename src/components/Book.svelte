@@ -1,7 +1,10 @@
 <script lang="ts">
-    import { sortGameState } from "../store/sort";
-    import type { Book } from "../services/bookApi";
+    import { sortGameState } from "../store/sortGameState";
+    import type { BookData } from "../services/bookApi";
     import { getCoteFromBook } from "../services/bookApi";
+    import { tweened } from "svelte/motion";
+    import { cubicOut } from "svelte/easing";
+    import { get } from "svelte/store";
 
     /**
      * Set to `true` to make book appear faded out. Ghost books should be used when the player is considering dropping a book onto the book shelf.
@@ -11,18 +14,31 @@
 
     /**
      * Data from book api.
-    */
-    export let data: Book;
+     */
+    export let data: BookData;
     /**
      * Extract cote from book data.
-    */
+     */
     $: cote = getCoteFromBook(data);
+    $: shelfPosition = data.shelfPosition ?? -1;
+    $: shelfPosition !== -1
+        ? pos.set({ x: 10 + 160 * shelfPosition, y: 110 })
+        : {};
+
+    /**
+     * The initial position of the book. This is not updated when book moves. Use `pos` instead.
+     */
+    export let initialPos = { x: 0, y: 0 };
 
     /**
      * The current position of the book (fixed position).
      */
-    export let pos = { x: 0, y: 0 };
-    $: transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
+    export let pos = tweened(initialPos, {
+        duration: 400 /* ms */,
+        easing: cubicOut,
+    });
+    $: transform = `translate3d(${$pos.x}px, ${$pos.y}px, 0)`;
+
     /**
      * Ref to book div.
      */
@@ -40,13 +56,22 @@
      * Moves book to a location (without animation).
      */
     const moveTo = ({ x, y }) => {
-        pos.x = x - diffPos.x;
-        pos.y = y - diffPos.y;
+        pos.set(
+            {
+                x: x - diffPos.x,
+                y: y - diffPos.y,
+            },
+            {
+                duration: 0, // disable animation when dragging
+            }
+        );
     };
 
     const handleMove = (event) => {
         let { x, y } = event;
         moveTo({ x, y });
+
+        sortGameState.considerBookAtPos({ x, y }, data.DOCUMENT_ID);
     };
 
     const handleDown = (
@@ -60,13 +85,20 @@
 
         isDragging = true;
 
+        // remove book before drag start
+        sortGameState.removeBookFromShelf(data.DOCUMENT_ID);
         window.addEventListener("pointermove", handleMove);
     };
 
     const handleUp = () => {
-        isDragging = false;
+        // make sure handler is only triggered on book that is being dragged because event is attached on window.
+        // isDragging is set in handleDown.
+        if (isDragging) {
+            isDragging = false;
 
-        window.removeEventListener("pointermove", handleMove);
+            sortGameState.dropBookAtPos(get(pos), data.DOCUMENT_ID);
+            window.removeEventListener("pointermove", handleMove);
+        }
     };
 </script>
 

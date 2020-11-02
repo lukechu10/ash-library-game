@@ -2,13 +2,14 @@
 </script>
 
 <script lang="ts">
+    import { onMount } from "svelte";
+
     export let segment: string;
     segment; // noop
 
-    import { onMount } from "svelte";
-
     onMount(async () => {
-        await import("../services/firebase"); // initialize firebase
+        const { db, perf } = await import("../services/firebase"); // initialize firebase
+        console.log(db, perf);
     });
 </script>
 
