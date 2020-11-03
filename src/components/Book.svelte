@@ -70,7 +70,7 @@
         let { x, y } = event;
         moveTo({ x, y });
 
-        sortGameState.considerBookAtPos({ x, y }, data.DOCUMENT_ID);
+        sortGameState.considerBookAtPos($pos, data.DOCUMENT_ID);
     };
 
     const handleDown = (
