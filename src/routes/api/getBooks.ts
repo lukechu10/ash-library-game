@@ -90,15 +90,15 @@ async function triage(
  * Shuffles `arr` in place.
  * @param arr items to shuffle.
  */
-function shuffle<T>(arr: Array<T>):Array<T> {
-	let j, x, i;
-	for (i = arr.length - 1; i > 0; i--) {
-		j = Math.floor(Math.random() * (i + 1));
-		x = arr[i];
-		arr[i] = arr[j];
-		arr[j] = x;
-	}
-	return arr;
+function shuffle<T>(arr: Array<T>): Array<T> {
+    let j, x, i;
+    for (i = arr.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = arr[i];
+        arr[i] = arr[j];
+        arr[j] = x;
+    }
+    return arr;
 }
 
 /**
@@ -106,49 +106,56 @@ function shuffle<T>(arr: Array<T>):Array<T> {
  * @param type the type of book to get.
  * @param amount the amount of books to get.
  */
-async function getRandomBooks(type: BookType, amount: number): Promise<RawBook[]> {
-	let books: RawBook[];
+async function getRandomBooks(
+    type: BookType,
+    amount: number
+): Promise<RawBook[]> {
+    let books: RawBook[];
 
-	// Use .slice(0) to create a clone of array
-	if (type == BookType.Alpha) {
-		books = (await triage(bookData)).alpha.slice(0);
-	}
-	else {
-		books = (await triage(bookData)).deweyDecimal.slice(0);
-	}
+    // Use .slice(0) to create a clone of array
+    if (type == BookType.Alpha) {
+        books = (await triage(bookData)).alpha.slice(0);
+    } else {
+        books = (await triage(bookData)).deweyDecimal.slice(0);
+    }
 
-	if (amount > books.length) {
-		throw new Error('there are not enough books to satisfy amount');
-	}
+    if (amount > books.length) {
+        throw new Error("there are not enough books to satisfy amount");
+    }
 
-	const result = shuffle(books).slice(0, amount);
+    const result = shuffle(books).slice(0, amount);
 
-	return result;
+    return result;
 }
 
 export async function get(req: Request, res: Response, next: NextFunction) {
     const amount: number = parseInt(req.query.amount as string);
-	if (isNaN(amount)) res.status(400).send('invalid amount query');
+    if (isNaN(amount)) res.status(400).send("invalid amount query");
 
-	const bookTypeStr: string = req.query.bookType as string;
-	if (bookTypeStr === undefined) res.status(400).send('invalid bookType query');
-	else if (bookTypeStr !== 'alpha' && bookTypeStr !== 'dewey') res.status(400).send('invalid bookType query');
+    const bookTypeStr: string = req.query.bookType as string;
+    if (bookTypeStr === undefined)
+        res.status(400).send("invalid bookType query");
+    else if (bookTypeStr !== "alpha" && bookTypeStr !== "dewey")
+        res.status(400).send("invalid bookType query");
 
-	const bookType: BookType = bookTypeStr === 'alpha' ? BookType.Alpha : BookType.DeweyDecimal;
-	
+    const bookType: BookType =
+        bookTypeStr === "alpha" ? BookType.Alpha : BookType.DeweyDecimal;
+
     try {
         // console.time("compute");
-        const randBooks = (await getRandomBooks(bookType, amount)).map(getImageUrl);
+        const randBooks = (await getRandomBooks(bookType, amount)).map(
+            getImageUrl
+        );
         // console.timeEnd("compute");
         res.json(randBooks);
-	}
-	catch(err) {
-		if (err.message === 'there are not enough books to satisfy amount') {
-			res.status(400).send('amount query exceeds the number of books');
-        }
-        else {
+    } catch (err) {
+        if (err.message === "there are not enough books to satisfy amount") {
+            res.status(400).send("amount query exceeds the number of books");
+        } else if (process.env.NODE_ENV === "development") {
+            res.status(400).json({ type: "Unexpected error", error: err });
+        } else {
             console.error(err);
             next(err);
         }
-	}
+    }
 }
