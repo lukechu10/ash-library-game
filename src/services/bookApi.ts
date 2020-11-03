@@ -1,9 +1,3 @@
-// export const API_URL_BASE =
-//     process.env.NODE_ENV === "production"
-//         ? "https://ash-game-api.herokuapp.com"
-//         : "http://localhost:8080";
-export const API_URL_BASE = "https://ash-game-api.herokuapp.com";
-
 export interface BookData extends RawBook {
     imageUrl: string;
     /**
@@ -25,7 +19,7 @@ export interface RawBook {
 
 export async function getBooks(): Promise<BookData[]> {
     const apiRes = await fetch(
-        `${API_URL_BASE}/books/get?amount=5&bookType=alpha`
+        `/api/getBooks?amount=5&bookType=alpha`
     );
     const books: BookData[] = await apiRes.json();
 
