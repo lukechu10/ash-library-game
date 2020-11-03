@@ -12,8 +12,10 @@ app.use(
     compression({ threshold: 1024 }),
     sirv("static", { dev }),
     sapper.middleware()
-).use((err) => {
+);
+app.use((err) => {
     if (err) console.log("error", err);
 });
+app.listen(PORT);
 
-export default app.listen(PORT);
+export default app;

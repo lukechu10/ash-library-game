@@ -10,7 +10,8 @@
     "start": "node __sapper__/build",
     "validate": "svelte-check --ignore src/node_modules/@sapper",
     "format": "prettier --write src",
-    "format:check": "prettier --check src"
+    "format:check": "prettier --check src",
+    "tokei": "tokei --exclude static/books.json"
   },
   "dependencies": {
     "compression": "^1.7.1",
