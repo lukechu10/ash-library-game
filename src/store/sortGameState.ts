@@ -52,7 +52,6 @@ function createSortGameState() {
                     : {}
             );
             index = Math.min(index, lastBookIndex);
-            console.log("dropped at index:", index);
 
             // update index of books already on shelf
             bookList.forEach((book) => {

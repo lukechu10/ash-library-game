@@ -17,7 +17,6 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-export let perf = firebase.performance();
-
-export let db = firebase.firestore();
+export const analytics = firebase.analytics();
+export const perf = firebase.performance();
+export const db = firebase.firestore();

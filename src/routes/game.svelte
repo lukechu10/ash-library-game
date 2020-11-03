@@ -6,7 +6,7 @@
 
     onMount(async () => {
         const module = await import("../components/SortGameView.svelte");
-        SortGameView = module.default;
+        SortGameView = module.default as any;
     });
 </script>
 

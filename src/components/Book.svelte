@@ -86,7 +86,8 @@
         isDragging = true;
 
         // remove book before drag start
-        sortGameState.removeBookFromShelf(data.DOCUMENT_ID);
+        if (data.shelfPosition !== undefined)
+            sortGameState.removeBookFromShelf(data.DOCUMENT_ID);
         window.addEventListener("pointermove", handleMove);
     };
 

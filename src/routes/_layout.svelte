@@ -3,13 +3,19 @@
 
 <script lang="ts">
     import { onMount } from "svelte";
+    import type GoogleAnalytics from "../components/GoogleAnalytics.svelte";
 
     export let segment: string;
     segment; // noop
 
+    let GoogleAnalytics: GoogleAnalytics;
+
     onMount(async () => {
-        const { db, perf } = await import("../services/firebase"); // initialize firebase
-        console.log(db, perf);
+        const firebase = await import("../services/firebase"); // initialize firebase
+        firebase; // noop
+
+        const module = await import("../components/GoogleAnalytics.svelte");
+        GoogleAnalytics = module.default as any;
     });
 </script>
 
@@ -27,3 +33,6 @@
 <main>
     <slot />
 </main>
+
+<!-- only load GoogleAnalytics in client -->
+<svelte:component this={GoogleAnalytics} />
