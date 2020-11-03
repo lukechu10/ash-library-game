@@ -4,6 +4,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import type GoogleAnalytics from "../components/GoogleAnalytics.svelte";
+    import { MaterialApp } from "svelte-materialify";
 
     export let segment: string;
     segment; // noop
@@ -30,9 +31,11 @@
     }
 </style>
 
-<main>
-    <slot />
-</main>
+<MaterialApp>
+    <main>
+        <slot />
+    </main>
+</MaterialApp>
 
 <!-- only load GoogleAnalytics in client -->
 <svelte:component this={GoogleAnalytics} />
