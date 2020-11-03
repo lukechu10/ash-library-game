@@ -6,10 +6,6 @@
     import { cubicOut } from "svelte/easing";
     import { get } from "svelte/store";
 
-    /**
-     * Set to `true` to make book appear faded out. Ghost books should be used when the player is considering dropping a book onto the book shelf.
-     */
-    export let isGhost = false;
     export let isDragging = false;
 
     /**
@@ -20,9 +16,12 @@
      * Extract cote from book data.
      */
     $: cote = getCoteFromBook(data);
-    $: shelfPosition = data.shelfPosition ?? -1;
-    $: shelfPosition !== -1
-        ? pos.set({ x: 10 + 160 * shelfPosition, y: 110 })
+
+    $: isAfterConsiderPos =
+        $sortGameState.considerPosition <= data.shelfPosition;
+    $: computedShelfPos = data.shelfPosition + (isAfterConsiderPos ? 1 : 0);
+    $: data.shelfPosition !== undefined
+        ? pos.set({ x: 10 + 160 * computedShelfPos, y: 110 })
         : {};
 
     /**
@@ -125,10 +124,6 @@
         transition-property: box-shadow;
     }
 
-    .ghost.book {
-        opacity: 50%;
-    }
-
     .dragging.book {
         box-shadow: black 0px 0px 7px;
     }
@@ -152,7 +147,6 @@
 <div
     bind:this={bookEl}
     class="book"
-    class:ghost={isGhost}
     class:dragging={isDragging}
     on:pointerdown={handleDown}
     on:dragstart={(event) => event.preventDefault()}

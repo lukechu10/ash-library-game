@@ -8,9 +8,14 @@ export interface SortGameState {
      */
     highestZIndex: number;
     /**
-     * A list of all books (including ghost books).
+     * A list of all books.
      */
     bookList: BookData[];
+    /**
+     * Current consider position. When computing location for books, if `shelfPosition >= considerPosition`, temporarily increment `shelfPosition`.
+     * If no book being considered, should be `bookList.length`.
+     */
+    considerPosition: number;
     /**
      * Current score in game.
      */
@@ -21,7 +26,7 @@ function createSortGameState() {
     const { set, subscribe, update } = writable({
         highestZIndex: 1, // start at 1 so that the first dragged book appears over rest of books (which have z-index: 0)
         bookList: [],
-        ghostBook: undefined,
+        considerPosition: 0,
         score: 0,
     } as SortGameState);
 
@@ -64,7 +69,11 @@ function createSortGameState() {
                 (book) => book.DOCUMENT_ID === id
             ).shelfPosition = index;
 
-            return { bookList, ...state };
+            return {
+                bookList,
+                ...state,
+                considerPosition: bookList.length, // reset considerPosition
+            };
         });
     };
 
@@ -118,24 +127,31 @@ function createSortGameState() {
             update((state) => {
                 return {
                     ...state,
+                    considerPosition: bookList.length, // see jsdoc on considerPosition
                     bookList,
                 };
             });
         },
         /**
-         * If book is within drop zone, create a ghost. Else remove all ghosts.
+         * If book is within drop zone, change considerPosition, else reset considerPosition.
          */
         considerBookAtPos: ({ x, y }: { x: number; y: number }, id: string) => {
             let index: number;
+            let state = get({ subscribe }) as SortGameState;
+
             if (y < 400) {
                 index = Math.max(Math.round((x - 10) / 160), 0);
             } else {
-                index = -1;
+                index = state.bookList.length; // see jsdoc on considerPosition
+            }
+            if (state.considerPosition !== index) {
+                // update
+                update((state) => ({ ...state, considerPosition: index }));
             }
         },
         /**
          * Should be called on pointerup event with current position.
-         * If book is within drop zone, remove ghost and update book shelf position.
+         * If book is within drop zone, update book shelf position.
          */
         dropBookAtPos: ({ x, y }: { x: number; y: number }, id: string) => {
             if (y < 400) {
