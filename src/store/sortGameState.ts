@@ -1,6 +1,6 @@
 import { get, writable } from "svelte/store";
-import { reduxify } from "svelte-reduxify";
 import type { BookData } from "../services/bookApi";
+import { reduxify } from "svelte-reduxify";
 
 export interface SortGameState {
     /**
@@ -166,6 +166,8 @@ function createSortGameState() {
     };
 }
 
-export const sortGameState: ReturnType<typeof createSortGameState> = reduxify(
-    createSortGameState()
-);
+export const sortGameState: ReturnType<typeof createSortGameState> = (() => {
+    if (process.env.NODE_ENV === "development") {
+        return reduxify(createSortGameState());
+    } else return createSortGameState();
+})();
