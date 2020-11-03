@@ -35,7 +35,7 @@ function createSortGameState() {
      */
     const insertBookToShelfAt = (index: number, id: string) => {
         update((state) => {
-            let bookList = Object.assign([] as BookData[], state.bookList);
+            let bookList = state.bookList.slice(0);
 
             if (process.env.NODE_ENV === "development") {
                 // make sure book is not already on shelf
@@ -82,7 +82,7 @@ function createSortGameState() {
      */
     const removeBookFromShelf = (id: string) => {
         update((state) => {
-            let bookList = Object.assign([] as BookData[], state.bookList);
+            let bookList = state.bookList.slice(0);
             let bookIndex = bookList.findIndex(
                 (book) =>
                     book.DOCUMENT_ID === id && book.shelfPosition !== undefined

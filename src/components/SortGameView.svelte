@@ -5,7 +5,9 @@
     import { sortGameState } from "../store/sortGameState";
 
     onMount(async () => {
-        sortGameState.loadBooksFromAPI(await getBooks());
+        sortGameState.loadBooksFromAPI(
+            await getBooks({ amount: 5, bookType: "dewey" })
+        );
     });
 </script>
 
