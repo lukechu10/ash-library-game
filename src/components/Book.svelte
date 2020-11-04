@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { sortGameState } from "../store/sortGameState";
+    import { sortGameState, isCorrectlySorted } from "../store/sortGameState";
     import type { BookData } from "../services/bookApi";
     import { getCoteFromBook } from "../services/bookApi";
     import { tweened } from "svelte/motion";
@@ -76,6 +76,9 @@
     const handleDown = (
         event: PointerEvent & { currentTarget: HTMLElement }
     ) => {
+        // do not allow dragging when books are already sorted.
+        if ($isCorrectlySorted) return;
+
         let currentPos = event.currentTarget.getBoundingClientRect();
         diffPos = { x: event.x - currentPos.x, y: event.y - currentPos.y };
 
