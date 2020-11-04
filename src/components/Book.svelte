@@ -128,10 +128,16 @@
 
         transition-duration: 200ms;
         transition-property: box-shadow;
+
+        will-change: transform;
     }
 
     .dragging.book {
         box-shadow: black 0px 0px 7px;
+    }
+
+    .correct.book {
+        background-color: rgb(101, 184, 98);
     }
 
     .book:hover {
@@ -154,6 +160,7 @@
     bind:this={bookEl}
     class="book"
     class:dragging={isDragging}
+    class:correct={$isCorrectlySorted}
     on:pointerdown={handleDown}
     on:dragstart={(event) => event.preventDefault()}
     style="transform: {transform}; z-index: {zIndex}"
