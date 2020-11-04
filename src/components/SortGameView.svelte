@@ -13,7 +13,7 @@
         dimmerActive = false;
     }
 
-    $: $isCorrectlySorted ? (window as any).confetti.start(3) : {};
+    $: $isCorrectlySorted ? (window as any).confetti.start(1000) : {};
 </script>
 
 <style>
