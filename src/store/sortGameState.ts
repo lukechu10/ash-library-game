@@ -35,7 +35,7 @@ function createSortGameState() {
      */
     const insertBookToShelfAt = (index: number, id: string) => {
         update((state) => {
-            let bookList = Object.assign([] as BookData[], state.bookList);
+            let bookList = state.bookList.slice(0);
 
             if (process.env.NODE_ENV === "development") {
                 // make sure book is not already on shelf
@@ -82,7 +82,7 @@ function createSortGameState() {
      */
     const removeBookFromShelf = (id: string) => {
         update((state) => {
-            let bookList = Object.assign([] as BookData[], state.bookList);
+            let bookList = state.bookList.slice(0);
             let bookIndex = bookList.findIndex(
                 (book) =>
                     book.DOCUMENT_ID === id && book.shelfPosition !== undefined
@@ -139,7 +139,7 @@ function createSortGameState() {
             let index: number;
             let state = get({ subscribe }) as SortGameState;
 
-            if (y < 400) {
+            if (y < 300) {
                 index = Math.max(Math.round((x - 10) / 160), 0);
             } else {
                 index = state.bookList.length; // see jsdoc on considerPosition
@@ -154,7 +154,7 @@ function createSortGameState() {
          * If book is within drop zone, update book shelf position.
          */
         dropBookAtPos: ({ x, y }: { x: number; y: number }, id: string) => {
-            if (y < 400) {
+            if (y < 300) {
                 const index = Math.max(Math.round((x - 10) / 160), 0);
                 insertBookToShelfAt(index, id);
             }

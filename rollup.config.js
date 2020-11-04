@@ -33,7 +33,11 @@ export default {
             svelte({
                 dev,
                 hydratable: true,
-                preprocess: sveltePreprocess(),
+                preprocess: sveltePreprocess({
+                    scss: {
+                        includePaths: ["src/theme"],
+                    },
+                }),
                 emitCss: true,
             }),
             resolve({
@@ -91,7 +95,11 @@ export default {
             svelte({
                 generate: "ssr",
                 hydratable: true,
-                preprocess: sveltePreprocess(),
+                preprocess: sveltePreprocess({
+                    scss: {
+                        includePaths: ["src/theme"],
+                    },
+                }),
                 dev,
             }),
             resolve({
