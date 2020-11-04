@@ -1,12 +1,14 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { getBooks } from "../services/bookApi";
+    import { isCorrectlySorted, sortGameState } from "../store/sortGameState";
     import Book from "./Book.svelte";
-    import { sortGameState } from "../store/sortGameState";
 
     onMount(async () => {
         sortGameState.loadBooksFromAPI(await getBooks());
     });
+
+    $: $isCorrectlySorted ? window.confetti.start(3) : {};
 </script>
 
 <style>
@@ -32,6 +34,7 @@
 <span>Score: ...</span>
 
 <div class="bg-img" />
+<p>Correctly sorted: {$isCorrectlySorted}</p>
 
 <!-- All the books are in .books-container in DOM -->
 <div class="books-container">
