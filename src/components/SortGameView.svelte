@@ -133,7 +133,7 @@
     </Card>
 </Overlay>
 
-<Overlay active={continueDimmerActive}>
+<Overlay style="z-index: 100000" active={continueDimmerActive}>
     <Button class="red white-text" on:click={continueGame}>Continuer</Button>
 </Overlay>
 
