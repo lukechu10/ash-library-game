@@ -24,7 +24,9 @@ export async function getBooks({
     amount: number;
     bookType: "alpha" | "dewey";
 }): Promise<BookData[]> {
-    const apiRes = await fetch(`/api/getBooks?amount=${amount}&bookType=${bookType}`);
+    const apiRes = await fetch(
+        `/api/getBooks?amount=${amount}&bookType=${bookType}`
+    );
     const books: BookData[] = await apiRes.json();
 
     return books;
