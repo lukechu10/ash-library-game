@@ -17,9 +17,15 @@ export interface RawBook {
     IMAGE: string;
 }
 
-export async function getBooks(): Promise<BookData[]> {
+export async function getBooks({
+    amount,
+    bookType,
+}: {
+    amount: number;
+    bookType: "alpha" | "dewey";
+}): Promise<BookData[]> {
     const apiRes = await fetch(
-        `/api/getBooks?amount=5&bookType=alpha`
+        `/api/getBooks?amount=${amount}&bookType=${bookType}`
     );
     const books: BookData[] = await apiRes.json();
 

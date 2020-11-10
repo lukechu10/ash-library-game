@@ -45,7 +45,7 @@ function getImageUrl(book: RawBook): BookData {
     } else if (imageData.match(/[0-9]{1,8}\.[a-z]*/)) {
         // e.g. 80116005.jpg
         imageUrl = `${BASE_URL}F_${imageData.slice(0, 2)}/${imageData}`;
-    } else if (imageData.match(/[0-9]+_[0-9]{4}-[0-9]{2}.*/)) {
+    } else if (imageData.match(/[0-9]*_[0-9]{4}-[0-9]{2}.*/)) {
         // e.g. 2_2012-06-18_10-46-37_.gif
         const firstUnderscorePos = imageData.indexOf("_");
         const year = imageData.slice(
@@ -152,6 +152,7 @@ export async function get(req: Request, res: Response, next: NextFunction) {
         if (err.message === "there are not enough books to satisfy amount") {
             res.status(400).send("amount query exceeds the number of books");
         } else if (process.env.NODE_ENV === "development") {
+            console.error(err);
             res.status(400).json({ type: "Unexpected error", error: err });
         } else {
             console.error(err);

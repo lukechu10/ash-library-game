@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { sortGameState } from "../store/sortGameState";
+    import { sortGameState, isCorrectlySorted } from "../store/sortGameState";
     import type { BookData } from "../services/bookApi";
     import { getCoteFromBook } from "../services/bookApi";
     import { tweened } from "svelte/motion";
@@ -70,12 +70,15 @@
         let { x, y } = event;
         moveTo({ x, y });
 
-        sortGameState.considerBookAtPos({ x, y }, data.DOCUMENT_ID);
+        sortGameState.considerBookAtPos($pos, data.DOCUMENT_ID);
     };
 
     const handleDown = (
         event: PointerEvent & { currentTarget: HTMLElement }
     ) => {
+        // do not allow dragging when books are already sorted.
+        if ($isCorrectlySorted) return;
+
         let currentPos = event.currentTarget.getBoundingClientRect();
         diffPos = { x: event.x - currentPos.x, y: event.y - currentPos.y };
 
@@ -85,8 +88,11 @@
         isDragging = true;
 
         // remove book before drag start
-        if (data.shelfPosition !== undefined)
+        if (data.shelfPosition !== undefined) {
             sortGameState.removeBookFromShelf(data.DOCUMENT_ID);
+            // prevent other books from filling space before dragging
+            sortGameState.considerBookAtPos($pos, data.DOCUMENT_ID);
+        }
         window.addEventListener("pointermove", handleMove);
     };
 
@@ -122,10 +128,16 @@
 
         transition-duration: 200ms;
         transition-property: box-shadow;
+
+        will-change: transform;
     }
 
     .dragging.book {
         box-shadow: black 0px 0px 7px;
+    }
+
+    .correct.book {
+        background-color: rgb(101, 184, 98);
     }
 
     .book:hover {
@@ -148,6 +160,7 @@
     bind:this={bookEl}
     class="book"
     class:dragging={isDragging}
+    class:correct={$isCorrectlySorted}
     on:pointerdown={handleDown}
     on:dragstart={(event) => event.preventDefault()}
     style="transform: {transform}; z-index: {zIndex}"

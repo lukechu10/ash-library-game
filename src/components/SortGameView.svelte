@@ -1,12 +1,79 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+    import { Button, Card, Overlay, Radio } from "svelte-materialify";
+    import Error from "../routes/_error.svelte";
     import { getBooks } from "../services/bookApi";
+    import { isCorrectlySorted, sortGameState } from "../store/sortGameState";
     import Book from "./Book.svelte";
-    import { sortGameState } from "../store/sortGameState";
 
-    onMount(async () => {
-        sortGameState.loadBooksFromAPI(await getBooks());
-    });
+    const numberOfRounds = 3;
+    let roundNumber = 0;
+
+    let startDimmerActive = true;
+    let continueDimmerActive = false;
+    let numOfBooks = 4;
+    let bookType: "alpha" | "dewey" = "alpha";
+
+    /**
+     * Instant when timer is started. Should be set to `Date.now()` in `startTimer()`.
+     */
+    let timerStart: number;
+    /**
+     * Used for `clearTimer` in `endTimer()`
+     */
+    let intervalId: number | undefined = undefined;
+    /**
+     * Starts the timer.
+     */
+    const startTimer = () => {
+        if (intervalId !== undefined) throw new Error("timer already started");
+        timerStart = Date.now();
+        intervalId = setInterval(() => {
+            // update timer
+            const duration = Date.now() - timerStart;
+            time = Math.round(duration / 100) / 10;
+        }, 100);
+    };
+    /**
+     * Ends the timer.
+     */
+    const endTimer = () => {
+        if (intervalId === undefined) throw new Error("timer not started yet");
+        clearInterval(intervalId);
+        intervalId = undefined; // erase intervalId
+    };
+
+    /**
+     * Handler for start game button.
+     */
+    const startGame = async () => {
+        let books = await getBooks({ amount: numOfBooks, bookType });
+        sortGameState.loadBooksFromAPI(books);
+        startTimer();
+        startDimmerActive = false;
+    };
+
+    /**
+     * Handler for continue game button.
+     */
+    const continueGame = async () => {
+        let books = await getBooks({ amount: numOfBooks, bookType });
+        sortGameState.loadBooksFromAPI(books);
+        startTimer();
+        continueDimmerActive = false;
+    };
+
+    $: if ($isCorrectlySorted) {
+        (window as any).confetti.start(1000);
+        endTimer();
+
+        // https://www.desmos.com/calculator/yecrb3rkbb
+        score += Math.round(2000 / time + 10);
+
+        setTimeout(() => (continueDimmerActive = true), 1000);
+    }
+
+    let time = 0;
+    let score = 0;
 </script>
 
 <style>
@@ -28,8 +95,8 @@
     }
 </style>
 
-<span>Time: ...</span>
-<span>Score: ...</span>
+<span>Time: {time}s</span>
+<span class="float-right">Score: {score}</span>
 
 <div class="bg-img" />
 
@@ -39,6 +106,36 @@
         <Book data={book} initialPos={{ x: 10 + (160 * i), y: 450 }} />
     {/each}
 </div>
+
+<Overlay active={startDimmerActive}>
+    <Card outlined style="min-width:500px;min-height:200px">
+        <h5 class="text-h5 ml-3">Choisir les paramètres du jeu</h5>
+        <div
+            class="d-flex justify-space-around difficulty-radios ml-10 mr-10 mb-5"
+        >
+            <Radio bind:group={numOfBooks} value={3}>3 livres</Radio>
+            <Radio bind:group={numOfBooks} value={4}>4 livres</Radio>
+            <Radio bind:group={numOfBooks} value={6}>6 livres</Radio>
+        </div>
+        <div
+            class="d-flex justify-space-around difficulty-radios ml-10 mr-10 mb-5"
+        >
+            <Radio bind:group={bookType} value={'alpha'}>
+                Ordre alphabetique
+            </Radio>
+            <Radio bind:group={bookType} value={'dewey'}>Ordre numerique</Radio>
+        </div>
+        <div class="d-flex justify-center">
+            <Button class="red white-text mb-3" on:click={startGame}>
+                Commencer
+            </Button>
+        </div>
+    </Card>
+</Overlay>
+
+<Overlay style="z-index: 100000" active={continueDimmerActive}>
+    <Button class="red white-text" on:click={continueGame}>Continuer</Button>
+</Overlay>
 
 <!-- prevent scrolling on touchscreen because it interferes with drag and drop -->
 <svelte:window on:touchmove|nonpassive={(event) => event.preventDefault()} />

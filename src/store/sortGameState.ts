@@ -1,6 +1,6 @@
-import { get, writable } from "svelte/store";
-import type { BookData } from "../services/bookApi";
 import { reduxify } from "svelte-reduxify";
+import { derived, get, writable } from "svelte/store";
+import { BookData, getCoteFromBook } from "../services/bookApi";
 
 export interface SortGameState {
     /**
@@ -35,7 +35,7 @@ function createSortGameState() {
      */
     const insertBookToShelfAt = (index: number, id: string) => {
         update((state) => {
-            let bookList = Object.assign([] as BookData[], state.bookList);
+            let bookList = state.bookList.slice(0);
 
             if (process.env.NODE_ENV === "development") {
                 // make sure book is not already on shelf
@@ -82,7 +82,7 @@ function createSortGameState() {
      */
     const removeBookFromShelf = (id: string) => {
         update((state) => {
-            let bookList = Object.assign([] as BookData[], state.bookList);
+            let bookList = state.bookList.slice(0);
             let bookIndex = bookList.findIndex(
                 (book) =>
                     book.DOCUMENT_ID === id && book.shelfPosition !== undefined
@@ -139,7 +139,7 @@ function createSortGameState() {
             let index: number;
             let state = get({ subscribe }) as SortGameState;
 
-            if (y < 400) {
+            if (y < 300) {
                 index = Math.max(Math.round((x - 10) / 160), 0);
             } else {
                 index = state.bookList.length; // see jsdoc on considerPosition
@@ -154,7 +154,7 @@ function createSortGameState() {
          * If book is within drop zone, update book shelf position.
          */
         dropBookAtPos: ({ x, y }: { x: number; y: number }, id: string) => {
-            if (y < 400) {
+            if (y < 300) {
                 const index = Math.max(Math.round((x - 10) / 160), 0);
                 insertBookToShelfAt(index, id);
             }
@@ -171,3 +171,39 @@ export const sortGameState: ReturnType<typeof createSortGameState> = (() => {
         return reduxify(createSortGameState());
     } else return createSortGameState();
 })();
+
+/**
+ * is `true` if all books are on shelf and in correct order. Is `false` otherwise.
+ */
+export const isCorrectlySorted = derived(sortGameState, ($sortGameState) => {
+    /**
+     * Custom string comparison.
+     * @param a the first string.
+     * @param b the second string.
+     * @returns `true` if `b.length > a.length` or if equal, `a >= b` (according to default js implementation).
+     */
+    const strGreaterThan = (a: string, b: string) => {
+        if (b.length > a.length) return true;
+        else return a >= b;
+    };
+
+    const bookList = $sortGameState.bookList;
+    if (bookList.length === 0) return false; // do not set to true before books are loaded
+
+    // check if all books are on shelf
+    const allOnShelf = bookList.every(
+        (book) => book.shelfPosition !== undefined
+    );
+    if (!allOnShelf) return false;
+
+    const bookListTmp = bookList.slice(0); // clone bookList for sorting
+    bookListTmp.sort((a, b) => a.shelfPosition - b.shelfPosition);
+
+    // make sure each book after the first is greater
+    let prevCote = ""; // smallest string value (according to strGreaterThan)
+    for (const cote of bookListTmp.map(getCoteFromBook)) {
+        if (strGreaterThan(cote, prevCote)) prevCote = cote;
+        else return false;
+    }
+    return true;
+});

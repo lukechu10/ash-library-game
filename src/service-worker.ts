@@ -51,6 +51,9 @@ self.addEventListener(
         // don't try to handle e.g. data: URIs
         if (!url.protocol.startsWith("http")) return;
 
+        // don't try to handle book cover images
+        if (url.hostname === "www.hiboutheque.fr") return;
+
         // ignore dev server requests
         if (
             url.hostname === self.location.hostname &&

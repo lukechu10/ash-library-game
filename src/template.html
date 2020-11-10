@@ -17,7 +17,7 @@
 
         <!-- Sapper creates a <script> tag containing `src/client.js`
 	     and anything else it needs to hydrate the app and
-	     initialise the router -->
+	     initialize the router -->
         %sapper.scripts%
 
         <!-- Sapper generates a <style> tag containing critical CSS
@@ -33,5 +33,6 @@
         <!-- The application will be rendered inside this element,
 	     because `src/client.js` references it -->
         <div id="sapper">%sapper.html%</div>
+        <script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
     </body>
 </html>
