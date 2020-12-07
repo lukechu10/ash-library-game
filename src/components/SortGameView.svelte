@@ -1,7 +1,9 @@
 <script lang="ts">
+    import { goto } from "@sapper/app";
     import { Button, Card, Overlay, Radio } from "svelte-materialify";
     import Error from "../routes/_error.svelte";
     import { getBooks } from "../services/bookApi";
+    import { db } from "../services/firebase";
     import { isCorrectlySorted, sortGameState } from "../store/sortGameState";
     import Book from "./Book.svelte";
 
@@ -10,6 +12,7 @@
 
     let startDimmerActive = true;
     let continueDimmerActive = false;
+    let finishDimmerActive = false;
     let numOfBooks = 4;
     let bookType: "alpha" | "dewey" = "alpha";
 
@@ -62,14 +65,33 @@
         continueDimmerActive = false;
     };
 
+    /**
+     * Handler for finish game button.
+     */
+    const finishGame = async () => {
+        // save score to firestore
+        await db.collection("scores").add({
+            score,
+        });
+
+        goto("/"); // go to home page
+    };
+
     $: if ($isCorrectlySorted) {
         (window as any).confetti.start(1000);
         endTimer();
 
         // https://www.desmos.com/calculator/yecrb3rkbb
         score += Math.round(2000 / time + 10);
-
-        setTimeout(() => (continueDimmerActive = true), 1000);
+        roundNumber++;
+        if (roundNumber >= numberOfRounds) {
+            // finish
+            console.log("finish");
+            finishDimmerActive = true;
+        } else {
+            // show continue button
+            setTimeout(() => (continueDimmerActive = true), 1000);
+        }
     }
 
     let time = 0;
@@ -133,8 +155,15 @@
     </Card>
 </Overlay>
 
+<!-- Continue button -->
 <Overlay style="z-index: 100000" active={continueDimmerActive}>
     <Button class="red white-text" on:click={continueGame}>Continuer</Button>
+</Overlay>
+
+<!-- Finish button -->
+<Overlay style="z-index: 100000" active={finishDimmerActive}>
+    <h3 class="white-text">Ton score: {score}</h3>
+    <Button class="red white-text" on:click={finishGame}>Continuer</Button>
 </Overlay>
 
 <!-- prevent scrolling on touchscreen because it interferes with drag and drop -->
