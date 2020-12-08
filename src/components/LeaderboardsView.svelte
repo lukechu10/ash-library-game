@@ -1,13 +1,18 @@
 <script>
     import { db } from "../services/firebase";
 
-    let scores = db.collection("scores").orderBy("score", "desc").limit(10).get().then(querySnapshot => {
-        const data = [];
-        querySnapshot.forEach(doc => {
-            data.push(doc);
+    let scores = db
+        .collection("scores")
+        .orderBy("score", "desc")
+        .limit(10)
+        .get()
+        .then((querySnapshot) => {
+            const data = [];
+            querySnapshot.forEach((doc) => {
+                data.push(doc);
+            });
+            return data;
         });
-        return data;
-    });
 </script>
 
 <style>
@@ -33,7 +38,7 @@
         <p>Loading...</p>
     {:then scores}
         {#each scores as score}
-            <p>{score.data().score}</p>
+            <p>{score.data().name} - {score.data().score}</p>
         {/each}
     {/await}
 </div>

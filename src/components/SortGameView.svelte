@@ -72,6 +72,7 @@
         // save score to firestore
         await db.collection("scores").add({
             score,
+            name: "AAA",
         });
 
         goto("/"); // go to home page
