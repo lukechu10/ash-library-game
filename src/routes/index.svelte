@@ -23,3 +23,4 @@
 <h1>Library Game</h1>
 
 <a href="./game">Game</a>
+<a href="./leaderboards">Leaderboards</a>
