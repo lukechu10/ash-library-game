@@ -22,7 +22,7 @@ jobs:
         node-version: 12.x
         
     - run: yarn
-    - run: yarn global add wait-on
+    - run: npm install -g wait-on
       
     - run: yarn dev & wait-on http://localhost:3000 && yarn cypress run
     
