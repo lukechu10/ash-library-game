@@ -1,7 +1,7 @@
 const webpack = require("webpack");
 const WebpackModules = require("webpack-modules");
 const path = require("path");
-const config = require("sapper/config/webpack.js");
+const sapperConfig = require("sapper/config/webpack.js");
 const pkg = require("./package.json");
 const sveltePreprocess = require("svelte-preprocess");
 
@@ -20,10 +20,37 @@ const tsLoaderRule = {
     use: ["ts-loader"],
 };
 
+const config = {
+    client: {
+        entry: {
+            main: path.resolve(`src/client`),
+        },
+        output: {
+            path: sapperConfig.client.output().path,
+            filename: "[hash]/[name].js",
+            chunkFilename: "[hash]/[name].[id].js",
+            publicPath: "client/",
+        },
+    },
+    server: {
+        entry: {
+            server: path.resolve(`src/server`),
+        },
+        output: {
+            path: sapperConfig.server.output().path,
+            filename: "[name].js",
+            chunkFilename: "[hash]/[name].[id].js",
+            publicPath: "client/",
+            libraryTarget: "commonjs2",
+        },
+    },
+};
+
 module.exports = {
     client: {
-        entry: config.client.entry(),
-        output: config.client.output(),
+        name: "client",
+        entry: config.client.entry,
+        output: config.client.output,
         resolve: { alias, extensions, mainFields },
         module: {
             rules: [
@@ -56,8 +83,9 @@ module.exports = {
     },
 
     server: {
-        entry: config.server.entry(),
-        output: config.server.output(),
+        name: "server",
+        entry: config.server.entry,
+        output: config.server.output,
         target: "node",
         resolve: { alias, extensions, mainFields },
         externals: Object.keys(pkg.dependencies).concat("encoding"),
