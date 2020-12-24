@@ -6,6 +6,8 @@
     let email, password;
     let handleLogin;
     let loginBtnDisabled = false;
+
+    let errorMessage = "";
     onMount(async () => {
         const { auth } = await import("../../services/firebase");
 
@@ -21,6 +23,7 @@
                 goto("/");
             } catch (err) {
                 console.error(err);
+                errorMessage = err.message;
             } finally {
                 loginBtnDisabled = false;
             }
@@ -44,4 +47,8 @@
     >
         Connexion
     </Button>
+
+    {#if errorMessage}
+        <div class="red white-text rounded ma-3 pa-2">{errorMessage}</div>
+    {/if}
 </div>

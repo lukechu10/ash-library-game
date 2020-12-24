@@ -3,7 +3,8 @@
     import { Button } from "svelte-materialify";
     import { goto } from "@sapper/app";
 
-    let email = "", name = "";
+    let email = "",
+        name = "";
     let signedIn = false;
 
     let handleSignout;
@@ -28,7 +29,7 @@
     });
 </script>
 
-Library Game
+<b>Library Game</b>
 <i>{email} - {name}</i>
 
 {#if signedIn}
