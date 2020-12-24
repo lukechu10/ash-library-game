@@ -3,7 +3,7 @@
     import { Button } from "svelte-materialify";
     import { goto } from "@sapper/app";
 
-    let email = "";
+    let email = "", name = "";
     let signedIn = false;
 
     let handleSignout;
@@ -17,9 +17,11 @@
         auth.onAuthStateChanged((user) => {
             if (user) {
                 email = user.email;
+                name = user.displayName;
                 signedIn = true;
             } else {
                 email = "";
+                name = "";
                 signedIn = false;
             }
         });
@@ -27,7 +29,7 @@
 </script>
 
 Library Game
-<i>{email}</i>
+<i>{email} - {name}</i>
 
 {#if signedIn}
     <Button class="red white-text" on:click={handleSignout}>Déconnecter</Button>
