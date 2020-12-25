@@ -1,10 +1,8 @@
-<script context="module">
-</script>
-
 <script lang="ts">
     import { onMount } from "svelte";
     import type GoogleAnalytics from "../components/GoogleAnalytics.svelte";
     import { MaterialApp } from "svelte-materialify";
+    import Nav from "../components/Nav.svelte";
 
     export let segment: string;
     segment; // noop
@@ -32,6 +30,7 @@
 </style>
 
 <MaterialApp>
+    <Nav />
     <main>
         <slot />
     </main>
