@@ -5,7 +5,7 @@
 
     let email = "",
         name = "";
-    let signedIn = false;
+    let signedIn: boolean | undefined; // signedIn should be undefined until auth has loaded
 
     let handleSignout;
     onMount(async () => {
@@ -29,13 +29,36 @@
     });
 </script>
 
-<b>Library Game</b>
-<i>{email} - {name}</i>
+<style>
+    nav {
+        height: 42px;
+    }
 
-{#if signedIn}
-    <Button class="red white-text" on:click={handleSignout}>Déconnecter</Button>
-{:else}
-    <Button class="red white-text" on:click={() => goto('/login/admin')}>
-        Connexion
-    </Button>
-{/if}
+    nav > b,
+    i {
+        line-height: 40px;
+    }
+</style>
+
+<nav>
+    <a href="/"><b>Library Game</b></a>
+
+    {#if signedIn !== undefined}
+        <i>{email} - {name}</i>
+
+        {#if signedIn === true}
+            <a href="/account">Mon compte</a>
+            <Button depressed class="red white-text" on:click={handleSignout}>
+                Déconnecter
+            </Button>
+        {:else}
+            <Button
+                depressed
+                class="red white-text"
+                on:click={() => goto('/login/admin')}
+            >
+                Connexion
+            </Button>
+        {/if}
+    {/if}
+</nav>
