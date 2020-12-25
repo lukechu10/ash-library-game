@@ -32,10 +32,6 @@
 <style>
     nav {
         height: 42px;
-    }
-
-    nav > b,
-    i {
         line-height: 40px;
     }
 </style>
