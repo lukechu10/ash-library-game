@@ -5,7 +5,8 @@
 
     let user: firebase.default.User | undefined;
     let oldPassword, newPassword, newPasswordVerify;
-    let handlePasswordChange;
+    let deletePassword;
+    let handlePasswordChange, handleDeleteAccount;
     let errorMessage, successMessage;
     let updatePasswordBtnDisabled = false;
 
@@ -44,6 +45,24 @@
                 successMessage = "";
             } finally {
                 updatePasswordBtnDisabled = false;
+            }
+        };
+
+        handleDeleteAccount = async () => {
+            try {
+                const credential = firebase.auth.EmailAuthProvider.credential(
+                    auth.currentUser.email,
+                    deletePassword
+                );
+                await auth.currentUser.reauthenticateWithCredential(credential);
+                await auth.currentUser.delete();
+
+                goto("/"); // successful account deletion
+            } catch (err) {
+                console.error(err);
+
+                errorMessage = err.message;
+                successMessage = "";
             }
         };
 
@@ -88,4 +107,13 @@
     {#if successMessage}
         <div class="green white-text rounded ma-3 pa-2">{successMessage}</div>
     {/if}
+
+    <br />
+    Supprimer ton compte. Attention! Cette action est irréversible.
+    <TextField type="password" bind:value={deletePassword}>
+        Mot de passe
+    </TextField>
+    <Button depressed class="red white-text" on:click={handleDeleteAccount}>
+        Supprimer mon compte
+    </Button>
 {/if}

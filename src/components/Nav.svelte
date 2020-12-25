@@ -40,9 +40,8 @@
     <a href="/"><b>Library Game</b></a>
 
     {#if signedIn !== undefined}
-        <i>{email} - {name}</i>
-
         {#if signedIn === true}
+            <i>{email} - {name}</i>
             <a href="/account">Mon compte</a>
             <Button depressed class="red white-text" on:click={handleSignout}>
                 Déconnecter
