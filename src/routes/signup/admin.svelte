@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { goto } from "@sapper/app";
     import { onMount } from "svelte";
     import { Button, TextField } from "svelte-materialify";
