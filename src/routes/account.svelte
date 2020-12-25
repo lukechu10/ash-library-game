@@ -6,7 +6,9 @@
     let user: firebase.default.User | undefined;
     let oldPassword, newPassword, newPasswordVerify;
     let deletePassword;
-    let handlePasswordChange, handleDeleteAccount;
+    let handlePasswordChange,
+        handleDeleteAccount,
+        handleResendVerificationEmail;
     let errorMessage, successMessage;
     let updatePasswordBtnDisabled = false;
 
@@ -66,6 +68,10 @@
             }
         };
 
+        handleResendVerificationEmail = async () => {
+            await auth.currentUser.sendEmailVerification();
+        };
+
         auth.onAuthStateChanged((_user) => {
             if (_user) {
                 user = _user;
@@ -80,8 +86,11 @@
     <br />
 
     <strong>Email: </strong><i>{user.email}</i>
-    (Verifié:
+    (verifié:
     {user.emailVerified})
+    {#if !user.emailVerified}
+        <span style="color: blue; cursor: pointer;">Renvoyer l'email de vérification</span>
+    {/if}
     <br />
     Changer le mot de passe:
     <TextField type="password" bind:value={oldPassword}>
