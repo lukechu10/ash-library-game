@@ -125,4 +125,6 @@
     <Button depressed class="red white-text" on:click={handleDeleteAccount}>
         Supprimer mon compte
     </Button>
+
+    <div class="bg-red-500">Test</div>
 {/if}
