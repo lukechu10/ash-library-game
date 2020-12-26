@@ -89,7 +89,8 @@
     (verifié:
     {user.emailVerified})
     {#if !user.emailVerified}
-        <span style="color: blue; cursor: pointer;">Renvoyer l'email de vérification</span>
+        <span style="color: blue; cursor: pointer;">Renvoyer l'email de
+            vérification</span>
     {/if}
     <br />
     Changer le mot de passe:

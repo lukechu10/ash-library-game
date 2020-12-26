@@ -126,7 +126,7 @@
 <!-- All the books are in .books-container in DOM -->
 <div class="books-container">
     {#each $sortGameState.bookList as book, i (book.DOCUMENT_ID)}
-        <Book data={book} initialPos={{ x: 10 + (160 * i), y: 450 }} />
+        <Book data={book} initialPos={{ x: 10 + 160 * i, y: 450 }} />
     {/each}
 </div>
 

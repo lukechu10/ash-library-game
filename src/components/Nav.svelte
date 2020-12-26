@@ -29,31 +29,26 @@
     });
 </script>
 
-<style>
-    nav {
-        height: 42px;
-        line-height: 40px;
-    }
-</style>
+<nav class="bg-white px-8 pt-2 shadow-md fixed w-full z-50 top-0">
+    <div>
+        <a href="/" class="border-gray-400 hover:border-red-500 border-b-2"><b
+            >Library Game</b></a>
 
-<nav>
-    <a href="/"><b>Library Game</b></a>
-
-    {#if signedIn !== undefined}
-        {#if signedIn === true}
-            <i>{email} - {name}</i>
-            <a href="/account">Mon compte</a>
-            <Button depressed class="red white-text" on:click={handleSignout}>
-                Déconnecter
-            </Button>
-        {:else}
-            <Button
-                depressed
-                class="red white-text"
-                on:click={() => goto('/login/admin')}
-            >
-                Connexion
-            </Button>
+        {#if signedIn !== undefined}
+            {#if signedIn === true}
+                <i>{email} - {name}</i>
+                <a href="/account">Mon compte</a>
+                <button class="red white-text" on:click={handleSignout}>
+                    Déconnecter
+                </button>
+            {:else}
+                <button
+                    class="red white-text"
+                    on:click={() => goto('/login/admin')}
+                >
+                    Connexion
+                </button>
+            {/if}
         {/if}
-    {/if}
+    </div>
 </nav>

@@ -20,21 +20,14 @@
 
 <style>
     main {
-        position: relative;
-        /* max-width: 56em; */
-        background-color: white;
-        padding: 0;
-        margin: 0;
         box-sizing: border-box;
     }
 </style>
 
-<MaterialApp>
-    <Nav />
-    <main>
-        <slot />
-    </main>
-</MaterialApp>
+<Nav />
+<main class="mt-10 bg-white p-0 relative">
+    <slot />
+</main>
 
 <!-- only load GoogleAnalytics in client -->
 <svelte:component this={GoogleAnalytics} />
