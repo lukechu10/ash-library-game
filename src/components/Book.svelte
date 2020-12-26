@@ -149,6 +149,9 @@
         top: 5px;
 
         border-radius: 4px;
+        width: 140px;
+        height: 145px;
+        margin: 0 auto;
     }
 
     span {
@@ -165,13 +168,7 @@
     on:dragstart={(event) => event.preventDefault()}
     style="transform: {transform}; z-index: {zIndex}"
 >
-    <img
-        class="book-cover"
-        src={data.imageUrl}
-        alt="book cover"
-        width="140px"
-        height="145px"
-    />
+    <img class="book-cover" src={data.imageUrl} alt="book cover" />
 
     <span>{cote}</span>
 </div>
