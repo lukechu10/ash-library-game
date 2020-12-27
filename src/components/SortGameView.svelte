@@ -40,7 +40,7 @@
      * Ends the timer.
      */
     const endTimer = () => {
-        if (intervalId === undefined) throw new Error("timer not started yet");
+        if (intervalId === undefined) throw new Error("timer not started yet"); // FIXME
         clearInterval(intervalId);
         intervalId = undefined; // erase intervalId
     };

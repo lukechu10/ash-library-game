@@ -5853,26 +5853,17 @@ postcss@^8.1.6, postcss@^8.2.1:
     nanoid "^3.1.20"
     source-map "^0.6.1"
 
-prettier-plugin-svelte@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-svelte/-/prettier-plugin-svelte-1.4.2.tgz#9a7968bbc78756670c816f22c0e83f98785031a0"
-  integrity sha512-O9VsNwII+raTG8QPoQWouk5ABQy/hmLm4dZ2eqJ7DPnbO35A+BxMSjlfqkw0cNP+UcbykHFYU8zNXm93ytWP9g==
-
-prettier-plugin-tailwind@^2.2.8:
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwind/-/prettier-plugin-tailwind-2.2.8.tgz#6e25544a9ca94f671a1befc0133992a6f7f8f7ad"
-  integrity sha512-0ViHn1LnRrPj09FXa1bbZF49ybctmDfnZjPI3Iy9jIL3+ZpD/TnbSgAy18xmy8SYw1EsAq5kyOXmOghc8+WipQ==
+prettier-plugin-tailwind@2.2.7:
+  version "2.2.7"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwind/-/prettier-plugin-tailwind-2.2.7.tgz#333c44d992b7b2dd16f7afb3ee04a6c17396b9c6"
+  integrity sha512-cu8gPv1o0ejYeHFdqnmDYp/SkqnUu/y1c/FL56bxjMRVqMRzdx1If81ot9m3ZNdt1HBhCwoXCdvK5FtUbDN3jQ==
   dependencies:
     prettier "^2.1.2"
+    svelte-prettier-plugin "npm:prettier-plugin-svelte"
     tailwind-classes-sorter "^0.2.5"
     tailwindcss "^1.8.13"
 
-prettier@2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.1.2.tgz#3050700dae2e4c8b67c4c3f666cdb8af405e1ce5"
-  integrity sha512-16c7K+x4qVlJg9rEbXl7HEGmQyZlG4R9AgP+oHKRMsMsuk8s+ATStlf1NpDqyBI1HpVyfjLOeMhH2LvuNvV5Vg==
-
-prettier@^2.1.2:
+prettier@^2.1.2, prettier@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
   integrity sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
@@ -6861,6 +6852,11 @@ svelte-preprocess@^4.0.0, svelte-preprocess@^4.3.0:
     "@types/sass" "^1.16.0"
     detect-indent "^6.0.0"
     strip-indent "^3.0.0"
+
+"svelte-prettier-plugin@npm:prettier-plugin-svelte":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-svelte/-/prettier-plugin-svelte-1.4.2.tgz#9a7968bbc78756670c816f22c0e83f98785031a0"
+  integrity sha512-O9VsNwII+raTG8QPoQWouk5ABQy/hmLm4dZ2eqJ7DPnbO35A+BxMSjlfqkw0cNP+UcbykHFYU8zNXm93ytWP9g==
 
 svelte-reduxify@^1.1.0:
   version "1.1.0"

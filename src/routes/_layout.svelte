@@ -31,3 +31,7 @@
 
 <!-- only load GoogleAnalytics in client -->
 <svelte:component this={GoogleAnalytics} />
+
+<svelte:head>
+    <title>Ashbury Library Game</title>
+</svelte:head>
