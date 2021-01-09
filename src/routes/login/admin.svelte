@@ -31,7 +31,7 @@
     });
 </script>
 
-<h3>Connexion Enseignant/Bibliothécaire</h3>
+<h1 class="text-xl font-bold">Connexion Enseignant/Bibliothécaire</h1>
 
 <div class="ml-5 mr-5">
     <TextField dense outlined type="email" bind:value={email}>Email</TextField>

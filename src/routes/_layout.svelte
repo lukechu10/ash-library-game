@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import type GoogleAnalytics from "../components/GoogleAnalytics.svelte";
-    import { MaterialApp } from "svelte-materialify";
     import Nav from "../components/Nav.svelte";
 
     export let segment: string;
@@ -25,7 +24,7 @@
 </style>
 
 <Nav />
-<main class="mt-12 bg-white p-0 relative">
+<main class="mt-12 bg-white p-0 relative container mx-auto">
     <slot />
 </main>
 
