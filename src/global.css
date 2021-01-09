@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    label {
+        @apply font-semibold;
+    }
+}
+
 @layer components {
     .btn {
         @apply py-2 px-3 bg-blue-500 text-white font-semibold rounded shadow-md transition-colors;
@@ -13,5 +19,16 @@
     
     .btn:focus {
         @apply outline-none;
+    }
+}
+
+@layer components {
+    .input {
+        @apply border-2 border-gray-400 appearance-none rounded w-full px-2 py-2 outline-none transition-all;
+        min-width: 280px;
+    }
+
+    .input:focus {
+        @apply border-gray-600;
     }
 }

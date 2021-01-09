@@ -43,7 +43,8 @@
 </script>
 
 <h3>Inscription Enseignant/Bibliothécaire</h3>
-<div class="ml-5 mr-5">
+
+<div>
     <TextField dense outlined bind:value={name}>Nom/Prénom</TextField>
     <TextField dense outlined type="email" bind:value={email}>Email</TextField>
     <TextField dense outlined type="password" bind:value={password}>
