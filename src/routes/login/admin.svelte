@@ -30,26 +30,45 @@
     });
 </script>
 
-<h1 class="text-xl font-bold">Connexion Enseignant/Bibliothécaire</h1>
+<h1 class="inline-block text-xl font-bold">
+    Connexion Enseignant/Bibliothécaire
+</h1>
+<span class="text-gray-500">Où
+    <a href="/signup/admin" class="text-blue-500">inscription</a>
+</span>
 
 <div>
     <div>
         <label for="email">Email</label>
-        <input class="input" id="email" placeholder="Email" type="email" bind:value={email} />
+        <input
+            class="input"
+            id="email"
+            placeholder="Email"
+            type="email"
+            bind:value={email}
+        />
     </div>
     <div>
         <label for="password">Mot de passe</label>
-        <input class="input" id="password" placeholder="Mot de passe" type="password" bind:value={password} />
+        <input
+            class="input"
+            id="password"
+            placeholder="Mot de passe"
+            type="password"
+            bind:value={password}
+        />
     </div>
     <button
         disabled={loginBtnDisabled}
-        class="btn w-full mt-2"
+        class="btn mt-2 w-full"
         on:click={handleLogin}
     >
         Connexion
     </button>
 
     {#if errorMessage}
-        <div class="rounded text-white bg-red-500 px-3 py-2 mt-2">{errorMessage}</div>
+        <div class="mt-2 px-3 py-2 text-white bg-red-500 rounded">
+            {errorMessage}
+        </div>
     {/if}
 </div>
