@@ -25,7 +25,7 @@
 </style>
 
 <Nav />
-<main class="mt-10 bg-white p-0 relative">
+<main class="mt-12 bg-white p-0 relative">
     <slot />
 </main>
 

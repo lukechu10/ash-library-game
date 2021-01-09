@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
     import { onMount } from "svelte";
-    import { Button, TextField } from "svelte-materialify";
+    import { TextField } from "svelte-materialify";
 
     let name, email, password, passwordVerify;
     let handleSignup;
@@ -52,15 +52,13 @@
     <TextField dense outlined type="password" bind:value={passwordVerify}>
         Confirmer le mot de passe
     </TextField>
-    <Button
-        block
-        depressed
+    <button
         disabled={signupBtnDisabled}
-        class="mt-5"
+        class="btn w-full"
         on:click={handleSignup}
     >
         Inscription
-    </Button>
+    </button>
 
     {#if errorMessage}
         <div class="red white-text rounded ma-3 pa-2">{errorMessage}</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { Button, TextField } from "svelte-materialify";
+    import { TextField } from "svelte-materialify";
     import { goto } from "@sapper/app";
 
     let email, password;
@@ -38,15 +38,13 @@
     <TextField dense outlined type="password" bind:value={password}>
         Mot de passe
     </TextField>
-    <Button
-        block
-        depressed
+    <button
         disabled={loginBtnDisabled}
-        class="mt-5"
+        class="btn w-full"
         on:click={handleLogin}
     >
         Connexion
-    </Button>
+    </button>
 
     {#if errorMessage}
         <div class="red white-text rounded ma-3 pa-2">{errorMessage}</div>

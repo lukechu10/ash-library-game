@@ -1,7 +1,5 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { Button } from "svelte-materialify";
-    import { goto } from "@sapper/app";
     import { slide } from "svelte/transition";
     import { cubicOut } from "svelte/easing";
 
@@ -49,23 +47,6 @@
                 >Library Game</a>
             </div>
         </div>
-
-        <!-- {#if signedIn !== undefined}
-            {#if signedIn === true}
-                <i>{email} - {name}</i>
-                <a href="/account">Mon compte</a>
-                <button class="red white-text" on:click={handleSignout}>
-                    Déconnecter
-                </button>
-            {:else}
-                <button
-                    class="red white-text"
-                    on:click={() => goto('/login/admin')}
-                >
-                    Connexion
-                </button>
-            {/if}
-        {/if} -->
 
         <!-- Profile dropdown -->
         <div class="flex-1">

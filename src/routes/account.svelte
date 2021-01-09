@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
     import { onMount } from "svelte";
-    import { Button, TextField } from "svelte-materialify";
+    import { TextField } from "svelte-materialify";
 
     let user: firebase.default.User | undefined;
     let oldPassword, newPassword, newPasswordVerify;
@@ -103,19 +103,19 @@
     <TextField type="password" bind:value={newPasswordVerify}>
         Confirmer le nouveau mot de passe
     </TextField>
-    <Button
-        depressed
+    <button
+        class="btn"
         disabled={updatePasswordBtnDisabled}
         on:click={handlePasswordChange}
     >
         Changer
-    </Button>
+    </button>
 
     {#if errorMessage}
-        <div class="red white-text rounded ma-3 pa-2">{errorMessage}</div>
+        <div class="red white-text ma-3 pa-2 rounded">{errorMessage}</div>
     {/if}
     {#if successMessage}
-        <div class="green white-text rounded ma-3 pa-2">{successMessage}</div>
+        <div class="green white-text ma-3 pa-2 rounded">{successMessage}</div>
     {/if}
 
     <br />
@@ -123,9 +123,7 @@
     <TextField type="password" bind:value={deletePassword}>
         Mot de passe
     </TextField>
-    <Button depressed class="red white-text" on:click={handleDeleteAccount}>
+    <button class="btn bg-red-500 hover:bg-red-600" on:click={handleDeleteAccount}>
         Supprimer mon compte
-    </Button>
-
-    <div class="bg-red-500">Test</div>
+    </button>
 {/if}

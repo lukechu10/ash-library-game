@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
-    import { Button, Card, Overlay, Radio } from "svelte-materialify";
+    import { Card, Overlay, Radio } from "svelte-materialify";
     import Error from "../routes/_error.svelte";
     import { getBooks } from "../services/bookApi";
     import { db } from "../services/firebase";
@@ -149,22 +149,22 @@
             <Radio bind:group={bookType} value={'dewey'}>Ordre numerique</Radio>
         </div>
         <div class="d-flex justify-center">
-            <Button class="red white-text mb-3" on:click={startGame}>
+            <button class="btn bg-red-500 hover:bg-red-600" on:click={startGame}>
                 Commencer
-            </Button>
+            </button>
         </div>
     </Card>
 </Overlay>
 
 <!-- Continue button -->
 <Overlay style="z-index: 100000" active={continueDimmerActive}>
-    <Button class="red white-text" on:click={continueGame}>Continuer</Button>
+    <button class="btn bg-red-500 hover:bg-red-600" on:click={continueGame}>Continuer</button>
 </Overlay>
 
 <!-- Finish button -->
 <Overlay style="z-index: 100000" active={finishDimmerActive}>
     <h3 class="white-text">Ton score: {score}</h3>
-    <Button class="red white-text" on:click={finishGame}>Continuer</Button>
+    <button class="btn bg-red-500 hover:bg-red-600" on:click={finishGame}>Continuer</button>
 </Overlay>
 
 <!-- prevent scrolling on touchscreen because it interferes with drag and drop -->
