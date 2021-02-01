@@ -1,11 +1,10 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
-    import { Card, Overlay, Radio } from "svelte-materialify";
-    import Error from "../routes/_error.svelte";
     import { getBooks } from "../services/bookApi";
     import { db } from "../services/firebase";
     import { isCorrectlySorted, sortGameState } from "../store/sortGameState";
     import Book from "./Book.svelte";
+    import Overlay from "./Overlay.svelte";
 
     const numberOfRounds = 3;
     let roundNumber = 0;
@@ -28,7 +27,7 @@
      * Starts the timer.
      */
     const startTimer = () => {
-        if (intervalId !== undefined) throw new Error("timer already started");
+        if (intervalId !== undefined) throw "timer already started";
         timerStart = Date.now();
         intervalId = setInterval(() => {
             // update timer
@@ -40,7 +39,7 @@
      * Ends the timer.
      */
     const endTimer = () => {
-        if (intervalId === undefined) throw new Error("timer not started yet"); // FIXME
+        if (intervalId === undefined) throw "timer not started yet"; // FIXME
         clearInterval(intervalId);
         intervalId = undefined; // erase intervalId
     };
@@ -139,41 +138,95 @@
     </div>
 
     <Overlay active={startDimmerActive}>
-        <Card outlined style="min-width:500px;min-height:200px">
-            <h5 class="text-h5 ml-3">Choisir les paramètres du jeu</h5>
-            <div
-                class="d-flex justify-space-around difficulty-radios ml-10 mr-10 mb-5"
+        <h5 class="text-h5 ml-3">Choisir les paramètres du jeu</h5>
+        <div
+            class="d-flex justify-space-around difficulty-radios mb-5 ml-10 mr-10"
+        >
+            <fieldset>
+                <div>
+                    <legend>Nombre de livres</legend>
+                </div>
+                <div class="flex flex-col">
+                    <label class="flex items-center">
+                        <input
+                            type="radio"
+                            class="radio"
+                            bind:group={numOfBooks}
+                            value={3}
+                        />
+                        3 livres
+                    </label>
+                    <label class="flex items-center">
+                        <input
+                            type="radio"
+                            class="radio"
+                            bind:group={numOfBooks}
+                            value={4}
+                        />
+                        4 livres
+                    </label>
+                    <label class="flex items-center">
+                        <input
+                            type="radio"
+                            class="radio"
+                            bind:group={numOfBooks}
+                            value={6}
+                        />
+                        6 livres
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div>
+                    <legend>Type de livre</legend>
+                </div>
+                <div class="flex flex-col">
+                    <label>
+                        <input
+                            type="radio"
+                            class="radio"
+                            bind:group={bookType}
+                            value={'alpha'}
+                        />Ordre alphabétique</label>
+                    <label>
+                        <input
+                            type="radio"
+                            class="radio"
+                            bind:group={bookType}
+                            value={'dewey'}
+                        />Ordre numérique</label>
+                </div>
+            </fieldset>
+        </div>
+        <div class="d-flex justify-center">
+            <button
+                class="btn bg-red-500 hover:bg-red-600"
+                on:click={startGame}
             >
-                <Radio bind:group={numOfBooks} value={3}>3 livres</Radio>
-                <Radio bind:group={numOfBooks} value={4}>4 livres</Radio>
-                <Radio bind:group={numOfBooks} value={6}>6 livres</Radio>
-            </div>
-            <div
-                class="d-flex justify-space-around difficulty-radios ml-10 mr-10 mb-5"
-            >
-                <Radio bind:group={bookType} value={'alpha'}>
-                    Ordre alphabetique
-                </Radio>
-                <Radio bind:group={bookType} value={'dewey'}>Ordre numerique</Radio>
-            </div>
-            <div class="d-flex justify-center">
-                <button class="btn bg-red-500 hover:bg-red-600" on:click={startGame}>
-                    Commencer
-                </button>
-            </div>
-        </Card>
+                Commencer
+            </button>
+        </div>
     </Overlay>
-    
+
     <!-- Continue button -->
-    <Overlay style="z-index: 100000" active={continueDimmerActive}>
-        <button class="btn bg-red-500 hover:bg-red-600" on:click={continueGame}>Continuer</button>
+    <Overlay active={continueDimmerActive}>
+        <button
+            class="btn bg-red-500 hover:bg-red-600"
+            on:click={continueGame}
+        >Continuer</button>
     </Overlay>
-    
+
     <!-- Finish button -->
-    <Overlay style="z-index: 100000" active={finishDimmerActive}>
+    <Overlay active={finishDimmerActive}>
         <div class="flex flex-col items-center">
-            <p class="text-white text-lg font-semibold mb-3">Ton score: {score}</p>
-            <button class="btn bg-red-500 hover:bg-red-600" on:click={finishGame}>Continuer</button>
+            <p class="mb-3 text-white text-lg font-semibold">
+                Ton score:
+                {score}
+            </p>
+            <button
+                class="btn bg-red-500 hover:bg-red-600"
+                on:click={finishGame}
+            >Continuer</button>
         </div>
     </Overlay>
 </div>

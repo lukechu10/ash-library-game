@@ -32,3 +32,9 @@
         @apply border-gray-600;
     }
 }
+
+@layer components {
+    .radio {
+        @apply w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500;
+    }
+}

@@ -10,5 +10,10 @@
     },
     "tailwindCSS.includeLanguages": {
         "Svelte": "html"
-    }
+    },
+    "cSpell.enableFiletypes": [
+        "git-rebase",
+        "svelte"
+    ],
+    "cSpell.language": "en,en-US,fr,fr-FR"
 }

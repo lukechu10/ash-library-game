@@ -39,6 +39,7 @@
     "postcss": "^8.2.1",
     "postcss-import": "^14.0.0",
     "postcss-loader": "^4.1.0",
+    "postcss-nesting": "^7.0.1",
     "prettier": "^2.2.1",
     "prettier-plugin-tailwind": "2.2.7",
     "sapper": "^0.28.0",

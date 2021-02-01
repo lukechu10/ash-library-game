@@ -8,7 +8,7 @@
     let signedIn: boolean | undefined; // signedIn should be undefined until auth has loaded
     let dropdownOpen = false;
 
-    let handleSignout;
+    let handleSignout: () => Promise<void>;
     onMount(async () => {
         const { auth } = await import("../services/firebase");
 
