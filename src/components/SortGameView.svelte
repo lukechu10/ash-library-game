@@ -73,6 +73,7 @@
             score,
             name: "AAA",
         });
+        sortGameState.reset();
 
         goto("/"); // go to home page
     };
