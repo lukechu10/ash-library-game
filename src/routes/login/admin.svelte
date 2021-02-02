@@ -1,6 +1,5 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { Button, TextField } from "svelte-materialify";
     import { goto } from "@sapper/app";
 
     let email, password;
@@ -31,24 +30,45 @@
     });
 </script>
 
-<h3>Connexion Enseignant/Bibliothécaire</h3>
+<h1 class="inline-block text-xl font-bold">
+    Connexion Enseignant/Bibliothécaire
+</h1>
+<span class="text-gray-500">Où
+    <a href="/signup/admin" class="text-blue-500">inscription</a>
+</span>
 
-<div class="ml-5 mr-5">
-    <TextField dense outlined type="email" bind:value={email}>Email</TextField>
-    <TextField dense outlined type="password" bind:value={password}>
-        Mot de passe
-    </TextField>
-    <Button
-        block
-        depressed
+<div>
+    <div>
+        <label for="email">Email</label>
+        <input
+            class="input"
+            id="email"
+            placeholder="Email"
+            type="email"
+            bind:value={email}
+        />
+    </div>
+    <div>
+        <label for="password">Mot de passe</label>
+        <input
+            class="input"
+            id="password"
+            placeholder="Mot de passe"
+            type="password"
+            bind:value={password}
+        />
+    </div>
+    <button
         disabled={loginBtnDisabled}
-        class="mt-5"
+        class="btn mt-2 w-full"
         on:click={handleLogin}
     >
         Connexion
-    </Button>
+    </button>
 
     {#if errorMessage}
-        <div class="red white-text rounded ma-3 pa-2">{errorMessage}</div>
+        <div class="mt-2 px-3 py-2 text-white bg-red-500 rounded">
+            {errorMessage}
+        </div>
     {/if}
 </div>

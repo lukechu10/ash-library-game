@@ -1,11 +1,10 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
-    import { Button, Card, Overlay, Radio } from "svelte-materialify";
-    import Error from "../routes/_error.svelte";
     import { getBooks } from "../services/bookApi";
     import { db } from "../services/firebase";
     import { isCorrectlySorted, sortGameState } from "../store/sortGameState";
     import Book from "./Book.svelte";
+    import Overlay from "./Overlay.svelte";
 
     const numberOfRounds = 3;
     let roundNumber = 0;
@@ -28,7 +27,7 @@
      * Starts the timer.
      */
     const startTimer = () => {
-        if (intervalId !== undefined) throw new Error("timer already started");
+        if (intervalId !== undefined) throw "timer already started";
         timerStart = Date.now();
         intervalId = setInterval(() => {
             // update timer
@@ -40,7 +39,7 @@
      * Ends the timer.
      */
     const endTimer = () => {
-        if (intervalId === undefined) throw new Error("timer not started yet");
+        if (intervalId === undefined) throw "timer not started yet"; // FIXME
         clearInterval(intervalId);
         intervalId = undefined; // erase intervalId
     };
@@ -74,6 +73,7 @@
             score,
             name: "AAA",
         });
+        sortGameState.reset();
 
         goto("/"); // go to home page
     };
@@ -100,6 +100,11 @@
 </script>
 
 <style>
+    .sort-game-view {
+        position: fixed;
+        left: 0;
+    }
+
     span {
         font-family: Berlin Sans FB;
         font-size: 30pt;
@@ -116,56 +121,126 @@
 
         z-index: -1; /* background */
     }
+
+    fieldset label {
+        font-weight: initial;
+    }
 </style>
 
-<span>Time: {time}s</span>
-<span class="float-right">Score: {score}</span>
+<div class="sort-game-view w-full">
+    <div class="flex flex-row w-full">
+        <span class="flex-1">Time: {time}s</span>
+        <span class="flex-1">Score: {score}</span>
+    </div>
 
-<div class="bg-img" />
+    <div class="bg-img" />
 
-<!-- All the books are in .books-container in DOM -->
-<div class="books-container">
-    {#each $sortGameState.bookList as book, i (book.DOCUMENT_ID)}
-        <Book data={book} initialPos={{ x: 10 + (160 * i), y: 450 }} />
-    {/each}
+    <!-- All the books are in .books-container in DOM -->
+    <div class="books-container">
+        {#each $sortGameState.bookList as book, i (book.DOCUMENT_ID)}
+            <Book data={book} initialPos={{ x: 10 + 160 * i, y: 450 }} />
+        {/each}
+    </div>
+
+    <Overlay active={startDimmerActive}>
+        <div
+            class="container flex flex-col mx-auto p-3 max-w-md bg-white rounded-md"
+        >
+            <h5 class="self-center text-lg font-bold">
+                Choisir les paramètres du jeu
+            </h5>
+            <div
+                class="d-flex justify-space-around difficulty-radios mb-5 ml-10 mr-10"
+            >
+                <fieldset class="flex flex-col">
+                    <div class="self-center">
+                        <legend class="font-semibold">Nombre de livres</legend>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="flex items-center">
+                            <input
+                                type="radio"
+                                class="radio"
+                                bind:group={numOfBooks}
+                                value={3}
+                            />
+                            3 livres
+                        </label>
+                        <label class="flex items-center">
+                            <input
+                                type="radio"
+                                class="radio"
+                                bind:group={numOfBooks}
+                                value={4}
+                            />
+                            4 livres
+                        </label>
+                        <label class="flex items-center">
+                            <input
+                                type="radio"
+                                class="radio"
+                                bind:group={numOfBooks}
+                                value={6}
+                            />
+                            6 livres
+                        </label>
+                    </div>
+                </fieldset>
+                <fieldset class="flex flex-col">
+                    <div class="self-center">
+                        <legend class="font-semibold">Type de livre</legend>
+                    </div>
+                    <div class="flex flex-col">
+                        <label>
+                            <input
+                                type="radio"
+                                class="radio"
+                                bind:group={bookType}
+                                value={'alpha'}
+                            />Ordre alphabétique</label>
+                        <label>
+                            <input
+                                type="radio"
+                                class="radio"
+                                bind:group={bookType}
+                                value={'dewey'}
+                            />Ordre numérique</label>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="flex justify-center">
+                <button
+                    class="btn bg-red-500 hover:bg-red-600"
+                    on:click={startGame}
+                >
+                    Commencer
+                </button>
+            </div>
+        </div>
+    </Overlay>
+
+    <!-- Continue button -->
+    <Overlay active={continueDimmerActive}>
+        <button
+            class="btn bg-red-500 hover:bg-red-600"
+            on:click={continueGame}
+        >Continuer</button>
+    </Overlay>
+
+    <!-- Finish button -->
+    <Overlay active={finishDimmerActive}>
+        <div class="flex flex-col items-center">
+            <p class="mb-3 text-white text-lg font-semibold">
+                Ton score:
+                {score}
+            </p>
+            <button
+                class="btn bg-red-500 hover:bg-red-600"
+                on:click={finishGame}
+            >Continuer</button>
+        </div>
+    </Overlay>
 </div>
-
-<Overlay active={startDimmerActive}>
-    <Card outlined style="min-width:500px;min-height:200px">
-        <h5 class="text-h5 ml-3">Choisir les paramètres du jeu</h5>
-        <div
-            class="d-flex justify-space-around difficulty-radios ml-10 mr-10 mb-5"
-        >
-            <Radio bind:group={numOfBooks} value={3}>3 livres</Radio>
-            <Radio bind:group={numOfBooks} value={4}>4 livres</Radio>
-            <Radio bind:group={numOfBooks} value={6}>6 livres</Radio>
-        </div>
-        <div
-            class="d-flex justify-space-around difficulty-radios ml-10 mr-10 mb-5"
-        >
-            <Radio bind:group={bookType} value={'alpha'}>
-                Ordre alphabetique
-            </Radio>
-            <Radio bind:group={bookType} value={'dewey'}>Ordre numerique</Radio>
-        </div>
-        <div class="d-flex justify-center">
-            <Button class="red white-text mb-3" on:click={startGame}>
-                Commencer
-            </Button>
-        </div>
-    </Card>
-</Overlay>
-
-<!-- Continue button -->
-<Overlay style="z-index: 100000" active={continueDimmerActive}>
-    <Button class="red white-text" on:click={continueGame}>Continuer</Button>
-</Overlay>
-
-<!-- Finish button -->
-<Overlay style="z-index: 100000" active={finishDimmerActive}>
-    <h3 class="white-text">Ton score: {score}</h3>
-    <Button class="red white-text" on:click={finishGame}>Continuer</Button>
-</Overlay>
 
 <!-- prevent scrolling on touchscreen because it interferes with drag and drop -->
 <svelte:window on:touchmove|nonpassive={(event) => event.preventDefault()} />

@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const WebpackModules = require("webpack-modules");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 const sapperConfig = require("sapper/config/webpack.js");
 const pkg = require("./package.json");
@@ -18,6 +19,10 @@ const fileLoaderRule = {
 const tsLoaderRule = {
     test: /\.(ts|tsx)$/i,
     use: ["ts-loader"],
+};
+const postcssLoaderRule = {
+    test: /\.css$/i,
+    use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
 };
 
 const config = {
@@ -68,6 +73,7 @@ module.exports = {
                 },
                 fileLoaderRule,
                 tsLoaderRule,
+                postcssLoaderRule,
             ],
         },
         mode,
@@ -78,6 +84,7 @@ module.exports = {
                 "process.browser": true,
                 "process.env.NODE_ENV": JSON.stringify(mode),
             }),
+            new MiniCssExtractPlugin(),
         ].filter(Boolean),
         devtool: dev && "inline-source-map",
     },
@@ -106,6 +113,7 @@ module.exports = {
                 },
                 fileLoaderRule,
                 tsLoaderRule,
+                postcssLoaderRule,
             ],
         },
         mode,

@@ -16,10 +16,6 @@
     }
 </style>
 
-<svelte:head>
-    <title>Ashbury Library Game</title>
-</svelte:head>
-
 <h1>Library Game</h1>
 
 <a href="./game">Game</a>

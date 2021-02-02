@@ -7,5 +7,13 @@
     },
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "tailwindCSS.includeLanguages": {
+        "Svelte": "html"
+    },
+    "cSpell.enableFiletypes": [
+        "git-rebase",
+        "svelte"
+    ],
+    "cSpell.language": "en,en-US,fr,fr-FR"
 }

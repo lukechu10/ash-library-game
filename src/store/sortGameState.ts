@@ -16,19 +16,14 @@ export interface SortGameState {
      * If no book being considered, should be `bookList.length`.
      */
     considerPosition: number;
-    /**
-     * Current score in game.
-     */
-    score: number;
 }
 
 function createSortGameState() {
-    const { set, subscribe, update } = writable({
+    const { set, subscribe, update } = writable<SortGameState>({
         highestZIndex: 1, // start at 1 so that the first dragged book appears over rest of books (which have z-index: 0)
         bookList: [],
         considerPosition: 0,
-        score: 0,
-    } as SortGameState);
+    });
 
     /**
      * Modifies book with `id` with new `shelfPosition` and moves other books on shelf to make space.
@@ -163,6 +158,15 @@ function createSortGameState() {
          * Removes a book from the shelf and moves other books to fill in space. If book is not already on shelf, does nothing.
          */
         removeBookFromShelf,
+        /**
+         * Reset sortGameState. Should be called after game is finished.
+         */
+        reset: () =>
+            set({
+                highestZIndex: 0,
+                bookList: [],
+                considerPosition: 0,
+            }),
     };
 }
 
@@ -173,7 +177,7 @@ export const sortGameState: ReturnType<typeof createSortGameState> = (() => {
 })();
 
 /**
- * is `true` if all books are on shelf and in correct order. Is `false` otherwise.
+ * Is `true` if all books are on shelf and in correct order. Is `false` otherwise.
  */
 export const isCorrectlySorted = derived(sortGameState, ($sortGameState) => {
     /**

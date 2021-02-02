@@ -10,7 +10,7 @@ describe("Sorting", () => {
     it("can start game", () => {
         cy.visit("http://localhost:3000/game");
 
-        cy.get(".s-btn").click();
+        cy.get('.btn').click();
 
         cy.get(".book").should("have.lengthOf", 4);
     });

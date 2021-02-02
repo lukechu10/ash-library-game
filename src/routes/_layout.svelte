@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import type GoogleAnalytics from "../components/GoogleAnalytics.svelte";
-    import { MaterialApp } from "svelte-materialify";
     import Nav from "../components/Nav.svelte";
 
     export let segment: string;
@@ -20,21 +19,18 @@
 
 <style>
     main {
-        position: relative;
-        /* max-width: 56em; */
-        background-color: white;
-        padding: 0;
-        margin: 0;
         box-sizing: border-box;
     }
 </style>
 
-<MaterialApp>
-    <Nav />
-    <main>
-        <slot />
-    </main>
-</MaterialApp>
+<Nav />
+<main class="mt-12 bg-white p-0 relative container mx-auto">
+    <slot />
+</main>
 
 <!-- only load GoogleAnalytics in client -->
 <svelte:component this={GoogleAnalytics} />
+
+<svelte:head>
+    <title>Ashbury Library Game</title>
+</svelte:head>
