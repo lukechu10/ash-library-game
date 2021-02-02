@@ -121,6 +121,10 @@
 
         z-index: -1; /* background */
     }
+
+    fieldset label {
+        font-weight: initial;
+    }
 </style>
 
 <div class="sort-game-view w-full">
@@ -139,73 +143,79 @@
     </div>
 
     <Overlay active={startDimmerActive}>
-        <h5 class="text-h5 ml-3">Choisir les paramètres du jeu</h5>
         <div
-            class="d-flex justify-space-around difficulty-radios mb-5 ml-10 mr-10"
+            class="container flex flex-col mx-auto p-3 max-w-md bg-white rounded-md"
         >
-            <fieldset>
-                <div>
-                    <legend>Nombre de livres</legend>
-                </div>
-                <div class="flex flex-col">
-                    <label class="flex items-center">
-                        <input
-                            type="radio"
-                            class="radio"
-                            bind:group={numOfBooks}
-                            value={3}
-                        />
-                        3 livres
-                    </label>
-                    <label class="flex items-center">
-                        <input
-                            type="radio"
-                            class="radio"
-                            bind:group={numOfBooks}
-                            value={4}
-                        />
-                        4 livres
-                    </label>
-                    <label class="flex items-center">
-                        <input
-                            type="radio"
-                            class="radio"
-                            bind:group={numOfBooks}
-                            value={6}
-                        />
-                        6 livres
-                    </label>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div>
-                    <legend>Type de livre</legend>
-                </div>
-                <div class="flex flex-col">
-                    <label>
-                        <input
-                            type="radio"
-                            class="radio"
-                            bind:group={bookType}
-                            value={'alpha'}
-                        />Ordre alphabétique</label>
-                    <label>
-                        <input
-                            type="radio"
-                            class="radio"
-                            bind:group={bookType}
-                            value={'dewey'}
-                        />Ordre numérique</label>
-                </div>
-            </fieldset>
-        </div>
-        <div class="d-flex justify-center">
-            <button
-                class="btn bg-red-500 hover:bg-red-600"
-                on:click={startGame}
+            <h5 class="self-center text-lg font-bold">
+                Choisir les paramètres du jeu
+            </h5>
+            <div
+                class="d-flex justify-space-around difficulty-radios mb-5 ml-10 mr-10"
             >
-                Commencer
-            </button>
+                <fieldset class="flex flex-col">
+                    <div class="self-center">
+                        <legend class="font-semibold">Nombre de livres</legend>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="flex items-center">
+                            <input
+                                type="radio"
+                                class="radio"
+                                bind:group={numOfBooks}
+                                value={3}
+                            />
+                            3 livres
+                        </label>
+                        <label class="flex items-center">
+                            <input
+                                type="radio"
+                                class="radio"
+                                bind:group={numOfBooks}
+                                value={4}
+                            />
+                            4 livres
+                        </label>
+                        <label class="flex items-center">
+                            <input
+                                type="radio"
+                                class="radio"
+                                bind:group={numOfBooks}
+                                value={6}
+                            />
+                            6 livres
+                        </label>
+                    </div>
+                </fieldset>
+                <fieldset class="flex flex-col">
+                    <div class="self-center">
+                        <legend class="font-semibold">Type de livre</legend>
+                    </div>
+                    <div class="flex flex-col">
+                        <label>
+                            <input
+                                type="radio"
+                                class="radio"
+                                bind:group={bookType}
+                                value={'alpha'}
+                            />Ordre alphabétique</label>
+                        <label>
+                            <input
+                                type="radio"
+                                class="radio"
+                                bind:group={bookType}
+                                value={'dewey'}
+                            />Ordre numérique</label>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="flex justify-center">
+                <button
+                    class="btn bg-red-500 hover:bg-red-600"
+                    on:click={startGame}
+                >
+                    Commencer
+                </button>
+            </div>
         </div>
     </Overlay>
 
