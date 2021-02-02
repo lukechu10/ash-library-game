@@ -6843,13 +6843,6 @@ svelte-loader@^2.13.6:
     loader-utils "^1.1.0"
     svelte-dev-helper "^1.1.9"
 
-svelte-materialify@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/svelte-materialify/-/svelte-materialify-0.3.0.tgz#2ad46edc52b20de9d736c4f839499ad3be62681d"
-  integrity sha512-fyklZVmjd2fBH6IoiIAfLk7GnQBkbteVvMsJY5ttHSWagf/DnFFAlLlKt+4rCtaAWBcPTJ6xlzgWMozvKanwlA==
-  dependencies:
-    uid "^1.0.0"
-
 svelte-preprocess@^4.0.0, svelte-preprocess@^4.3.0:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/svelte-preprocess/-/svelte-preprocess-4.5.2.tgz#37976d1e0d866eb382411d486f7468d2275087e9"
@@ -7141,11 +7134,6 @@ uglify-js@^3.5.1:
   version "3.11.5"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.11.5.tgz#d6788bc83cf35ff18ea78a65763e480803409bc6"
   integrity sha512-btvv/baMqe7HxP7zJSF7Uc16h1mSfuuSplT0/qdjxseesDU+yYzH33eHBH+eMdeRXwujXspaCTooWHQVVBh09w==
-
-uid@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/uid/-/uid-1.0.0.tgz#40a64108ebdf765b3945c286b77c83c168687170"
-  integrity sha512-DYp36HDIRECMW0xmeyGSDSheURMbL7gy4DqINDUW5OSw7cot0pNRNvEtEji9nk1XVDZN/0lJ7myxacoTeU9oow==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

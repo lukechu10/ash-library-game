@@ -1,15 +1,14 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
     import { onMount } from "svelte";
-    import { TextField } from "svelte-materialify";
 
     let user: firebase.default.User | undefined;
-    let oldPassword, newPassword, newPasswordVerify;
-    let deletePassword;
-    let handlePasswordChange,
-        handleDeleteAccount,
-        handleResendVerificationEmail;
-    let errorMessage, successMessage;
+    let oldPassword: string, newPassword: string, newPasswordVerify: string;
+    let deletePassword: string;
+    let handlePasswordChange: () => Promise<void>,
+        handleDeleteAccount: () => Promise<void>,
+        handleResendVerificationEmail: () => Promise<void>;
+    let errorMessage: string, successMessage: string;
     let updatePasswordBtnDisabled = false;
 
     onMount(async () => {
@@ -80,31 +79,60 @@
     });
 </script>
 
-<h3>Mon Compte</h3>
-{#if user !== undefined}
-    <strong>Nom/Prénom: </strong><i>{user.displayName}</i>
-    <br />
+<style>
+    label {
+        display: block;
+    }
 
-    <strong>Email: </strong><i>{user.email}</i>
-    (verifié:
-    {user.emailVerified})
-    {#if !user.emailVerified}
-        <span style="color: blue; cursor: pointer;">Renvoyer l'email de
-            vérification</span>
-    {/if}
-    <br />
-    Changer le mot de passe:
-    <TextField type="password" bind:value={oldPassword}>
+    .btn {
+        display: block;
+    }
+</style>
+
+<h1 class="text-xl font-bold">Mon Compte</h1>
+{#if user !== undefined}
+    <div>
+        <strong>Nom/Prénom: </strong><i>{user.displayName}</i>
+        <br />
+
+        <strong>Email: </strong><i>{user.email}</i>
+        (vérifié:
+        {user.emailVerified ? 'oui' : 'non'})
+        {#if !user.emailVerified}
+            <span style="color: blue; cursor: pointer;">Renvoyer l'email de
+                vérification</span>
+        {/if}
+    </div>
+    <h2 class="text-lg font-semibold">Changer le mot de passe</h2>
+    <label>
         Mot de passe existant
-    </TextField>
-    <TextField type="password" bind:value={newPassword}>
-        Novueau mot de passe
-    </TextField>
-    <TextField type="password" bind:value={newPasswordVerify}>
+        <input
+            class="input"
+            type="password"
+            placeholder="Mot de passe existant"
+            bind:value={oldPassword}
+        />
+    </label>
+    <label>
+        Nouveau mot de passe
+        <input
+            class="input"
+            type="password"
+            placeholder="Nouveau mot de passe"
+            bind:value={newPassword}
+        />
+    </label>
+    <label>
         Confirmer le nouveau mot de passe
-    </TextField>
+        <input
+            class="input"
+            type="password"
+            placeholder="Confirmer le nouveau mot de passe"
+            bind:value={newPasswordVerify}
+        />
+    </label>
     <button
-        class="btn"
+        class="btn mt-2"
         disabled={updatePasswordBtnDisabled}
         on:click={handlePasswordChange}
     >
@@ -117,13 +145,22 @@
     {#if successMessage}
         <div class="green white-text ma-3 pa-2 rounded">{successMessage}</div>
     {/if}
-
-    <br />
-    Supprimer ton compte. Attention! Cette action est irréversible.
-    <TextField type="password" bind:value={deletePassword}>
+    <h2 class="text-lg font-semibold">Supprimer votre compte</h2>
+    <span class="text-red-500 font-semibold">Attention! Cette action est
+        irréversible.</span>
+    <label>
         Mot de passe
-    </TextField>
-    <button class="btn bg-red-500 hover:bg-red-600" on:click={handleDeleteAccount}>
+        <input
+            class="input"
+            type="password"
+            placeholder="Mot de passe"
+            bind:value={deletePassword}
+        />
+    </label>
+    <button
+        class="btn mt-2 bg-red-500 hover:bg-red-600"
+        on:click={handleDeleteAccount}
+    >
         Supprimer mon compte
     </button>
 {/if}

@@ -1,10 +1,9 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
     import { onMount } from "svelte";
-    import { TextField } from "svelte-materialify";
 
-    let name, email, password, passwordVerify;
-    let handleSignup;
+    let name: string, email: string, password: string, passwordVerify: string;
+    let handleSignup: () => Promise<void>;
     let signupBtnDisabled = false;
 
     let errorMessage = "";
