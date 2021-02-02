@@ -10,13 +10,13 @@
 
 @layer components {
     .btn {
-        @apply py-2 px-3 bg-blue-500 text-white font-semibold rounded shadow-md transition-colors;
+        @apply px-3 py-2 text-white font-semibold bg-blue-500 rounded shadow-md transition-colors;
     }
 
     .btn:hover {
         @apply bg-blue-600;
     }
-    
+
     .btn:focus {
         @apply outline-none;
     }
@@ -24,7 +24,7 @@
 
 @layer components {
     .input {
-        @apply border-2 border-gray-400 appearance-none rounded w-full px-2 py-2 outline-none transition-all;
+        @apply px-2 py-2 w-full border-2 border-gray-400 rounded outline-none appearance-none transition-all;
         min-width: 280px;
     }
 
@@ -35,6 +35,11 @@
 
 @layer components {
     .radio {
-        @apply w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 mr-2;
+        @apply mr-2 w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500;
     }
+}
+
+html,
+body {
+    @apply absolute left-0 top-0 w-full h-full;
 }
