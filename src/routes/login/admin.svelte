@@ -33,7 +33,8 @@
 <h1 class="inline-block text-xl font-bold">
     Connexion Enseignant/Bibliothécaire
 </h1>
-<span class="text-gray-500">Où
+<span class="text-gray-500"
+    >Où
     <a href="/signup/admin" class="text-blue-500">inscription</a>
 </span>
 
@@ -60,14 +61,14 @@
     </div>
     <button
         disabled={loginBtnDisabled}
-        class="btn mt-2 w-full"
+        class="mt-2 w-full btn"
         on:click={handleLogin}
     >
         Connexion
     </button>
 
     {#if errorMessage}
-        <div class="mt-2 px-3 py-2 text-white bg-red-500 rounded">
+        <div class="py-2 px-3 mt-2 text-white bg-red-500 rounded">
             {errorMessage}
         </div>
     {/if}

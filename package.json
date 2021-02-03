@@ -8,7 +8,7 @@
     "build": "cross-env NODE_ENV=production sapper build",
     "start": "node __sapper__/build",
     "validate": "svelte-check --ignore src/node_modules/@sapper",
-    "format": "prettier --write src",
+    "format": "prettier --write src && rustywind --write src",
     "format:check": "prettier --check src",
     "tokei": "tokei --exclude static/books.json"
   },
@@ -41,7 +41,8 @@
     "postcss-loader": "^4.1.0",
     "postcss-nesting": "^7.0.1",
     "prettier": "^2.2.1",
-    "prettier-plugin-tailwind": "2.2.7",
+    "prettier-plugin-svelte": "^2.1.1",
+    "rustywind": "^0.8.0",
     "sapper": "^0.29.0",
     "sass": "^1.28.0",
     "style-loader": "^2.0.0",
