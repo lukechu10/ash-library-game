@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": "true",
   "scripts": {
-    "dev": "sapper dev --no-hot",
+    "dev": "sapper dev",
     "build": "cross-env NODE_ENV=production sapper build",
     "start": "node __sapper__/build",
     "validate": "svelte-check --ignore src/node_modules/@sapper",
@@ -49,6 +49,7 @@
     "svelte": "^3.31.0",
     "svelte-check": "^1.1.23",
     "svelte-loader": "^2.13.6",
+    "svelte-loader-hot": "^0.3.1",
     "svelte-preprocess": "^4.3.0",
     "svelte-reduxify": "^1.3.0",
     "tailwindcss": "^2.0.2",
