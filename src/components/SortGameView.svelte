@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
+    import { onDestroy, onMount } from "svelte";
     import { getBooks } from "../services/bookApi";
     import { db } from "../services/firebase";
     import { isCorrectlySorted, sortGameState } from "../store/sortGameState";
@@ -97,6 +98,10 @@
 
     let time = 0;
     let score = 0;
+
+    onDestroy(() => {
+        sortGameState.reset(); // reset state for next game
+    });
 </script>
 
 <style>
