@@ -23,6 +23,12 @@
 }
 
 @layer components {
+    .card {
+        @apply container flex flex-col p-3 mx-auto bg-white rounded-md;
+    }
+}
+
+@layer components {
     .input {
         @apply px-2 py-2 w-full border-2 border-gray-400 rounded outline-none appearance-none transition-all;
         min-width: 280px;

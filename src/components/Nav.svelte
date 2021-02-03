@@ -83,9 +83,14 @@
                                             class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
                                             role="menuitem">Mon compte</a
                                         >
+                                        <a
+                                            href="/my_classes"
+                                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
+                                            role="menuitem">Mes classes</a
+                                        >
                                         <span
                                             href="#"
-                                            class="block py-2 px-4 text-sm text-red-500 hover:bg-gray-100"
+                                            class="block py-2 px-4 text-sm text-red-500 cursor-pointer hover:bg-gray-100"
                                             role="menuitem"
                                             on:click={handleSignout}
                                             >Déconnecter</span

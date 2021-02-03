@@ -145,12 +145,10 @@
     </div>
 
     <Overlay active={startDimmerActive}>
-        <div
-            class="container flex flex-col p-3 mx-auto max-w-md bg-white rounded-md"
-        >
-            <h5 class="self-center text-lg font-bold">
+        <div class="card max-w-md">
+            <h3 class="self-center text-lg font-bold">
                 Choisir les paramètres du jeu
-            </h5>
+            </h3>
             <div
                 class="mr-10 mb-5 ml-10 d-flex justify-space-around difficulty-radios"
             >

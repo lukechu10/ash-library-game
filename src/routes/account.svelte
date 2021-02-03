@@ -99,7 +99,9 @@
         (vérifié:
         {user.emailVerified ? "oui" : "non"})
         {#if !user.emailVerified}
-            <span style="color: blue; cursor: pointer;"
+            <span
+                style="color: blue; cursor: pointer;"
+                on:click={handleResendVerificationEmail}
                 >Renvoyer l'email de vérification</span
             >
         {/if}

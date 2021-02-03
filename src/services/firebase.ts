@@ -24,7 +24,18 @@ export interface ScoreSchema {
     score: number;
 }
 
-export async function getTopScores(count: number): Promise<ScoreSchema[]> {
+export interface ClassSchema {
+    /** The name of the class. */
+    name: string;
+    /** A list of student names. */
+    students: string[];
+    /** The user uid who owns the class. */
+    owner: string;
+}
+
+export async function getTopScores(
+    count: number
+): Promise<{ data: () => ScoreSchema }[]> {
     return db
         .collection("scores")
         .orderBy("score", "desc")
@@ -32,15 +43,31 @@ export async function getTopScores(count: number): Promise<ScoreSchema[]> {
         .get()
         .then((querySnapshot) => {
             const data = [];
-            querySnapshot.forEach((doc) => {
-                data.push(doc);
-            });
+            querySnapshot.forEach((doc) => data.push(doc));
             return data;
         });
 }
 
 export async function addNewScore(score: ScoreSchema): Promise<void> {
     db.collection("scores").add(score);
+}
+
+export async function createClass(_class: ClassSchema): Promise<void> {
+    db.collection("classes").add(_class);
+}
+
+export async function getUserClasses(
+    uid: string
+): Promise<{ data: () => ClassSchema }[]> {
+    return db
+        .collection("classes")
+        .where("owner", "==", uid)
+        .get()
+        .then((querySnapshot) => {
+            const classes = [];
+            querySnapshot.forEach((_class) => classes.push(_class));
+            return classes;
+        });
 }
 
 export const analytics = firebase.analytics();
