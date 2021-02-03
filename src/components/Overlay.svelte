@@ -7,7 +7,7 @@
 {#if active}
     <div
         class="fixed z-50 left-0 top-0 w-full h-full bg-black bg-opacity-50"
-        transition:fade={{ duration: 200 }}
+        transition:fade|local={{ duration: 200 }}
     >
         <div
             class="flex flex-col items-center justify-center w-full h-full"
