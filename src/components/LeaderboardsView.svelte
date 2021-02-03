@@ -1,18 +1,7 @@
 <script>
-    import { db } from "../services/firebase";
+    import { getTopScores } from "../services/firebase";
 
-    let scores = db
-        .collection("scores")
-        .orderBy("score", "desc")
-        .limit(10)
-        .get()
-        .then((querySnapshot) => {
-            const data = [];
-            querySnapshot.forEach((doc) => {
-                data.push(doc);
-            });
-            return data;
-        });
+    let scores = getTopScores(10);
 </script>
 
 <style>

@@ -2,7 +2,7 @@
     import { goto } from "@sapper/app";
     import { onDestroy } from "svelte";
     import { getBooks } from "../services/bookApi";
-    import { db } from "../services/firebase";
+    import { addNewScore } from "../services/firebase";
     import { isCorrectlySorted, sortGameState } from "../store/sortGameState";
     import Book from "./Book.svelte";
     import Overlay from "./Overlay.svelte";
@@ -70,10 +70,7 @@
      */
     const finishGame = async () => {
         // save score to firestore
-        await db.collection("scores").add({
-            score,
-            name: "AAA",
-        });
+        await addNewScore({ name: "AAA", score });
         sortGameState.reset();
 
         goto("/"); // go to home page

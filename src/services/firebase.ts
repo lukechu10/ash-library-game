@@ -18,6 +18,31 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+export interface ScoreSchema {
+    name: string;
+    score: number;
+}
+
+export async function getTopScores(count: number): Promise<ScoreSchema[]> {
+    return db
+        .collection("scores")
+        .orderBy("score", "desc")
+        .limit(count)
+        .get()
+        .then((querySnapshot) => {
+            const data = [];
+            querySnapshot.forEach((doc) => {
+                data.push(doc);
+            });
+            return data;
+        });
+}
+
+export async function addNewScore(score: ScoreSchema): Promise<void> {
+    db.collection("scores").add(score);
+}
+
 export const analytics = firebase.analytics();
 export const perf = firebase.performance();
 export const db = firebase.firestore();
