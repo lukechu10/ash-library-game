@@ -1,8 +1,8 @@
-import firebase from "firebase/app";
-import "firebase/firestore";
 import "firebase/analytics";
-import "firebase/performance";
+import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
+import "firebase/performance";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -27,6 +27,8 @@ export interface ScoreSchema {
 export interface ClassSchema {
     /** The name of the class. */
     name: string;
+    /** Class username. */
+    classId: string;
     /** A list of student names. */
     students: string[];
     /** The user uid who owns the class. */
@@ -49,11 +51,21 @@ export async function getTopScores(
 }
 
 export async function addNewScore(score: ScoreSchema): Promise<void> {
-    db.collection("scores").add(score);
+    await db.collection("scores").add(score);
 }
 
-export async function createClass(_class: ClassSchema): Promise<void> {
-    db.collection("classes").add(_class);
+/**
+ * @returns `true` if the class was successfully added or `false` if a class with the same `classId` already exists.
+ */
+export async function createClass(_class: ClassSchema): Promise<boolean> {
+    if (
+        await (await db.collection("classes").doc(_class.classId).get()).exists
+    ) {
+        return false;
+    } else {
+        await db.collection("classes").doc(_class.classId).set(_class);
+        return true;
+    }
 }
 
 export async function getUserClasses(

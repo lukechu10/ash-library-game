@@ -145,7 +145,7 @@
     </div>
 
     <Overlay active={startDimmerActive}>
-        <div class="card max-w-md">
+        <div class="max-w-md card">
             <h3 class="self-center text-lg font-bold">
                 Choisir les paramètres du jeu
             </h3>

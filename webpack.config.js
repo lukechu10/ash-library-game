@@ -67,7 +67,13 @@ module.exports = {
                             preprocess: sveltePreprocess(),
                             dev,
                             hydratable: true,
+                            emitCss: false, // currently broken with HMR
                             hotReload: true,
+                            hotOptions: {
+                                noPreserveState: false,
+                                acceptAccessors: true,
+                                acceptNamedExports: true,
+                            },
                         },
                     },
                 },
