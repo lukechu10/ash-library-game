@@ -9,6 +9,7 @@ const dev = NODE_ENV === "development";
 const app = express();
 
 app.use(
+    // @ts-expect-error middleware type error
     compression({ threshold: 1024 }),
     sirv("static", { dev }),
     sapper.middleware()
