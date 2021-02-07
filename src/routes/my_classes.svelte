@@ -106,6 +106,7 @@
                     type="text"
                     class="input"
                     placeholder="Nom de la classe"
+                    autocomplete="off"
                     bind:value={newClass.name}
                 />
             </label>

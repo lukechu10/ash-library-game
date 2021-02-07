@@ -104,9 +104,9 @@
                         >
                     </div>
                 {:else}
-                    <div class="flex ml-2 space-x-4 text-white">
+                    <div class="flex flex-row-reverse ml-2 space-x-4 text-white">
                         <a
-                            href="/login/admin"
+                            href="/login/student"
                             class="py-2 px-3 text-sm font-medium bg-gray-900 rounded-md"
                             >Connexion</a
                         >

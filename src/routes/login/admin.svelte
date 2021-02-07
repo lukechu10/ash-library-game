@@ -2,8 +2,8 @@
     import { onMount } from "svelte";
     import { goto } from "@sapper/app";
 
-    let email, password;
-    let handleLogin;
+    let email: string, password: string;
+    let handleLogin: () => Promise<void>;
     let loginBtnDisabled = false;
 
     let errorMessage = "";
