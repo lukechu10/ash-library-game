@@ -12,7 +12,7 @@
     let updatePasswordBtnDisabled = false;
 
     onMount(async () => {
-        const { auth } = await import("../services/firebase");
+        const { auth, deleteUserClasses } = await import("../services/firebase");
         const firebase = (await import("firebase/app")).default;
 
         handlePasswordChange = async () => {
@@ -56,6 +56,11 @@
                     deletePassword
                 );
                 await auth.currentUser.reauthenticateWithCredential(credential);
+
+                // delete classes associated with user
+                await deleteUserClasses(auth.currentUser.uid);
+
+                // delete user
                 await auth.currentUser.delete();
 
                 goto("/"); // successful account deletion

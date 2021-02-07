@@ -98,6 +98,8 @@
     </button>
 
     {#if errorMessage}
-        <div class="rounded red white-text ma-3 pa-2">{errorMessage}</div>
+        <div class="py-2 px-3 mt-2 text-white bg-red-500 rounded">
+            {errorMessage}
+        </div>
     {/if}
 </div>

@@ -82,6 +82,13 @@ export async function getUserClasses(
         });
 }
 
+/** Deletes all the classes associated with a user. This should be called prior to deleting the user account. */
+export async function deleteUserClasses(uid: string): Promise<void> {
+    (await db.collection("classes").where("owner", "==", uid).get()).forEach(
+        async (doc) => await doc.ref.delete()
+    );
+}
+
 export const analytics = firebase.analytics();
 export const perf = firebase.performance();
 export const db = firebase.firestore();
