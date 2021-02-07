@@ -29,6 +29,9 @@ export interface ClassSchema {
     name: string;
     /** Class username. */
     classId: string;
+    /** Class password. */
+    // FIXME: do not store password as raw text
+    classPassword: string;
     /** A list of student names. */
     students: string[];
     /** The user uid who owns the class. */

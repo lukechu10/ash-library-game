@@ -12,7 +12,9 @@
     let newClass = {
         name: "",
         classId: "",
+        classPassword: "",
     };
+    let classPasswordConfirm = "";
 
     let refreshClasses: () => Promise<void>;
     let handleCreateClass: () => Promise<void>;
@@ -20,7 +22,9 @@
         newClass = {
             name: "",
             classId: "",
+            classPassword: "",
         };
+        classPasswordConfirm = "";
         newClassErrorMessage = "";
         newClassOverlayActive = false;
     };
@@ -43,7 +47,10 @@
         };
 
         handleCreateClass = async () => {
-            if (
+            if (newClass.classPassword !== classPasswordConfirm) {
+                newClassErrorMessage =
+                    "les mots de passes ne sont pas identiques";
+            } else if (
                 await createClass({
                     ...newClass,
                     students: [],
@@ -53,14 +60,16 @@
                 newClass = {
                     name: "",
                     classId: "",
+                    classPassword: "",
                 };
+                classPasswordConfirm = "";
                 newClassErrorMessage = "";
                 newClassOverlayActive = false;
                 refreshClasses();
             } else {
                 // class with id already exists
-                newClassErrorMessage = "une classe avec cet identifiant éxiste déjà";
-                return;
+                newClassErrorMessage =
+                    "une classe avec cet identifiant éxiste déjà";
             }
         };
     });
@@ -119,12 +128,33 @@
                     bind:value={newClass.classId}
                 />
             </label>
+            <label class="flex-grow">
+                Mot de passe de la classe
+                <input
+                    type="password"
+                    class="input"
+                    placeholder="Identifiant de la classe"
+                    bind:value={newClass.classPassword}
+                />
+            </label>
+            <label class="flex-grow">
+                Confirmer le mot de passe de la classe
+                <input
+                    type="password"
+                    class="input"
+                    placeholder="Identifiant de la classe"
+                    bind:value={classPasswordConfirm}
+                />
+            </label>
         </div>
 
         <div class="flex flex-row mt-2 space-x-2">
             <button
                 class="flex-grow btn"
-                disabled={newClass.name === "" || newClass.classId === ""}
+                disabled={newClass.name === "" ||
+                    newClass.classId === "" ||
+                    newClass.classPassword === "" ||
+                    classPasswordConfirm === ""}
                 on:click={handleCreateClass}>Créer</button
             >
             <button
@@ -136,7 +166,9 @@
         {#if newClassErrorMessage !== ""}
             <div class="text-white bg-red-500 footer">
                 <p>
-                    <span class="font-bold">Erreur: </span>{newClassErrorMessage}
+                    <span class="font-bold"
+                        >Erreur:
+                    </span>{newClassErrorMessage}
                 </p>
             </div>
         {/if}
