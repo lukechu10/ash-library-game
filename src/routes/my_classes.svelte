@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
     import { onMount } from "svelte";
-    import { fade } from "svelte/transition";
+    import ClassListItem from "../components/ClassListItem.svelte";
     import Overlay from "../components/Overlay.svelte";
     import type { ClassSchema } from "../services/firebase";
 
@@ -86,19 +86,7 @@
         <p class="ml-2">Loading...</p>
     {:else}
         {#each classes as _class}
-            <div
-                class="inline-block flex-grow p-2 m-2 w-72 bg-gray-100 rounded-md transition-colors cursor-pointer hover:bg-gray-200"
-                transition:fade|local={{ duration: 200 }}
-            >
-                <h2 class="text-lg font-semibold">{_class.data().name}</h2>
-                <p class="font-mono text-sm">{_class.data().classId}</p>
-                <p>
-                    <span class="font-semibold"
-                        >{_class.data().students.length}</span
-                    >
-                    {_class.data().students.length === 1 ? "élève" : "élèves"}
-                </p>
-            </div>
+            <ClassListItem classData={_class.data()} />
         {/each}
     {/if}
 </div>
