@@ -8,9 +8,7 @@
     let loginBtnDisabled = false;
 </script>
 
-<h1 class="inline-block text-xl font-bold">
-    Connexion Élève
-</h1>
+<h1 class="inline-block text-xl font-bold">Connexion Élève</h1>
 <span class="text-gray-500"
     >Où
     <a href="/login/admin" class="text-blue-500"
