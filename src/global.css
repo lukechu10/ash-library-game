@@ -14,7 +14,7 @@
     }
 
     .btn:disabled {
-        @apply bg-gray-400 text-black;
+        @apply text-black bg-gray-400 hover:bg-gray-400 cursor-default;
     }
 
     .btn:focus {

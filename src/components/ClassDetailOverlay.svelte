@@ -1,9 +1,24 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+
     import type { ClassSchema } from "../services/firebase";
     import Overlay from "./Overlay.svelte";
 
     export let active: boolean;
     export let classData: ClassSchema;
+
+    let newStudentName: string;
+
+    let handleAddStudent: () => Promise<void>;
+
+    onMount(async () => {
+        const { addStudentToClass } = await import("../services/firebase");
+
+        handleAddStudent = async () => {
+            await addStudentToClass(classData.classId, newStudentName);
+            newStudentName = "";
+        };
+    });
 </script>
 
 <Overlay bind:active>
@@ -20,9 +35,11 @@
         </ul>
 
         <div class="flex flex-row">
-            <input class="input rounded-r-none" />
-            <button class="btn rounded-l-none bg-gray-400 hover:bg-gray-500"
-                >Ajouter</button
+            <input class="input rounded-r-none" bind:value={newStudentName} />
+            <button
+                class="btn rounded-l-none"
+                on:click={handleAddStudent}
+                disabled={!newStudentName}>Ajouter</button
             >
         </div>
 

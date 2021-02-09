@@ -85,7 +85,7 @@
     {#if classes === undefined}
         <p class="ml-2">Loading...</p>
     {:else}
-        {#each classes as _class}
+        {#each classes as _class (_class.data().classId)}
             <ClassListItem classData={_class.data()} />
         {/each}
     {/if}

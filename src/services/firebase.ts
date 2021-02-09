@@ -71,9 +71,21 @@ export async function createClass(_class: ClassSchema): Promise<boolean> {
     }
 }
 
+export async function addStudentToClass(
+    classId: string,
+    student: string
+): Promise<void> {
+    await db
+        .collection("classes")
+        .doc(classId)
+        .update({
+            students: firebase.firestore.FieldValue.arrayUnion(student),
+        });
+}
+
 export async function getUserClasses(
     uid: string
-): Promise<{ data: () => ClassSchema }[]> {
+): Promise<{ data: () => ClassSchema; ref: any }[]> {
     return db
         .collection("classes")
         .where("owner", "==", uid)
