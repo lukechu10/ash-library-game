@@ -12,9 +12,7 @@
     let updatePasswordBtnDisabled = false;
 
     onMount(async () => {
-        const { auth, deleteUserClasses } = await import(
-            "../services/firebase"
-        );
+        const { auth, deleteUserClasses } = await import("$services/firebase");
         const firebase = (await import("firebase/app")).default;
 
         handlePasswordChange = async () => {

@@ -1,6 +1,6 @@
 <script lang="ts">
+    import type { ClassSchema } from "$services/firebase";
     import { onMount } from "svelte";
-    import type { ClassSchema } from "../../services/firebase";
 
     let classId = "";
     let classPassword = "";
@@ -12,7 +12,7 @@
     let classData: ClassSchema = null;
 
     onMount(async () => {
-        const { db } = await import("../../services/firebase");
+        const { db } = await import("$services/firebase");
 
         handleContinue = async () => {
             let data = await db.collection("classes").doc(classId).get();

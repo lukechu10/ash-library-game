@@ -9,7 +9,13 @@ const sveltePreprocess = require("svelte-preprocess");
 const mode = process.env.NODE_ENV;
 const dev = mode === "development";
 
-const alias = { svelte: path.resolve("node_modules", "svelte") };
+const alias = {
+    svelte: path.resolve("node_modules", "svelte"),
+    $components: path.resolve("src", "components"),
+    $routes: path.resolve("src", "routes"),
+    $services: path.resolve("src", "services"),
+    $store: path.resolve("src", "store"),
+};
 const extensions = [".mjs", ".js", ".ts", ".json", ".svelte", ".html"];
 const mainFields = ["svelte", "module", "browser", "main"];
 const fileLoaderRule = {

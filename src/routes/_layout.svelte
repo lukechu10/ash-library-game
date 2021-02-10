@@ -1,7 +1,7 @@
 <script lang="ts">
+    import type GoogleAnalytics from "$components/GoogleAnalytics.svelte";
+    import Nav from "$components/Nav.svelte";
     import { onMount } from "svelte";
-    import type GoogleAnalytics from "../components/GoogleAnalytics.svelte";
-    import Nav from "../components/Nav.svelte";
 
     export let segment: string;
     segment; // noop
@@ -9,10 +9,10 @@
     let GoogleAnalytics: GoogleAnalytics;
 
     onMount(async () => {
-        const firebase = await import("../services/firebase"); // initialize firebase
+        const firebase = await import("$services/firebase"); // initialize firebase
         firebase; // noop
 
-        const module = await import("../components/GoogleAnalytics.svelte");
+        const module = await import("$components/GoogleAnalytics.svelte");
         GoogleAnalytics = module.default as any;
     });
 </script>

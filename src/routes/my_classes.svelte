@@ -1,12 +1,12 @@
 <script lang="ts">
+    import ClassListItem from "$components/ClassListItem.svelte";
+    import Overlay from "$components/Overlay.svelte";
+    import type { ClassSchema } from "$services/firebase";
     import { goto } from "@sapper/app";
     import { authState } from "rxfire/auth";
     import { collectionData } from "rxfire/firestore";
     import type { Observable } from "rxjs";
     import { onMount } from "svelte";
-    import ClassListItem from "../components/ClassListItem.svelte";
-    import Overlay from "../components/Overlay.svelte";
-    import type { ClassSchema } from "../services/firebase";
 
     let newClassOverlayActive = false;
     let newClassErrorMessage = "";
@@ -16,14 +16,14 @@
 
     $: if ($user !== undefined)
         (async () => {
-            const { db } = await import("../services/firebase");
+            const { db } = await import("$services/firebase");
             classes = collectionData(
                 db.collection("classes").where("owner", "==", $user.uid)
             );
         })();
 
     onMount(async () => {
-        const { auth } = await import("../services/firebase");
+        const { auth } = await import("$services/firebase");
         user = authState(auth);
     });
 
@@ -47,7 +47,7 @@
     };
 
     onMount(async () => {
-        const { auth, createClass } = await import("../services/firebase");
+        const { auth, createClass } = await import("$services/firebase");
 
         auth.onAuthStateChanged(async (user) => {
             if (!user) {

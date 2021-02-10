@@ -8,7 +8,7 @@
 
     let errorMessage = "";
     onMount(async () => {
-        const { auth } = await import("../../services/firebase");
+        const { auth } = await import("$services/firebase");
 
         handleSignup = async () => {
             try {
