@@ -49,7 +49,7 @@
     "style-loader": "^2.0.0",
     "svelte": "^3.32.2",
     "svelte-check": "^1.1.33",
-    "svelte-loader": "^2.13.6",
+    "svelte-loader": "^3.0.0",
     "svelte-loader-hot": "^0.3.1",
     "svelte-preprocess": "^4.6.6",
     "svelte-reduxify": "^1.3.0",
