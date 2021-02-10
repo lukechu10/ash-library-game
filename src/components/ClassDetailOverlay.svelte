@@ -14,8 +14,9 @@
         const { addStudentToClass } = await import("../services/firebase");
 
         handleAddStudent = async () => {
-            await addStudentToClass(classData.classId, newStudentName);
+            let name = newStudentName;
             newStudentName = "";
+            await addStudentToClass(classData.classId, name);
         };
     });
 </script>
