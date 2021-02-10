@@ -3,9 +3,6 @@
     "compilerOptions": {
         "lib": ["DOM", "ES2017", "WebWorker"],
         "resolveJsonModule": true,
-        "sourceMap": false,
-        "inlineSourceMap": true,
-        "inlineSources": true,
         "baseUrl": "./src/",
         "paths": {
             "$components/*": ["./components/*"],
