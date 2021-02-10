@@ -1331,16 +1331,6 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/polka@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@types/polka/-/polka-0.5.2.tgz#645580a78cd8606d6ef00dba1972272d542c2411"
-  integrity sha512-9AS3N5uDagt25iDH4WIG/uYoTA+DCn2VFI+waJwGKkG1vHi4jz218itxwY3Oarx2jr398mA1a/MjUftyH74R9A==
-  dependencies:
-    "@types/express" "*"
-    "@types/express-serve-static-core" "*"
-    "@types/node" "*"
-    "@types/trouter" "*"
-
 "@types/pug@^2.0.4":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@types/pug/-/pug-2.0.4.tgz#8772fcd0418e3cd2cc171555d73007415051f4b2"
@@ -1385,11 +1375,6 @@
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.2.tgz#a811b8c18e2babab7d542b3365887ae2e4d9de47"
   integrity sha512-7EJYyKTL7tFR8+gDbB6Wwz/arpGa0Mywk1TJbNzKzHtzbwVmY4HR9WqS5VV7dsBUKQmPNr192jHr/VpBluj/hg==
-
-"@types/trouter@*":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@types/trouter/-/trouter-3.1.0.tgz#8a3c7b34352b1cb454217a194e8bf03e5cdf7cc4"
-  integrity sha512-4LPNrqSJknLzILMVXn2P/mh0djNgFvom4T9Y1hmhaB8OBm1cY71bMMSrGRu1q5qF4JZzY6iaGT11BHmCMY/NZg==
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"

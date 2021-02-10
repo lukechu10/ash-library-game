@@ -8,12 +8,14 @@ const dev = NODE_ENV === "development";
 
 const app = express();
 
+app.disable("x-powered-by");
+
 app.use(
     compression({ threshold: 1024 }),
     sirv("static", { dev }),
     sapper.middleware()
 );
-app.use((err) => {
+app.use((err: any) => {
     if (err) console.log("error", err);
 });
 app.listen(PORT);
