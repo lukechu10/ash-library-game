@@ -1,6 +1,5 @@
 <script lang="ts">
     import { onMount } from "svelte";
-
     import type { ClassSchema } from "../services/firebase";
     import Overlay from "./Overlay.svelte";
 

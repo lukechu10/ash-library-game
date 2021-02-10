@@ -38,21 +38,6 @@ export interface ClassSchema {
     owner: string;
 }
 
-export async function getTopScores(
-    count: number
-): Promise<{ data: () => ScoreSchema }[]> {
-    return db
-        .collection("scores")
-        .orderBy("score", "desc")
-        .limit(count)
-        .get()
-        .then((querySnapshot) => {
-            const data = [];
-            querySnapshot.forEach((doc) => data.push(doc));
-            return data;
-        });
-}
-
 export async function addNewScore(score: ScoreSchema): Promise<void> {
     await db.collection("scores").add(score);
 }
@@ -80,20 +65,6 @@ export async function addStudentToClass(
         .doc(classId)
         .update({
             students: firebase.firestore.FieldValue.arrayUnion(student),
-        });
-}
-
-export async function getUserClasses(
-    uid: string
-): Promise<{ data: () => ClassSchema; ref: any }[]> {
-    return db
-        .collection("classes")
-        .where("owner", "==", uid)
-        .get()
-        .then((querySnapshot) => {
-            const classes = [];
-            querySnapshot.forEach((_class) => classes.push(_class));
-            return classes;
         });
 }
 
