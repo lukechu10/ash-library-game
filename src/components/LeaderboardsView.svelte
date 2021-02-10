@@ -1,7 +1,10 @@
 <script>
-    import { getTopScores } from "../services/firebase";
+    import { db } from "../services/firebase";
+    import { collectionData } from "rxfire/firestore";
 
-    let scores = getTopScores(10);
+    let scores = collectionData(
+        db.collection("scores").orderBy("score", "desc").limit(15)
+    );
 </script>
 
 <style>
@@ -23,11 +26,11 @@
 <a href="./">Back</a>
 
 <div>
-    {#await scores}
+    {#if $scores === undefined}
         <p>Loading...</p>
-    {:then scores}
-        {#each scores as score}
-            <p>{score.data().name} - {score.data().score}</p>
+    {:else}
+        {#each $scores as score}
+            <p>{score.name} - {score.score}</p>
         {/each}
-    {/await}
+    {/if}
 </div>
