@@ -1,8 +1,8 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
-    import { onDestroy, onMount } from "svelte";
+    import { onDestroy } from "svelte";
     import { getBooks } from "../services/bookApi";
-    import { db } from "../services/firebase";
+    import { addNewScore } from "../services/firebase";
     import { isCorrectlySorted, sortGameState } from "../store/sortGameState";
     import Book from "./Book.svelte";
     import Overlay from "./Overlay.svelte";
@@ -40,7 +40,7 @@
      * Ends the timer.
      */
     const endTimer = () => {
-        if (intervalId === undefined) throw "timer not started yet"; // FIXME
+        if (intervalId === undefined) throw "timer not started yet";
         clearInterval(intervalId);
         intervalId = undefined; // erase intervalId
     };
@@ -70,10 +70,7 @@
      */
     const finishGame = async () => {
         // save score to firestore
-        await db.collection("scores").add({
-            score,
-            name: "AAA",
-        });
+        await addNewScore({ name: "AAA", score });
         sortGameState.reset();
 
         goto("/"); // go to home page
@@ -132,7 +129,7 @@
     }
 </style>
 
-<div class="sort-game-view w-full">
+<div class="w-full sort-game-view">
     <div class="flex flex-row w-full">
         <span class="flex-1">Time: {time}s</span>
         <span class="flex-1">Score: {score}</span>
@@ -148,14 +145,12 @@
     </div>
 
     <Overlay active={startDimmerActive}>
-        <div
-            class="container flex flex-col mx-auto p-3 max-w-md bg-white rounded-md"
-        >
-            <h5 class="self-center text-lg font-bold">
+        <div class="max-w-md card">
+            <h3 class="self-center text-lg font-bold">
                 Choisir les paramètres du jeu
-            </h5>
+            </h3>
             <div
-                class="d-flex justify-space-around difficulty-radios mb-5 ml-10 mr-10"
+                class="mr-10 mb-5 ml-10 d-flex justify-space-around difficulty-radios"
             >
                 <fieldset class="flex flex-col">
                     <div class="self-center">
@@ -201,21 +196,23 @@
                                 type="radio"
                                 class="radio"
                                 bind:group={bookType}
-                                value={'alpha'}
-                            />Ordre alphabétique</label>
+                                value={"alpha"}
+                            />Ordre alphabétique</label
+                        >
                         <label>
                             <input
                                 type="radio"
                                 class="radio"
                                 bind:group={bookType}
-                                value={'dewey'}
-                            />Ordre numérique</label>
+                                value={"dewey"}
+                            />Ordre numérique</label
+                        >
                     </div>
                 </fieldset>
             </div>
             <div class="flex justify-center">
                 <button
-                    class="btn bg-red-500 hover:bg-red-600"
+                    class="bg-red-500 btn hover:bg-red-600"
                     on:click={startGame}
                 >
                     Commencer
@@ -226,23 +223,22 @@
 
     <!-- Continue button -->
     <Overlay active={continueDimmerActive}>
-        <button
-            class="btn bg-red-500 hover:bg-red-600"
-            on:click={continueGame}
-        >Continuer</button>
+        <button class="bg-red-500 btn hover:bg-red-600" on:click={continueGame}
+            >Continuer</button
+        >
     </Overlay>
 
     <!-- Finish button -->
     <Overlay active={finishDimmerActive}>
         <div class="flex flex-col items-center">
-            <p class="mb-3 text-white text-lg font-semibold">
+            <p class="mb-3 text-lg font-semibold text-white">
                 Ton score:
                 {score}
             </p>
             <button
-                class="btn bg-red-500 hover:bg-red-600"
-                on:click={finishGame}
-            >Continuer</button>
+                class="bg-red-500 btn hover:bg-red-600"
+                on:click={finishGame}>Continuer</button
+            >
         </div>
     </Overlay>
 </div>

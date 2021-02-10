@@ -24,7 +24,7 @@
 </style>
 
 <Nav />
-<main class="mt-12 bg-white p-0 relative container mx-auto">
+<main class="container relative p-0 mx-auto mt-12 bg-white">
     <slot />
 </main>
 

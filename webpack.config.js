@@ -62,12 +62,18 @@ module.exports = {
                 {
                     test: /\.(svelte|html)$/,
                     use: {
-                        loader: "svelte-loader",
+                        loader: "svelte-loader-hot",
                         options: {
                             preprocess: sveltePreprocess(),
                             dev,
                             hydratable: true,
-                            hotReload: false, // pending https://github.com/sveltejs/svelte/issues/2377
+                            emitCss: false, // currently broken with HMR
+                            hotReload: true,
+                            hotOptions: {
+                                noPreserveState: false,
+                                acceptAccessors: true,
+                                acceptNamedExports: true,
+                            },
                         },
                     },
                 },
@@ -85,6 +91,7 @@ module.exports = {
                 "process.env.NODE_ENV": JSON.stringify(mode),
             }),
             new MiniCssExtractPlugin(),
+            new webpack.HotModuleReplacementPlugin(),
         ].filter(Boolean),
         devtool: dev && "inline-source-map",
     },

@@ -44,7 +44,8 @@
 <h1 class="inline-block text-xl font-bold">
     Inscription Enseignant/Bibliothécaire
 </h1>
-<span class="text-gray-500">Où
+<span class="text-gray-500"
+    >Où
     <a href="/login/admin" class="text-blue-500">connexion</a>
 </span>
 
@@ -90,13 +91,15 @@
     </div>
     <button
         disabled={signupBtnDisabled}
-        class="btn mt-2 w-full"
+        class="mt-2 w-full btn"
         on:click={handleSignup}
     >
         Inscription
     </button>
 
     {#if errorMessage}
-        <div class="red white-text ma-3 pa-2 rounded">{errorMessage}</div>
+        <div class="py-2 px-3 mt-2 text-white bg-red-500 rounded">
+            {errorMessage}
+        </div>
     {/if}
 </div>

@@ -10,15 +10,25 @@
 
 @layer components {
     .btn {
-        @apply px-3 py-2 text-white font-semibold bg-blue-500 rounded shadow-md transition-colors;
+        @apply px-3 py-2 text-white font-semibold bg-blue-500 rounded shadow-md transition-colors hover:bg-blue-700;
     }
 
-    .btn:hover {
-        @apply bg-blue-600;
+    .btn:disabled {
+        @apply text-black bg-gray-400 hover:bg-gray-400 cursor-default;
     }
 
     .btn:focus {
         @apply outline-none;
+    }
+}
+
+@layer components {
+    .card {
+        @apply container flex flex-col p-3 mx-auto bg-white rounded-md;
+    }
+
+    .card > .footer {
+        @apply flex flex-col -m-3 mt-2 p-3 rounded-b-md;
     }
 }
 

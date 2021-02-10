@@ -12,7 +12,9 @@
     let updatePasswordBtnDisabled = false;
 
     onMount(async () => {
-        const { auth } = await import("../services/firebase");
+        const { auth, deleteUserClasses } = await import(
+            "../services/firebase"
+        );
         const firebase = (await import("firebase/app")).default;
 
         handlePasswordChange = async () => {
@@ -56,6 +58,11 @@
                     deletePassword
                 );
                 await auth.currentUser.reauthenticateWithCredential(credential);
+
+                // delete classes associated with user
+                await deleteUserClasses(auth.currentUser.uid);
+
+                // delete user
                 await auth.currentUser.delete();
 
                 goto("/"); // successful account deletion
@@ -97,10 +104,13 @@
 
         <strong>Email: </strong><i>{user.email}</i>
         (vérifié:
-        {user.emailVerified ? 'oui' : 'non'})
+        {user.emailVerified ? "oui" : "non"})
         {#if !user.emailVerified}
-            <span style="color: blue; cursor: pointer;">Renvoyer l'email de
-                vérification</span>
+            <span
+                style="color: blue; cursor: pointer;"
+                on:click={handleResendVerificationEmail}
+                >Renvoyer l'email de vérification</span
+            >
         {/if}
     </div>
     <h2 class="text-lg font-semibold">Changer le mot de passe</h2>
@@ -132,7 +142,7 @@
         />
     </label>
     <button
-        class="btn mt-2"
+        class="mt-2 btn"
         disabled={updatePasswordBtnDisabled}
         on:click={handlePasswordChange}
     >
@@ -140,14 +150,15 @@
     </button>
 
     {#if errorMessage}
-        <div class="red white-text ma-3 pa-2 rounded">{errorMessage}</div>
+        <div class="rounded red white-text ma-3 pa-2">{errorMessage}</div>
     {/if}
     {#if successMessage}
-        <div class="green white-text ma-3 pa-2 rounded">{successMessage}</div>
+        <div class="rounded green white-text ma-3 pa-2">{successMessage}</div>
     {/if}
     <h2 class="text-lg font-semibold">Supprimer votre compte</h2>
-    <span class="text-red-500 font-semibold">Attention! Cette action est
-        irréversible.</span>
+    <span class="font-semibold text-red-500"
+        >Attention! Cette action est irréversible.</span
+    >
     <label>
         Mot de passe
         <input
@@ -158,7 +169,7 @@
         />
     </label>
     <button
-        class="btn mt-2 bg-red-500 hover:bg-red-600"
+        class="mt-2 bg-red-500 btn hover:bg-red-600"
         on:click={handleDeleteAccount}
     >
         Supprimer mon compte
