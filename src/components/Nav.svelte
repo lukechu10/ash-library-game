@@ -1,32 +1,24 @@
 <script lang="ts">
+    import type { Observable } from "rxjs";
     import { onMount } from "svelte";
-    import { slide } from "svelte/transition";
     import { cubicOut } from "svelte/easing";
+    import { slide } from "svelte/transition";
 
-    let email = "",
-        name = "";
-    let signedIn: boolean | undefined; // signedIn should be undefined until auth has loaded
     let dropdownOpen = false;
 
+    let user: Observable<firebase.default.User> | undefined;
+
     let handleSignout: () => Promise<void>;
+
     onMount(async () => {
-        const { auth } = await import("../services/firebase");
+        const firebase = await import("../services/firebase");
+        const { authState } = await import("rxfire/auth");
+
+        user = authState(firebase.auth);
 
         handleSignout = async () => {
-            await auth.signOut();
+            await firebase.auth.signOut();
         };
-
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                email = user.email;
-                name = user.displayName;
-                signedIn = true;
-            } else {
-                email = "";
-                name = "";
-                signedIn = false;
-            }
-        });
     });
 
     const toggleDropdown = (event: Event) => {
@@ -51,8 +43,8 @@
 
         <!-- Profile dropdown -->
         <div class="flex-1">
-            {#if signedIn !== undefined}
-                {#if signedIn === true}
+            {#if $user !== undefined}
+                {#if $user !== null}
                     <div class="flex flex-row-reverse">
                         <div>
                             <button
@@ -100,7 +92,7 @@
                             {/if}
                         </div>
                         <span class="inline-block my-auto mr-3 text-white"
-                            >{name}</span
+                            >{$user.displayName}</span
                         >
                     </div>
                 {:else}
