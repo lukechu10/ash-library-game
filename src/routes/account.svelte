@@ -12,9 +12,7 @@
     let updatePasswordBtnDisabled = false;
 
     onMount(async () => {
-        const { auth, deleteUserClasses } = await import(
-            "../services/firebase"
-        );
+        const { auth, deleteUserClasses } = await import("$services/firebase");
         const firebase = (await import("firebase/app")).default;
 
         handlePasswordChange = async () => {
@@ -28,11 +26,11 @@
                     throw { message: "You must enter a new password." };
 
                 const credential = firebase.auth.EmailAuthProvider.credential(
-                    auth.currentUser.email,
+                    auth.currentUser!.email!,
                     oldPassword
                 );
-                await auth.currentUser.reauthenticateWithCredential(credential);
-                await auth.currentUser.updatePassword(newPassword);
+                await auth.currentUser!.reauthenticateWithCredential(credential);
+                await auth.currentUser!.updatePassword(newPassword);
 
                 errorMessage = "";
                 successMessage = "Successfully updated password.";
@@ -54,16 +52,16 @@
         handleDeleteAccount = async () => {
             try {
                 const credential = firebase.auth.EmailAuthProvider.credential(
-                    auth.currentUser.email,
+                    auth.currentUser!.email!,
                     deletePassword
                 );
-                await auth.currentUser.reauthenticateWithCredential(credential);
+                await auth.currentUser!.reauthenticateWithCredential(credential);
 
                 // delete classes associated with user
-                await deleteUserClasses(auth.currentUser.uid);
+                await deleteUserClasses(auth.currentUser!.uid);
 
                 // delete user
-                await auth.currentUser.delete();
+                await auth.currentUser!.delete();
 
                 goto("/"); // successful account deletion
             } catch (err) {
@@ -75,7 +73,7 @@
         };
 
         handleResendVerificationEmail = async () => {
-            await auth.currentUser.sendEmailVerification();
+            await auth.currentUser!.sendEmailVerification();
         };
 
         auth.onAuthStateChanged((_user) => {

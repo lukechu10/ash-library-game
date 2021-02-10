@@ -1,11 +1,11 @@
 <script lang="ts">
+    import Book from "$components/Book.svelte";
+    import Overlay from "$components/Overlay.svelte";
+    import { getBooks } from "$services/bookApi";
+    import { addNewScore } from "$services/firebase";
+    import { isCorrectlySorted, sortGameState } from "$store/sortGameState";
     import { goto } from "@sapper/app";
     import { onDestroy } from "svelte";
-    import { getBooks } from "../services/bookApi";
-    import { addNewScore } from "../services/firebase";
-    import { isCorrectlySorted, sortGameState } from "../store/sortGameState";
-    import Book from "./Book.svelte";
-    import Overlay from "./Overlay.svelte";
 
     const numberOfRounds = 3;
     let roundNumber = 0;

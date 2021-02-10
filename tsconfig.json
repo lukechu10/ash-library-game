@@ -5,7 +5,16 @@
         "resolveJsonModule": true,
         "sourceMap": false,
         "inlineSourceMap": true,
-        "inlineSources": true
+        "inlineSources": true,
+        "baseUrl": "./src/",
+        "paths": {
+            "$components/*": ["./components/*"],
+            "$routes/*": ["./routes/*"],
+            "$services/*": ["./services/*"],
+            "$store/*": ["./store/*"]
+        },
+        "strict": true,
+        "noFallthroughCasesInSwitch": true
     },
     "include": ["src/**/*", "src/node_modules/**/*"],
     "exclude": ["node_modules/*", "__sapper__/*", "static/*"]

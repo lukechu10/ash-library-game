@@ -55,18 +55,18 @@ function createSortGameState() {
 
             // update index of books already on shelf
             bookList.forEach((book) => {
-                if (book.shelfPosition >= index && book.DOCUMENT_ID !== id)
-                    book.shelfPosition += 1;
+                if (book.shelfPosition! >= index && book.DOCUMENT_ID !== id)
+                    book.shelfPosition! += 1;
             });
 
             // update index of book with id
             bookList.find(
                 (book) => book.DOCUMENT_ID === id
-            ).shelfPosition = index;
+            )!.shelfPosition = index;
 
             return {
-                bookList,
                 ...state,
+                bookList,
                 considerPosition: bookList.length, // reset considerPosition
             };
         });
@@ -84,14 +84,14 @@ function createSortGameState() {
             );
 
             if (bookIndex !== -1) {
-                let pos = bookList[bookIndex].shelfPosition;
+                let pos = bookList[bookIndex].shelfPosition!;
 
                 // set bookIndex shelfPosition to undefined to remove from shelf
                 bookList[bookIndex].shelfPosition = undefined;
 
                 // move other books
                 bookList.forEach((book) =>
-                    book.shelfPosition > pos ? book.shelfPosition-- : {}
+                    book.shelfPosition! > pos ? book.shelfPosition!-- : {}
                 );
             }
 
@@ -201,7 +201,7 @@ export const isCorrectlySorted = derived(sortGameState, ($sortGameState) => {
     if (!allOnShelf) return false;
 
     const bookListTmp = bookList.slice(0); // clone bookList for sorting
-    bookListTmp.sort((a, b) => a.shelfPosition - b.shelfPosition);
+    bookListTmp.sort((a, b) => a.shelfPosition! - b.shelfPosition!);
 
     // make sure each book after the first is greater
     let prevCote = ""; // smallest string value (according to strGreaterThan)

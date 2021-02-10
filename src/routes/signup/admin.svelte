@@ -8,7 +8,7 @@
 
     let errorMessage = "";
     onMount(async () => {
-        const { auth } = await import("../../services/firebase");
+        const { auth } = await import("$services/firebase");
 
         handleSignup = async () => {
             try {
@@ -24,10 +24,10 @@
                     email,
                     password
                 );
-                await auth.currentUser.updateProfile({ displayName: name });
+                await auth.currentUser!.updateProfile({ displayName: name });
 
                 // send verification email
-                await user.user.sendEmailVerification();
+                await user.user!.sendEmailVerification();
 
                 // signup successful
                 goto("/");

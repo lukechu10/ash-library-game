@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { sortGameState, isCorrectlySorted } from "../store/sortGameState";
-    import type { BookData } from "../services/bookApi";
-    import { getCoteFromBook } from "../services/bookApi";
-    import { tweened } from "svelte/motion";
+    import type { BookData } from "$services/bookApi";
+    import { getCoteFromBook } from "$services/bookApi";
+    import { isCorrectlySorted, sortGameState } from "$store/sortGameState";
     import { cubicOut } from "svelte/easing";
+    import { tweened } from "svelte/motion";
     import { get } from "svelte/store";
 
     export let isDragging = false;
@@ -54,7 +54,7 @@
     /**
      * Moves book to a location (without animation).
      */
-    const moveTo = ({ x, y }) => {
+    const moveTo = ({ x, y }: { x: number; y: number }) => {
         pos.set(
             {
                 x: x - diffPos.x,
@@ -66,7 +66,7 @@
         );
     };
 
-    const handleMove = (event) => {
+    const handleMove = (event: PointerEvent) => {
         let { x, y } = event;
         moveTo({ x, y });
 

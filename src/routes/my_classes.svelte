@@ -1,13 +1,31 @@
 <script lang="ts">
+    import ClassListItem from "$components/ClassListItem.svelte";
+    import Overlay from "$components/Overlay.svelte";
+    import type { ClassSchema } from "$services/firebase";
     import { goto } from "@sapper/app";
+    import { authState } from "rxfire/auth";
+    import { collectionData } from "rxfire/firestore";
+    import type { Observable } from "rxjs";
     import { onMount } from "svelte";
-    import ClassListItem from "../components/ClassListItem.svelte";
-    import Overlay from "../components/Overlay.svelte";
-    import type { ClassSchema } from "../services/firebase";
 
     let newClassOverlayActive = false;
     let newClassErrorMessage = "";
-    let classes: { data: () => ClassSchema }[] = undefined;
+
+    let user: Observable<firebase.default.User>;
+    let classes: Observable<ClassSchema[]>;
+
+    $: if ($user !== undefined)
+        (async () => {
+            const { db } = await import("$services/firebase");
+            classes = collectionData(
+                db.collection("classes").where("owner", "==", $user.uid)
+            );
+        })();
+
+    onMount(async () => {
+        const { auth } = await import("$services/firebase");
+        user = authState(auth);
+    });
 
     let newClass = {
         name: "",
@@ -16,7 +34,6 @@
     };
     let classPasswordConfirm = "";
 
-    let refreshClasses: () => Promise<void>;
     let handleCreateClass: () => Promise<void>;
     const handleCancelClass = () => {
         newClass = {
@@ -30,21 +47,13 @@
     };
 
     onMount(async () => {
-        const { auth, createClass, getUserClasses } = await import(
-            "../services/firebase"
-        );
+        const { auth, createClass } = await import("$services/firebase");
 
         auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                classes = await getUserClasses(user.uid);
-            } else {
+            if (!user) {
                 goto("/login/admin"); // not logged in, go to login page
             }
         });
-
-        refreshClasses = async () => {
-            classes = await getUserClasses(auth.currentUser.uid);
-        };
 
         handleCreateClass = async () => {
             if (newClass.classPassword !== classPasswordConfirm) {
@@ -54,7 +63,7 @@
                 await createClass({
                     ...newClass,
                     students: [],
-                    owner: auth.currentUser.uid,
+                    owner: $user.uid,
                 })
             ) {
                 newClass = {
@@ -65,7 +74,6 @@
                 classPasswordConfirm = "";
                 newClassErrorMessage = "";
                 newClassOverlayActive = false;
-                refreshClasses();
             } else {
                 // class with id already exists
                 newClassErrorMessage =
@@ -82,11 +90,11 @@
 >
 
 <div class="flex flex-row flex-wrap -m-2 mt-2 class-grid">
-    {#if classes === undefined}
+    {#if $classes === undefined}
         <p class="ml-2">Loading...</p>
     {:else}
-        {#each classes as _class (_class.data().classId)}
-            <ClassListItem classData={_class.data()} />
+        {#each $classes as _class (_class.classId)}
+            <ClassListItem classData={_class} />
         {/each}
     {/if}
 </div>

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import { goto } from "@sapper/app";
+    import { onMount } from "svelte";
 
     let email: string, password: string;
     let handleLogin: () => Promise<void>;
@@ -8,7 +8,7 @@
 
     let errorMessage = "";
     onMount(async () => {
-        const { auth } = await import("../../services/firebase");
+        const { auth } = await import("$services/firebase");
 
         handleLogin = async () => {
             try {
@@ -18,6 +18,7 @@
                     email,
                     password
                 );
+                user; // noop
                 // login successful
                 goto("/");
             } catch (err) {

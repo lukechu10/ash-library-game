@@ -38,21 +38,6 @@ export interface ClassSchema {
     owner: string;
 }
 
-export async function getTopScores(
-    count: number
-): Promise<{ data: () => ScoreSchema }[]> {
-    return db
-        .collection("scores")
-        .orderBy("score", "desc")
-        .limit(count)
-        .get()
-        .then((querySnapshot) => {
-            const data = [];
-            querySnapshot.forEach((doc) => data.push(doc));
-            return data;
-        });
-}
-
 export async function addNewScore(score: ScoreSchema): Promise<void> {
     await db.collection("scores").add(score);
 }
@@ -83,20 +68,6 @@ export async function addStudentToClass(
         });
 }
 
-export async function getUserClasses(
-    uid: string
-): Promise<{ data: () => ClassSchema; ref: any }[]> {
-    return db
-        .collection("classes")
-        .where("owner", "==", uid)
-        .get()
-        .then((querySnapshot) => {
-            const classes = [];
-            querySnapshot.forEach((_class) => classes.push(_class));
-            return classes;
-        });
-}
-
 /** Deletes all the classes associated with a user. This should be called prior to deleting the user account. */
 export async function deleteUserClasses(uid: string): Promise<void> {
     (await db.collection("classes").where("owner", "==", uid).get()).forEach(
@@ -108,3 +79,8 @@ export const analytics = firebase.analytics();
 export const perf = firebase.performance();
 export const db = firebase.firestore();
 export const auth = firebase.auth();
+
+if (process.env.NODE_ENV === "development") {
+    console.log("Disabling Google Analytics collection in DEV mode");
+    analytics.setAnalyticsCollectionEnabled(false); // disable analytics in dev mode
+}

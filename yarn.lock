@@ -6224,7 +6224,14 @@ rustywind@^0.8.0:
   resolved "https://registry.yarnpkg.com/rustywind/-/rustywind-0.8.0.tgz#ff690e882d0e4f9bfe85b77bf886acfc04939adc"
   integrity sha512-DRa2AE8WODMUTZZ61/bEuXyPWuJ1mXWVM5jTzd9y8xFQAizJ1HCDkFpUdM3M5LKzr0DIfv1vq6I5DLeGtdRG5Q==
 
-rxjs@^6.3.3:
+rxfire@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/rxfire/-/rxfire-4.0.0.tgz#53f70fac70864f517134bf99e3a1b3424ca4a854"
+  integrity sha512-0Hor04B9ZgOZSULW3xOvEFXNPuqFXpwoT+4UdMSB5JCxXaVvltJ2eQynRdnGcalhqND3Vbtgz2TZia9aGs3TlQ==
+  dependencies:
+    tslib "^1.11.1"
+
+rxjs@^6.3.3, rxjs@^6.6.3:
   version "6.6.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.3.tgz#8ca84635c4daa900c0d3967a6ee7ac60271ee552"
   integrity sha512-trsQc+xYYXZ3urjOiJOuCOa5N3jAZ3eiSpQB5hIT8zGlL2QfnHLJ2r7GMkBGuIausdJN1OneaI6gQlsqNHHmZQ==

@@ -4,5 +4,5 @@ import "./global.css";
 console.log("Start");
 
 sapper.start({
-    target: document.querySelector("#sapper"),
+    target: document.getElementById("sapper")!,
 });
