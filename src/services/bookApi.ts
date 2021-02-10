@@ -3,7 +3,7 @@ export interface BookData extends RawBook {
     /**
      * Position of book on shelf. If not on shelf, value should be `undefined`. Starts as `undefined`.
      */
-    shelfPosition: number;
+    shelfPosition?: number;
 }
 
 export interface RawBook {
