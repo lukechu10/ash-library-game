@@ -108,3 +108,8 @@ export const analytics = firebase.analytics();
 export const perf = firebase.performance();
 export const db = firebase.firestore();
 export const auth = firebase.auth();
+
+if (process.env.NODE_ENV === "development") {
+    console.log("Disabling Google Analytics collection in DEV mode");
+    analytics.setAnalyticsCollectionEnabled(false); // disable analytics in dev mode
+}
