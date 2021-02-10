@@ -11,8 +11,8 @@
     let newClassOverlayActive = false;
     let newClassErrorMessage = "";
 
-    let user: Observable<firebase.default.User> | undefined;
-    let classes: Observable<ClassSchema[]> | undefined;
+    let user: Observable<firebase.default.User>;
+    let classes: Observable<ClassSchema[]>;
 
     $: if ($user !== undefined)
         (async () => {
@@ -63,7 +63,7 @@
                 await createClass({
                     ...newClass,
                     students: [],
-                    owner: auth.currentUser.uid,
+                    owner: $user.uid,
                 })
             ) {
                 newClass = {

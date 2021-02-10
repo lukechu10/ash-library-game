@@ -54,7 +54,7 @@
     /**
      * Moves book to a location (without animation).
      */
-    const moveTo = ({ x, y }) => {
+    const moveTo = ({ x, y }: { x: number; y: number }) => {
         pos.set(
             {
                 x: x - diffPos.x,
@@ -66,7 +66,7 @@
         );
     };
 
-    const handleMove = (event) => {
+    const handleMove = (event: PointerEvent) => {
         let { x, y } = event;
         moveTo({ x, y });
 

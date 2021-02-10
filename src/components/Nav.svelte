@@ -6,7 +6,7 @@
 
     let dropdownOpen = false;
 
-    let user: Observable<firebase.default.User> | undefined;
+    let user: Observable<firebase.default.User>;
 
     let handleSignout: () => Promise<void>;
 

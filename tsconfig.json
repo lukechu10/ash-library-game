@@ -12,7 +12,9 @@
             "$routes/*": ["./routes/*"],
             "$services/*": ["./services/*"],
             "$store/*": ["./store/*"]
-        }
+        },
+        "strict": true,
+        "noFallthroughCasesInSwitch": true
     },
     "include": ["src/**/*", "src/node_modules/**/*"],
     "exclude": ["node_modules/*", "__sapper__/*", "static/*"]

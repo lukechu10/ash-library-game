@@ -9,14 +9,14 @@
     let phase: "class" | "student" = "class";
 
     let handleContinue: () => Promise<void>;
-    let classData: ClassSchema = null;
+    let classData: ClassSchema;
 
     onMount(async () => {
         const { db } = await import("$services/firebase");
 
         handleContinue = async () => {
             let data = await db.collection("classes").doc(classId).get();
-            if (!data.exists || data.data().classPassword !== classPassword) {
+            if (!data.exists || data.data()!.classPassword !== classPassword) {
                 errorMessage = "Identifiant ou mot de passe incorrect.";
             } else {
                 classData = data.data() as ClassSchema;

@@ -18,6 +18,7 @@
                     email,
                     password
                 );
+                user; // noop
                 // login successful
                 goto("/");
             } catch (err) {
