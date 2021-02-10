@@ -35,15 +35,15 @@
         </ul>
 
         <div class="flex flex-row">
-            <input class="input rounded-r-none" bind:value={newStudentName} />
+            <input class="rounded-r-none input" bind:value={newStudentName} />
             <button
-                class="btn rounded-l-none"
+                class="rounded-l-none btn"
                 on:click={handleAddStudent}
                 disabled={!newStudentName}>Ajouter</button
             >
         </div>
 
-        <button class="btn mt-2" on:click={() => (active = false)}
+        <button class="mt-2 btn" on:click={() => (active = false)}
             >Fermer</button
         >
     </div>
