@@ -1,10 +1,21 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
+    import { authState } from "rxfire/auth";
+    import type { Observable } from "rxjs";
     import { onMount } from "svelte";
 
     let email: string, password: string;
     let handleLogin: () => Promise<void>;
     let loginBtnDisabled = false;
+
+    let user: Observable<firebase.default.User>;
+
+    $: if (!!$user) goto("/account");
+
+    onMount(async () => {
+        const { auth } = await import("$services/firebase");
+        user = authState(auth);
+    });
 
     let errorMessage = "";
     onMount(async () => {

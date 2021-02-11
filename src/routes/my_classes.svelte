@@ -14,13 +14,14 @@
     let user: Observable<firebase.default.User>;
     let classes: Observable<ClassSchema[]>;
 
-    $: if ($user !== undefined)
+    $: if (!!$user)
         (async () => {
             const { db } = await import("$services/firebase");
             classes = collectionData(
                 db.collection("classes").where("owner", "==", $user.uid)
             );
         })();
+    else if ($user === null) goto("/login/student");
 
     onMount(async () => {
         const { auth } = await import("$services/firebase");
@@ -47,13 +48,7 @@
     };
 
     onMount(async () => {
-        const { auth, createClass } = await import("$services/firebase");
-
-        auth.onAuthStateChanged(async (user) => {
-            if (!user) {
-                goto("/login/admin"); // not logged in, go to login page
-            }
-        });
+        const { createClass } = await import("$services/firebase");
 
         handleCreateClass = async () => {
             if (newClass.classPassword !== classPasswordConfirm) {

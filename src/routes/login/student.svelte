@@ -1,6 +1,9 @@
 <script lang="ts">
     import type { ClassSchema } from "$services/firebase";
+    import { authState } from "rxfire/auth";
+    import type { Observable } from "rxjs";
     import { onMount } from "svelte";
+    import { goto } from "@sapper/app";
 
     let classId = "";
     let classPassword = "";
@@ -10,6 +13,15 @@
 
     let handleContinue: () => Promise<void>;
     let classData: ClassSchema;
+
+    let user: Observable<firebase.default.User>;
+
+    $: if (!!$user) goto("/account");
+
+    onMount(async () => {
+        const { auth } = await import("$services/firebase");
+        user = authState(auth);
+    });
 
     onMount(async () => {
         const { db } = await import("$services/firebase");
