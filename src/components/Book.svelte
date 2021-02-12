@@ -18,8 +18,8 @@
     $: cote = getCoteFromBook(data);
 
     $: isAfterConsiderPos =
-        $sortGameState.considerPosition <= data.shelfPosition;
-    $: computedShelfPos = data.shelfPosition + (isAfterConsiderPos ? 1 : 0);
+        $sortGameState.considerPosition <= data.shelfPosition!;
+    $: computedShelfPos = data.shelfPosition! + (isAfterConsiderPos ? 1 : 0);
     $: data.shelfPosition !== undefined
         ? pos.set({ x: 10 + 160 * computedShelfPos, y: 110 })
         : {};
