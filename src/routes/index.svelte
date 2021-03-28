@@ -1,15 +1,15 @@
-<style>
+<style style lang="postcss">
     h1 {
         font-size: 2.8em;
-        text-transform: uppercase;
+        @apply uppercase;
         font-weight: 700;
         margin: 0 0 0.5em 0;
 
-        text-align: center;
-        margin: 0 auto;
+        @apply text-center;
+        @apply mx-auto;
     }
 
-    @media (min-width: 480px) {
+    @screen sm {
         h1 {
             font-size: 4em;
         }
@@ -18,5 +18,5 @@
 
 <h1>Library Game</h1>
 
-<a href="./game">Game</a>
+<a class="text-blue-600 underline" href="./game">Game</a>
 <a href="./leaderboards">Leaderboards</a>
