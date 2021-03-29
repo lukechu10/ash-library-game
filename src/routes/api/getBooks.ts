@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import type { BookData, RawBook } from "../../services/bookApi";
-const bookData = require("../../../static/books.json") as RawBook[]; // require is used in this case to prevent typescript from typechecking the file (which lags a lot).
+// const bookData = require("../../../static/books.json") as RawBook[]; // require is used in this case to prevent typescript from typechecking the file (which lags a lot).
+
+import bookData from "../../../static/books.json";
 
 /**
  * Used for filtering books.
@@ -128,35 +130,38 @@ async function getRandomBooks(
     return result;
 }
 
-export async function get(req: Request, res: Response, next: NextFunction) {
-    const amount: number = parseInt(req.query.amount as string);
-    if (isNaN(amount)) res.status(400).send("invalid amount query");
+export async function get({ query }) {
+    const amount: number = parseInt(query.get("amount") as string);
+    if (isNaN(amount)) return { status: 400, body: "invalid amount query" };
 
-    const bookTypeStr: string = req.query.bookType as string;
+    const bookTypeStr: string = query.get("bookType") as string;
     if (bookTypeStr === undefined)
-        res.status(400).send("invalid bookType query");
+        return { status: 400, body: "invalid bookType query" };
     else if (bookTypeStr !== "alpha" && bookTypeStr !== "dewey")
-        res.status(400).send("invalid bookType query");
+        return { status: 400, body: "invalid bookType query" };
 
     const bookType: BookType =
         bookTypeStr === "alpha" ? BookType.Alpha : BookType.DeweyDecimal;
 
     try {
-        // console.time("compute");
         const randBooks = (await getRandomBooks(bookType, amount)).map(
             getImageUrl
         );
-        // console.timeEnd("compute");
-        res.json(randBooks);
+        return { body: randBooks };
     } catch (err) {
         if (err.message === "there are not enough books to satisfy amount") {
-            res.status(400).send("amount query exceeds the number of books");
+            return {
+                status: 400,
+                body: "amount query exceeds maximum number of books",
+            };
         } else if (process.env.NODE_ENV === "development") {
             console.error(err);
-            res.status(400).json({ type: "Unexpected error", error: err });
+            return {
+                status: 400,
+                body: { type: "Unexpected error", err: err },
+            };
         } else {
             console.error(err);
-            next(err);
         }
     }
 }
