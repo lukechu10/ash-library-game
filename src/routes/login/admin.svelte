@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { goto } from "@sapper/app";
+    import { goto } from "$app/navigation";
     import { authState } from "rxfire/auth";
     import type { Observable } from "rxjs";
     import { onMount } from "svelte";
+
 
     let email: string, password: string;
     let handleLogin: () => Promise<void>;
@@ -13,13 +14,13 @@
     $: if (!!$user) goto("/account");
 
     onMount(async () => {
-        const { auth } = await import("$services/firebase");
+        const { auth } = await import("../../services/firebase");
         user = authState(auth);
     });
 
     let errorMessage = "";
     onMount(async () => {
-        const { auth } = await import("$services/firebase");
+        const { auth } = await import("../../services/firebase");
 
         handleLogin = async () => {
             try {

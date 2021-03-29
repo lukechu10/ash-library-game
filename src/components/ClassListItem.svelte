@@ -1,7 +1,7 @@
 <script lang="ts">
     import { fade } from "svelte/transition";
-    import type { ClassSchema } from "$services/firebase";
-    import ClassDetailOverlay from "$components/ClassDetailOverlay.svelte";
+    import type { ClassSchema } from "../services/firebase";
+    import ClassDetailOverlay from "../components/ClassDetailOverlay.svelte";
 
     export let classData: ClassSchema;
     let active = false;

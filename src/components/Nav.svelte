@@ -11,7 +11,7 @@
     let handleSignout: () => Promise<void>;
 
     onMount(async () => {
-        const firebase = await import("$services/firebase");
+        const firebase = await import("../services/firebase");
         const { authState } = await import("rxfire/auth");
 
         user = authState(firebase.auth);

@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { analytics } from "$services/firebase";
-    import { stores } from "@sapper/app";
-    const { page } = stores();
+    import { analytics } from "../services/firebase";
+    import { page } from "$app/stores";
 
     $: {
         analytics.setCurrentScreen($page.path);

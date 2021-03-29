@@ -1,11 +1,11 @@
 <script lang="ts">
-    import type LeaderboardsView from "$components/LeaderboardsView.svelte";
+    import type LeaderboardsView from "../components/LeaderboardsView.svelte";
     import { onMount } from "svelte";
 
     let LeaderboardsView: LeaderboardsView;
 
     onMount(async () => {
-        const module = await import("$components/LeaderboardsView.svelte");
+        const module = await import("../components/LeaderboardsView.svelte");
         LeaderboardsView = module.default as any;
     });
 </script>

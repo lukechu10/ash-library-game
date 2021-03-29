@@ -1,6 +1,7 @@
 import { reduxify } from "svelte-reduxify";
 import { derived, get, writable } from "svelte/store";
-import { BookData, getCoteFromBook } from "../services/bookApi";
+import type { BookData } from "../services/bookApi";
+import { getCoteFromBook } from "../services/bookApi";
 
 export interface SortGameState {
     /**

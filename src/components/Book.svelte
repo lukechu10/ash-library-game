@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { BookData } from "$services/bookApi";
-    import { getCoteFromBook } from "$services/bookApi";
-    import { isCorrectlySorted, sortGameState } from "$store/sortGameState";
+    import type { BookData } from "../services/bookApi";
+    import { getCoteFromBook } from "../services/bookApi";
+    import { isCorrectlySorted, sortGameState } from "../store/sortGameState";
     import { cubicOut } from "svelte/easing";
     import { tweened } from "svelte/motion";
     import { get } from "svelte/store";

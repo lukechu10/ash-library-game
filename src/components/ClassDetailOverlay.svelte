@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Overlay from "$components/Overlay.svelte";
-    import type { ClassSchema } from "$services/firebase";
+    import Overlay from "../components/Overlay.svelte";
+    import type { ClassSchema } from "../services/firebase";
     import { onMount } from "svelte";
 
     export let active: boolean;
@@ -11,7 +11,7 @@
     let handleAddStudent: () => Promise<void>;
 
     onMount(async () => {
-        const { addStudentToClass } = await import("$services/firebase");
+        const { addStudentToClass } = await import("../services/firebase");
 
         handleAddStudent = async () => {
             let name = newStudentName;

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { goto } from "@sapper/app";
+    import { goto } from "$app/navigation";
     import { onMount } from "svelte";
 
     let user: firebase.default.User | undefined;
@@ -12,7 +12,9 @@
     let updatePasswordBtnDisabled = false;
 
     onMount(async () => {
-        const { auth, deleteUserClasses } = await import("$services/firebase");
+        const { auth, deleteUserClasses } = await import(
+            "../services/firebase"
+        );
         const firebase = (await import("firebase/app")).default;
 
         handlePasswordChange = async () => {
@@ -29,7 +31,9 @@
                     auth.currentUser!.email!,
                     oldPassword
                 );
-                await auth.currentUser!.reauthenticateWithCredential(credential);
+                await auth.currentUser!.reauthenticateWithCredential(
+                    credential
+                );
                 await auth.currentUser!.updatePassword(newPassword);
 
                 errorMessage = "";
@@ -55,7 +59,9 @@
                     auth.currentUser!.email!,
                     deletePassword
                 );
-                await auth.currentUser!.reauthenticateWithCredential(credential);
+                await auth.currentUser!.reauthenticateWithCredential(
+                    credential
+                );
 
                 // delete classes associated with user
                 await deleteUserClasses(auth.currentUser!.uid);

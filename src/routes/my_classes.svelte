@@ -1,8 +1,8 @@
 <script lang="ts">
-    import ClassListItem from "$components/ClassListItem.svelte";
-    import Overlay from "$components/Overlay.svelte";
-    import type { ClassSchema } from "$services/firebase";
-    import { goto } from "@sapper/app";
+    import ClassListItem from "../components/ClassListItem.svelte";
+    import Overlay from "../components/Overlay.svelte";
+    import type { ClassSchema } from "../services/firebase";
+    import { goto } from "$app/navigation";
     import { authState } from "rxfire/auth";
     import { collectionData } from "rxfire/firestore";
     import type { Observable } from "rxjs";
@@ -16,7 +16,7 @@
 
     $: if (!!$user)
         (async () => {
-            const { db } = await import("$services/firebase");
+            const { db } = await import("../services/firebase");
             classes = collectionData(
                 db.collection("classes").where("owner", "==", $user.uid)
             );
@@ -24,7 +24,7 @@
     else if ($user === null) goto("/login/student");
 
     onMount(async () => {
-        const { auth } = await import("$services/firebase");
+        const { auth } = await import("../services/firebase");
         user = authState(auth);
     });
 
@@ -48,7 +48,7 @@
     };
 
     onMount(async () => {
-        const { createClass } = await import("$services/firebase");
+        const { createClass } = await import("../services/firebase");
 
         handleCreateClass = async () => {
             if (newClass.classPassword !== classPasswordConfirm) {

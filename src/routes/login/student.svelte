@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type { ClassSchema } from "$services/firebase";
+    import { goto } from "$app/navigation";
     import { authState } from "rxfire/auth";
     import type { Observable } from "rxjs";
     import { onMount } from "svelte";
-    import { goto } from "@sapper/app";
+    import type { ClassSchema } from "../../services/firebase";
 
     let classId = "";
     let classPassword = "";
@@ -19,12 +19,12 @@
     $: if (!!$user) goto("/account");
 
     onMount(async () => {
-        const { auth } = await import("$services/firebase");
+        const { auth } = await import("../../services/firebase");
         user = authState(auth);
     });
 
     onMount(async () => {
-        const { db } = await import("$services/firebase");
+        const { db } = await import("../../services/firebase");
 
         handleContinue = async () => {
             let data = await db.collection("classes").doc(classId).get();

@@ -18,5 +18,5 @@
 
 <h1>Library Game</h1>
 
-<a class="text-blue-600 underline" href="./game">Game</a>
+<a href="./game">Game</a>
 <a href="./leaderboards">Leaderboards</a>

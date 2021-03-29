@@ -1,10 +1,10 @@
 <script lang="ts">
-    import Book from "$components/Book.svelte";
-    import Overlay from "$components/Overlay.svelte";
-    import { getBooks } from "$services/bookApi";
-    import { addNewScore } from "$services/firebase";
-    import { isCorrectlySorted, sortGameState } from "$store/sortGameState";
-    import { goto } from "@sapper/app";
+    import Book from "./Book.svelte";
+    import Overlay from "./Overlay.svelte";
+    import { getBooks } from "../services/bookApi";
+    import { addNewScore } from "../services/firebase";
+    import { isCorrectlySorted, sortGameState } from "../store/sortGameState";
+    import { goto } from "$app/navigation";
     import { onDestroy } from "svelte";
 
     const numberOfRounds = 3;
@@ -34,7 +34,7 @@
             // update timer
             const duration = Date.now() - timerStart;
             time = Math.round(duration / 100) / 10;
-        }, 100);
+        }, 100) as unknown as number;
     };
     /**
      * Ends the timer.

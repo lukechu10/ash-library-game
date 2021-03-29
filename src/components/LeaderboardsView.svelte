@@ -1,5 +1,5 @@
 <script>
-    import { db } from "$services/firebase";
+    import { db } from "../services/firebase";
     import { collectionData } from "rxfire/firestore";
 
     let scores = collectionData(
