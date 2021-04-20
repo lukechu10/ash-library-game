@@ -51,7 +51,7 @@
     "svelte-check": "^1.1.33",
     "svelte-loader": "^2.13.6",
     "svelte-loader-hot": "^0.3.1",
-    "svelte-preprocess": "^4.6.6",
+    "svelte-preprocess": "^4.7.2",
     "svelte-reduxify": "^1.3.0",
     "tailwindcss": "^2.0.3",
     "ts-loader": "^8.0.16",
