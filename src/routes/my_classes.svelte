@@ -3,7 +3,7 @@
     import Overlay from "../components/Overlay.svelte";
     import type { ClassSchema } from "../services/firebase";
     import { goto } from "$app/navigation";
-    import { authState } from "rxfire/auth";
+    import { authState } from "rxfire/auth/dist/index.cjs";
     import { collectionData } from "rxfire/firestore";
     import type { Observable } from "rxjs";
     import { onMount } from "svelte";

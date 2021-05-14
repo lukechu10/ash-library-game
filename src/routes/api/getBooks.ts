@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import type { BookData, RawBook } from "../../services/bookApi";
-// const bookData = require("../../../static/books.json") as RawBook[]; // require is used in this case to prevent typescript from typechecking the file (which lags a lot).
 
+// @ts-expect-error do not typecheck JSON file
 import bookData from "../../../static/books.json";
 
 /**

@@ -2,7 +2,7 @@
     import { goto } from "$app/navigation";
     import type { Observable } from "rxjs";
     import { onMount } from "svelte";
-    import { authState } from "rxfire/auth";
+    import { authState } from "rxfire/auth/dist/index.cjs";
 
     let name: string, email: string, password: string, passwordVerify: string;
     let handleSignup: () => Promise<void>;
