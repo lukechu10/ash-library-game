@@ -1,7 +1,6 @@
-<script lang="ts">
-</script>
-
 <h1 class="text-5xl uppercase font-bold mt-2 text-center mx-auto">Library Game</h1>
 
-<a href="./game/sorting">Sorting game</a>
-<a href="./leaderboards">Leaderboards</a>
+<div class="flex flex-col mt-10 space-y-5 place-items-center">
+    <a class="btn w-52" href="./game/sorting">Sorting game</a>
+    <a class="btn w-52" href="./leaderboards">Leaderboards</a>
+</div>

@@ -8,7 +8,7 @@
 </script>
 
 <h1 class="text-lg font-bold">Leaderboards</h1>
-<a href="./">Back</a>
+<a class="btn" href="./">Back</a>
 
 <ul>
     {#await scores}
