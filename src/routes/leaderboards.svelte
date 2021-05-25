@@ -2,9 +2,9 @@
     import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 
     const db = getFirestore();
-    let scores = getDocs(
-        query(collection(db, "scores"), orderBy("score", "desc"), limit(20))
-    ).then((scores) => scores.docs.map((d) => d.data()));
+    let scores = getDocs(query(collection(db, "scores"), orderBy("score", "desc"), limit(20))).then(
+        (scores) => scores.docs.map((d) => d.data())
+    );
 </script>
 
 <h1 class="text-lg font-bold">Leaderboards</h1>

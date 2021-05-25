@@ -1,3 +1,7 @@
+<script>
+    import { authState } from "$lib/store/authState";
+</script>
+
 <nav class="fixed top-0 z-50 px-8 w-full bg-gray-800 shadow-md">
     <div class="flex flex-row justify-between items-center h-12">
         <!-- Left menu items -->

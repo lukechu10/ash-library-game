@@ -2,9 +2,7 @@
     import GoogleAnalytics from "$lib/GoogleAnalytics.svelte";
     import Nav from "$lib/Nav.svelte";
     import "../app.postcss";
-    import { initialize } from "./_firebase";
-
-    initialize();
+    import "$lib/firebase";
 </script>
 
 <Nav />

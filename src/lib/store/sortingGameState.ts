@@ -1,4 +1,3 @@
-// import { reduxify } from "svelte-reduxify";
 import { derived, get, writable } from "svelte/store";
 import type { BookData } from "$lib/bookApi";
 import { getCoteFromBook } from "$lib/bookApi";
@@ -171,12 +170,7 @@ function createSortGameState() {
     };
 }
 
-export const sortGameState: ReturnType<typeof createSortGameState> = (() => {
-    // if (process.env.NODE_ENV === "development") {
-    //     return reduxify(createSortGameState());
-    // } else return createSortGameState();
-    return createSortGameState();
-})();
+export const sortGameState = createSortGameState();
 
 /**
  * Is `true` if all books are on shelf and in correct order. Is `false` otherwise.
