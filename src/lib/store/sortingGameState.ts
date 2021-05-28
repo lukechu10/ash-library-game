@@ -22,7 +22,7 @@ function createSortGameState() {
     const { set, subscribe, update } = writable<SortGameState>({
         highestZIndex: 1, // start at 1 so that the first dragged book appears over rest of books (which have z-index: 0)
         bookList: [],
-        considerPosition: 0,
+        considerPosition: 0
     });
 
     /**
@@ -36,9 +36,7 @@ function createSortGameState() {
                 // make sure book is not already on shelf
                 if (
                     bookList.findIndex(
-                        (book) =>
-                            book.DOCUMENT_ID === id &&
-                            book.shelfPosition !== undefined
+                        (book) => book.DOCUMENT_ID === id && book.shelfPosition !== undefined
                     ) !== -1
                 )
                     throw new Error("book is already on shelf.");
@@ -47,9 +45,7 @@ function createSortGameState() {
             // make sure book cannot be placed without a book behind
             let lastBookIndex = 0;
             bookList.forEach((book) =>
-                book.shelfPosition !== undefined && book.DOCUMENT_ID !== id
-                    ? lastBookIndex++
-                    : {}
+                book.shelfPosition !== undefined && book.DOCUMENT_ID !== id ? lastBookIndex++ : {}
             );
             index = Math.min(index, lastBookIndex);
 
@@ -60,14 +56,12 @@ function createSortGameState() {
             });
 
             // update index of book with id
-            bookList.find(
-                (book) => book.DOCUMENT_ID === id
-            )!.shelfPosition = index;
+            bookList.find((book) => book.DOCUMENT_ID === id)!.shelfPosition = index;
 
             return {
                 ...state,
                 bookList,
-                considerPosition: bookList.length, // reset considerPosition
+                considerPosition: bookList.length // reset considerPosition
             };
         });
     };
@@ -79,8 +73,7 @@ function createSortGameState() {
         update((state) => {
             const bookList = state.bookList.slice(0);
             const bookIndex = bookList.findIndex(
-                (book) =>
-                    book.DOCUMENT_ID === id && book.shelfPosition !== undefined
+                (book) => book.DOCUMENT_ID === id && book.shelfPosition !== undefined
             );
 
             if (bookIndex !== -1) {
@@ -111,7 +104,7 @@ function createSortGameState() {
                 const newZIndex = state.highestZIndex + 1;
                 return {
                     ...state,
-                    highestZIndex: newZIndex,
+                    highestZIndex: newZIndex
                 };
             });
         },
@@ -123,7 +116,7 @@ function createSortGameState() {
                 return {
                     ...state,
                     considerPosition: bookList.length, // see jsdoc on considerPosition
-                    bookList,
+                    bookList
                 };
             });
         },
@@ -165,8 +158,8 @@ function createSortGameState() {
             set({
                 highestZIndex: 0,
                 bookList: [],
-                considerPosition: 0,
-            }),
+                considerPosition: 0
+            })
     };
 }
 
@@ -191,9 +184,7 @@ export const isCorrectlySorted = derived(sortGameState, ($sortGameState) => {
     if (bookList.length === 0) return false; // do not set to true before books are loaded
 
     // check if all books are on shelf
-    const allOnShelf = bookList.every(
-        (book) => book.shelfPosition !== undefined
-    );
+    const allOnShelf = bookList.every((book) => book.shelfPosition !== undefined);
     if (!allOnShelf) return false;
 
     const bookListTmp = bookList.slice(0); // clone bookList for sorting

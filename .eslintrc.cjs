@@ -16,5 +16,9 @@ module.exports = {
         browser: true,
         es2017: true,
         node: true
+    },
+    rules: {
+        semi: ["warn", "always"],
+        "@typescript-eslint/no-explicit-any": ["allow", "always"]
     }
 };

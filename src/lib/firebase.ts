@@ -1,4 +1,4 @@
-import { getApps, initializeApp } from "firebase/app";
+import { getApps, initializeApp } from "@firebase/app";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -15,4 +15,23 @@ const firebaseConfig = {
 
 if (!getApps().length) {
     initializeApp(firebaseConfig);
+}
+
+export interface ScoreSchema {
+    name: string;
+    score: number;
+}
+
+export interface ClassSchema {
+    /** The name of the class. */
+    name: string;
+    /** Class username. */
+    classId: string;
+    /** Class password. */
+    // FIXME: do not store password as raw text
+    classPassword: string;
+    /** A list of student names. */
+    students: string[];
+    /** The user uid who owns the class. */
+    owner: string;
 }

@@ -30,11 +30,11 @@
     const startTimer = () => {
         if (intervalId !== undefined) throw "timer already started";
         timerStart = Date.now();
-        intervalId = (setInterval(() => {
+        intervalId = setInterval(() => {
             // update timer
             const duration = Date.now() - timerStart;
             time = Math.round(duration / 100) / 10;
-        }, 100) as unknown) as number;
+        }, 100) as unknown as number;
     };
     /**
      * Ends the timer.
