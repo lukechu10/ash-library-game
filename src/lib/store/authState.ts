@@ -1,5 +1,3 @@
-import { browser } from "$app/env";
-import { session } from "$app/stores";
 import "$lib/firebase";
 import { getApp } from "@firebase/app";
 import { getAuth, onAuthStateChanged, User } from "@firebase/auth";

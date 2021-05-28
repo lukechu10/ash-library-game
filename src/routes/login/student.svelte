@@ -6,9 +6,7 @@
 </script>
 
 <script lang="ts">
-    import { goto } from "$app/navigation";
     import type { ClassSchema } from "$lib/firebase";
-    import { authState } from "$lib/store/authState";
     import { doc, getDoc, getFirestore } from "@firebase/firestore";
     import type { LoadInput, LoadOutput } from "@sveltejs/kit/types/page";
 
@@ -21,8 +19,6 @@
     let phase: "class" | "student" = "class";
 
     let classData: ClassSchema;
-
-    $: if ($authState === null) goto("/account");
 
     const handleContinue = async () => {
         let data = await getDoc(doc(db, classId));
