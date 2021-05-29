@@ -1,4 +1,12 @@
 import { getApps, initializeApp } from "@firebase/app";
+import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocsFromServer,
+    deleteDoc
+} from "@firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -34,4 +42,12 @@ export interface ClassSchema {
     students: string[];
     /** The user uid who owns the class. */
     owner: string;
+}
+
+/** Deletes all the classes associated with a user. This should be called prior to deleting the user account. */
+export async function deleteUserClasses(uid: string): Promise<void> {
+    let classes = await getDocsFromServer(
+        query(collection(getFirestore(), "classes"), where("owner", "==", uid))
+    );
+    classes.forEach((doc) => deleteDoc(doc.ref));
 }
