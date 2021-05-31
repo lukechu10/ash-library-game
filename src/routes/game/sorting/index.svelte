@@ -1,11 +1,13 @@
 <script lang="ts">
-    import Book from "./_Book.svelte";
-    import Overlay from "$lib/Overlay.svelte";
-    import { getBooks } from "$lib/bookApi";
-    import { isCorrectlySorted, sortGameState } from "$lib/store/sortingGameState";
     import { goto } from "$app/navigation";
+    import { getBooks } from "$lib/bookApi";
+    import Overlay from "$lib/Overlay.svelte";
+    import { isCorrectlySorted,sortGameState } from "$lib/store/sortingGameState";
+    import { addDoc,collection,getFirestore } from "firebase/firestore";
     import { onDestroy } from "svelte";
-    import { getFirestore, addDoc, collection } from "firebase/firestore";
+    import { cubicOut } from "svelte/easing";
+    import { tweened } from "svelte/motion";
+    import Book from "./_Book.svelte";
 
     const numberOfRounds = 3;
     let roundNumber = 0;
@@ -65,6 +67,8 @@
         continueDimmerActive = false;
     };
 
+    let finishScore = tweened(0, { delay: 500, duration: 3000, easing: cubicOut });
+
     /**
      * Handler for finish game button.
      */
@@ -93,6 +97,7 @@
         if (roundNumber >= numberOfRounds) {
             // finish
             finishDimmerActive = true;
+            finishScore.set(score);
         } else {
             // show continue button
             setTimeout(() => (continueDimmerActive = true), 1000);
@@ -187,7 +192,7 @@
         <div class="flex flex-col items-center">
             <p class="mb-3 text-lg font-semibold text-white">
                 Ton score:
-                {score}
+                {Math.trunc($finishScore)}
             </p>
             <button class="bg-red-500 btn hover:bg-red-600" on:click={finishGame}>Continuer</button>
         </div>
