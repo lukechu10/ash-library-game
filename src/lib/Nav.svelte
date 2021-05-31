@@ -1,9 +1,10 @@
 <script lang="ts">
+    import { session } from "$app/stores";
     import { auth, authState, authStateInitialized } from "$lib/store/authState";
+    import { signOut } from "@firebase/auth";
     import { cubicOut } from "svelte/easing";
     import { slide } from "svelte/transition";
-    import { signOut } from "@firebase/auth";
-    import { session } from "$app/stores";
+    import defaultAvatar from "../../static/images/default_avatar.png";
 
     let dropdownOpen = false;
 
@@ -47,11 +48,7 @@
                             on:click={toggleDropdown}
                         >
                             <span class="sr-only">Open user menu</span>
-                            <img
-                                src="/images/default_avatar.png"
-                                alt="avatar"
-                                class="w-8 h-8 rounded-full"
-                            />
+                            <img src={defaultAvatar} alt="avatar" class="w-8 h-8 rounded-full" />
                         </button>
                         {#if dropdownOpen}
                             <div class="absolute mt-2 w-8">
