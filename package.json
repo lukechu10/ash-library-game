@@ -32,6 +32,7 @@
         "tslib": "^2.0.0",
         "typescript": "^4.0.0"
     },
+    "license": "MIT",
     "type": "module",
     "dependencies": {
         "cookie": "^0.4.1"
