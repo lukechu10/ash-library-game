@@ -67,7 +67,7 @@
         let { x, y } = event;
         moveTo({ x, y });
 
-        sortGameState.considerBookAtPos($pos, data.DOCUMENT_ID);
+        sortGameState.considerBookAtPos($pos);
     };
 
     const handleDown = (event: PointerEvent & { currentTarget: HTMLElement }) => {
@@ -86,7 +86,7 @@
         if (data.shelfPosition !== undefined) {
             sortGameState.removeBookFromShelf(data.DOCUMENT_ID);
             // prevent other books from filling space before dragging
-            sortGameState.considerBookAtPos($pos, data.DOCUMENT_ID);
+            sortGameState.considerBookAtPos($pos);
         }
         window.addEventListener("pointermove", handleMove);
     };

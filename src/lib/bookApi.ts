@@ -30,7 +30,7 @@ export async function getBooks({
     return books;
 }
 
-export function getCoteFromBook(book: BookData) {
+export function getCoteFromBook(book: BookData): string {
     // cote text
     const deweyPos = book.COTE.search(/[0-9]{3}/);
     if (deweyPos !== -1) {

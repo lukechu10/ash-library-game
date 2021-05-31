@@ -1,5 +1,5 @@
 import type { BookData, RawBook } from "$lib/bookApi";
-
+import type { RequestHandler } from "@sveltejs/kit";
 import bookData from "../../../static/books.json";
 
 /**
@@ -113,7 +113,7 @@ async function getRandomBooks(type: BookType, amount: number): Promise<RawBook[]
     return result;
 }
 
-export async function get({ query }) {
+export const get: RequestHandler = async ({ query }) => {
     const amount: number = parseInt(query.get("amount") as string);
     if (isNaN(amount)) return { status: 400, body: "invalid amount query" };
 
@@ -126,21 +126,19 @@ export async function get({ query }) {
 
     try {
         const randBooks = (await getRandomBooks(bookType, amount)).map(getImageUrl);
-        return { body: randBooks };
+        return { body: JSON.stringify(randBooks) };
     } catch (err) {
         if (err.message === "there are not enough books to satisfy amount") {
             return {
                 status: 400,
-                body: "amount query exceeds maximum number of books"
-            };
-        } else if (process.env.NODE_ENV === "development") {
-            console.error(err);
-            return {
-                status: 400,
-                body: { type: "Unexpected error", err: err }
+                body: JSON.stringify("amount query exceeds maximum number of books")
             };
         } else {
             console.error(err);
+            return {
+                status: 400,
+                body: JSON.stringify({ type: "Unexpected error" })
+            };
         }
     }
-}
+};

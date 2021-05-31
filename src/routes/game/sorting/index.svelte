@@ -2,8 +2,8 @@
     import { goto } from "$app/navigation";
     import { getBooks } from "$lib/bookApi";
     import Overlay from "$lib/Overlay.svelte";
-    import { isCorrectlySorted,sortGameState } from "$lib/store/sortingGameState";
-    import { addDoc,collection,getFirestore } from "firebase/firestore";
+    import { isCorrectlySorted, sortGameState } from "$lib/store/sortingGameState";
+    import { addDoc, collection, getFirestore } from "firebase/firestore";
     import { onDestroy } from "svelte";
     import { cubicOut } from "svelte/easing";
     import { tweened } from "svelte/motion";

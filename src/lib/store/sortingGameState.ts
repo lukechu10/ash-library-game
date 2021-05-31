@@ -123,7 +123,7 @@ function createSortGameState() {
         /**
          * If book is within drop zone, change considerPosition, else reset considerPosition.
          */
-        considerBookAtPos: ({ x, y }: { x: number; y: number }, id: string) => {
+        considerBookAtPos: ({ x, y }: { x: number; y: number }) => {
             let index: number;
             const state = get({ subscribe }) as SortGameState;
 
