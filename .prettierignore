@@ -1,0 +1,5 @@
+.vercel_build_output/**
+.svelte-kit/**
+static/**
+build/**
+node_modules/**
