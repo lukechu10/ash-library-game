@@ -19,6 +19,7 @@ module.exports = {
     },
     rules: {
         semi: ["warn", "always"],
-        "@typescript-eslint/no-explicit-any": ["allow", "always"]
+        "@typescript-eslint/no-explicit-any": ["off", "always"],
+        "@typescript-eslint/no-non-null-assertion": ["off", "always"]
     }
 };

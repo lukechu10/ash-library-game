@@ -3,7 +3,7 @@ import * as cookie from "cookie";
 
 export async function handle({
     request,
-    resolve,
+    resolve
 }: {
     request: Request;
     resolve: (request: Request) => Response | Promise<Response>;

@@ -13,7 +13,7 @@
         dropdownOpen = !dropdownOpen;
     };
     const handleSignout = () => {
-        signOut(auth);
+        signOut(auth!);
         $session = { ...$session, token: undefined };
     };
     const closeDropdown = () => (dropdownOpen = false);
