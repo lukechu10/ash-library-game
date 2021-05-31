@@ -46,7 +46,9 @@
             classes.set(newClasses);
         });
     }
-    onDestroy(() => (unsubscribeOnSnapshot ?? () => {})());
+    onDestroy(() => {
+        if (unsubscribeOnSnapshot !== null) unsubscribeOnSnapshot();
+    });
 
     const handleCancelClass = () => {
         newClass = {
@@ -63,7 +65,7 @@
         if (newClass.classPassword !== classPasswordConfirm) {
             newClassErrorMessage = "les mots de passes ne sont pas identiques";
         } else {
-            if ((await getDoc(doc(db, newClass.classId))).exists()) {
+            if ((await getDoc(doc(collection(db, "classes"), newClass.classId))).exists()) {
                 // class with id already exists
                 newClassErrorMessage = "une classe avec cet identifiant éxiste déjà";
             } else {

@@ -7,7 +7,7 @@
 
 <script lang="ts">
     import type { ClassSchema } from "$lib/firebase";
-    import { doc, getDoc, getFirestore } from "@firebase/firestore";
+    import { collection, doc, getDoc, getFirestore } from "@firebase/firestore";
     import type { LoadInput, LoadOutput } from "@sveltejs/kit/types/page";
 
     const db = getFirestore();
@@ -21,14 +21,14 @@
     let classData: ClassSchema;
 
     const handleContinue = async () => {
-        let data = await getDoc(doc(db, classId));
-        if (!data.exists || data.data()!.classPassword !== classPassword) {
-            errorMessage = "Identifiant ou mot de passe incorrect.";
-        } else {
+        let data = await getDoc(doc(collection(db, "classes"), classId));
+        if (data.exists() && data.data()!.classPassword === classPassword) {
             classData = data.data() as ClassSchema;
             errorMessage = "";
             phase = "student";
             classPassword = classId = "";
+        } else {
+            errorMessage = "Identifiant ou mot de passe incorrect.";
         }
     };
 </script>
