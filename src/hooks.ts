@@ -1,21 +1,18 @@
-import type { Request, Response } from "@sveltejs/kit";
+import type { Handle, GetSession } from "@sveltejs/kit";
 import * as cookie from "cookie";
 
-export async function handle({
+export const handle: Handle = async ({
     request,
     resolve
-}: {
-    request: Request;
-    resolve: (request: Request) => Response | Promise<Response>;
-}): Promise<Response> {
+}) => {
     request.locals.token = cookie.parse(request.headers.cookie ?? "").token;
 
     const response = await resolve(request);
     return response;
-}
+};
 
-export function getSession(request: Request): { token?: string } {
+export const getSession: GetSession = (request) => {
     return {
         token: request.locals.token
     };
-}
+};
