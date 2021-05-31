@@ -3,14 +3,14 @@ import * as cookie from "cookie";
 
 export async function handle({
     request,
-    resolve
+    render,
 }: {
     request: Request;
-    resolve: (request: Request) => Response | Promise<Response>;
+    render: (request: Request) => Response | Promise<Response>;
 }): Promise<Response> {
     request.locals.token = cookie.parse(request.headers.cookie ?? "").token;
 
-    const response = await resolve(request);
+    const response = await render(request);
     return response;
 }
 
