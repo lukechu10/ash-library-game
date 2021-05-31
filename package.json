@@ -33,6 +33,11 @@
         "typescript": "^4.0.0"
     },
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lukechu10/ash-library-game.git"
+    },
+    "description": "library game",
     "type": "module",
     "dependencies": {
         "cookie": "^0.4.1"
