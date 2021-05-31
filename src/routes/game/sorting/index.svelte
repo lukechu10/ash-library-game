@@ -92,7 +92,6 @@
         roundNumber++;
         if (roundNumber >= numberOfRounds) {
             // finish
-            console.log("finish");
             finishDimmerActive = true;
         } else {
             // show continue button
