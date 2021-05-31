@@ -24,8 +24,10 @@
         <!-- Left menu items -->
         <div class="flex-initial">
             <div class="flex space-x-4 text-white">
-                <a href="/" class="py-2 px-3 text-sm font-medium bg-gray-900 rounded-md"
-                    >Library Game</a
+                <a
+                    sveltekit:prefetch
+                    href="/"
+                    class="py-2 px-3 text-sm font-medium bg-gray-900 rounded-md">Library Game</a
                 >
             </div>
         </div>
@@ -36,6 +38,7 @@
                 <!-- Logged out -->
                 <div class="flex flex-row-reverse ml-2 space-x-4 text-white">
                     <a
+                        sveltekit:prefetch
                         href="/login/student"
                         class="py-2 px-3 text-sm font-medium bg-gray-900 rounded-md">Connexion</a
                     >
@@ -63,11 +66,13 @@
                                     aria-labelledby="user-menu"
                                 >
                                     <a
+                                        sveltekit:prefetch
                                         href="/account"
                                         class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
                                         role="menuitem">Mon compte</a
                                     >
                                     <a
+                                        sveltekit:prefetch
                                         href="/account/classes"
                                         class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
                                         role="menuitem">Mes classes</a
