@@ -1,19 +1,21 @@
 import type { BookData, RawBook } from "$lib/bookApi";
 import type { RequestHandler } from "@sveltejs/kit";
 import bookData from "../../../static/books.json";
+import Ajv, { JSONSchemaType } from "ajv";
+const ajv = new Ajv();
 
 /**
  * Used for filtering books.
  */
-const enum BookType {
+enum BookType {
     /**
      * Fiction books. Uses alphabetical order for sorting
      */
-    Alpha,
+    Alpha = "alpha",
     /**
      * Non fiction books. Uses numerical order for sorting.
      */
-    DeweyDecimal
+    DeweyDecimal = "dewey",
 }
 
 function getBookType(book: RawBook): BookType {
@@ -114,18 +116,28 @@ async function getRandomBooks(type: BookType, amount: number): Promise<RawBook[]
 }
 
 export const get: RequestHandler = async ({ query }) => {
-    const amount: number = parseInt(query.get("amount") as string);
-    if (isNaN(amount)) return { status: 400, body: "invalid amount query" };
+    const queryObj = {
+        amount: parseInt(query.get("amount")!),
+        bookType: query.get("bookType")!
+    };
 
-    const bookTypeStr: string = query.get("bookType") as string;
-    if (bookTypeStr === undefined) return { status: 400, body: "invalid bookType query" };
-    else if (bookTypeStr !== "alpha" && bookTypeStr !== "dewey")
-        return { status: 400, body: "invalid bookType query" };
-
-    const bookType: BookType = bookTypeStr === "alpha" ? BookType.Alpha : BookType.DeweyDecimal;
+    interface GetBooksOpts {
+        amount: number,
+        bookType: "alpha" | "dewey",
+    }
+    const schema: JSONSchemaType<GetBooksOpts> = {
+        type: "object",
+        properties: {
+            amount: { type: "integer" },
+            bookType: { type: "string", pattern: "(alpha|dewey)" }
+        },
+        required: ["amount", "bookType"],
+        additionalProperties: false,
+    };
+    if (!ajv.validate(schema, queryObj)) return { status: 400, body: { type: "Input does not match schema" } };
 
     try {
-        const randBooks = (await getRandomBooks(bookType, amount)).map(getImageUrl);
+        const randBooks = (await getRandomBooks(queryObj.bookType as BookType, queryObj.amount)).map(getImageUrl);
         return { body: JSON.stringify(randBooks) };
     } catch (err) {
         if (err.message === "there are not enough books to satisfy amount") {
