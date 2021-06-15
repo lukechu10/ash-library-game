@@ -28,7 +28,12 @@ const tsLoaderRule = {
 };
 const postcssLoaderRule = {
     test: /\.css$/i,
-    use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
+    use: [
+        // MiniCssExtractPlugin.loader,
+        "style-loader",
+        "css-loader",
+        "postcss-loader",
+    ],
 };
 // const babelLoaderRule = {
 //     test: /\.m?js$/i,
@@ -77,6 +82,24 @@ module.exports = {
         module: {
             rules: [
                 {
+                    test: /\.(svelte|js|mjs)$/,
+                    use: {
+                        loader: "babel-loader",
+                        options: {
+                            presets: [
+                                [
+                                    "@babel/preset-env",
+                                    {
+                                        targets: "ios_saf 9",
+                                        // corejs: "3.14",
+                                    },
+                                ],
+                            ],
+                            plugins: ["@babel/plugin-transform-runtime"],
+                        },
+                    },
+                },
+                {
                     test: /\.(svelte|html)$/,
                     use: {
                         loader: "svelte-loader-hot",
@@ -108,7 +131,7 @@ module.exports = {
                 "process.browser": true,
                 "process.env.NODE_ENV": JSON.stringify(mode),
             }),
-            new MiniCssExtractPlugin(),
+            // new MiniCssExtractPlugin(),
             new webpack.HotModuleReplacementPlugin(),
         ].filter(Boolean),
         devtool: dev && "inline-source-map",
