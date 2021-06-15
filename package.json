@@ -61,6 +61,7 @@
     "tslib": "^2.1.0",
     "typescript": "^4.1.4",
     "webpack": "^4.46.0",
-    "webpack-modules": "^1.0.0"
+    "webpack-modules": "^1.0.0",
+    "whatwg-fetch": "^3.6.2"
   }
 }
