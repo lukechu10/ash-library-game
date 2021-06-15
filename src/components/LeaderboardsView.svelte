@@ -30,7 +30,8 @@
         <p>Loading...</p>
     {:else}
         {#each $scores as score}
-            <p>{score.name} - {score.score}</p>
+            <!-- <p>{score.name} - {score.score}</p> -->
+            <p>TODO - {score.score}</p>
         {/each}
     {/if}
 </div>
