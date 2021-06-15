@@ -1,22 +1,6 @@
-<style>
-    h1 {
-        font-size: 2.8em;
-        text-transform: uppercase;
-        font-weight: 700;
-        margin: 0 0 0.5em 0;
+<h1 class="text-5xl uppercase font-bold mt-2 text-center mx-auto">Library Game</h1>
 
-        text-align: center;
-        margin: 0 auto;
-    }
-
-    @media (min-width: 480px) {
-        h1 {
-            font-size: 4em;
-        }
-    }
-</style>
-
-<h1>Library Game</h1>
-
-<a href="./game">Game</a>
-<a href="./leaderboards">Leaderboards</a>
+<div class="flex flex-col mt-10 space-y-5 place-items-center">
+    <a sapper:prefetch class="btn w-52" href="./game">Sorting game</a>
+    <a sapper:prefetch class="btn w-52" href="./leaderboards">Leaderboards</a>
+</div>
