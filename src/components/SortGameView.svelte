@@ -77,7 +77,6 @@
     };
 
     $: if ($isCorrectlySorted) {
-        (window as any).confetti.start(1000);
         endTimer();
 
         // https://www.desmos.com/calculator/yecrb3rkbb
