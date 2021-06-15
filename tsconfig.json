@@ -11,7 +11,6 @@
             "$store/*": ["./store/*"]
         },
         "strict": true,
-        "alwaysStrict": false, // ios const bug
         "noFallthroughCasesInSwitch": true
     },
     "include": ["src/**/*", "src/node_modules/**/*"],
