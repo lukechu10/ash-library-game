@@ -82,7 +82,6 @@
         // https://www.desmos.com/calculator/yecrb3rkbb
         let scoreDifficultyMultiplier =
             numOfBooks == 3 ? 0.5 : numOfBooks == 4 ? 2.5 : 6;
-        console.log("score difficulty multiplier:", scoreDifficultyMultiplier);
         let modeMultiplier = bookType == "alpha" ? 1 : 0.5;
         score += Math.round((200 / time + 10) * scoreDifficultyMultiplier * modeMultiplier);
         roundNumber++;
