@@ -30,17 +30,17 @@ const postcssLoaderRule = {
     test: /\.css$/i,
     use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
 };
-const babelLoaderRule = {
-    test: /\.m?js$/i,
-    use: !dev ? {
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            ['@babel/preset-env', { targets: "ios_saf 9" }]
-          ]
-        }
-      } : []
-};
+// const babelLoaderRule = {
+//     test: /\.m?js$/i,
+//     use: !dev ? {
+//         loader: 'babel-loader',
+//         options: {
+//           presets: [
+//             ['@babel/preset-env', { targets: "ios_saf 9" }]
+//           ]
+//         }
+//       } : []
+// };
 
 const config = {
     client: {
@@ -97,7 +97,7 @@ module.exports = {
                 fileLoaderRule,
                 tsLoaderRule,
                 postcssLoaderRule,
-                babelLoaderRule,
+                // babelLoaderRule,
             ],
         },
         mode,
