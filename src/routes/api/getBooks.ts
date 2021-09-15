@@ -15,7 +15,7 @@ enum BookType {
     /**
      * Non fiction books. Uses numerical order for sorting.
      */
-    DeweyDecimal = "dewey",
+    DeweyDecimal = "dewey"
 }
 
 function getBookType(book: RawBook): BookType {
@@ -122,8 +122,8 @@ export const get: RequestHandler = async ({ query }) => {
     };
 
     interface GetBooksOpts {
-        amount: number,
-        bookType: "alpha" | "dewey",
+        amount: number;
+        bookType: "alpha" | "dewey";
     }
     const schema: JSONSchemaType<GetBooksOpts> = {
         type: "object",
@@ -132,12 +132,15 @@ export const get: RequestHandler = async ({ query }) => {
             bookType: { type: "string", pattern: "(alpha|dewey)" }
         },
         required: ["amount", "bookType"],
-        additionalProperties: false,
+        additionalProperties: false
     };
-    if (!ajv.validate(schema, queryObj)) return { status: 400, body: { type: "Input does not match schema" } };
+    if (!ajv.validate(schema, queryObj))
+        return { status: 400, body: { type: "Input does not match schema" } };
 
     try {
-        const randBooks = (await getRandomBooks(queryObj.bookType as BookType, queryObj.amount)).map(getImageUrl);
+        const randBooks = (
+            await getRandomBooks(queryObj.bookType as BookType, queryObj.amount)
+        ).map(getImageUrl);
         return { body: JSON.stringify(randBooks) };
     } catch (err) {
         if (err.message === "there are not enough books to satisfy amount") {
