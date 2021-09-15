@@ -1,6 +1,7 @@
 import "$lib/firebase";
 import { getApp } from "@firebase/app";
-import { getAuth, onAuthStateChanged, User } from "@firebase/auth";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import type { User } from "@firebase/auth";
 import Cookies from "js-cookie";
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
